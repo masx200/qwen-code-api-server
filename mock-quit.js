@@ -1,6 +1,5 @@
 import { quitCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/quitCommand.js";
-export async function mockQuit(model, sessionId, sessionManager) {
-    const result = {};
+export async function mockQuit(sessionId, sessionManager) {
     const context = {
         session: {
             stats: sessionManager.sessions.get(sessionId),
@@ -12,25 +11,15 @@ export async function mockQuit(model, sessionId, sessionManager) {
                     selectedAuthType: "openai",
                 },
             },
-            config: {
-                getModel() {
-                    return model;
-                },
-            },
+            config: {},
         },
-        ui: {
-            addItem(itemData, baseTimestamp) {
-                result.itemData = itemData;
-                result.baseTimestamp = baseTimestamp;
-            },
-        },
+        ui: {},
     };
     if (typeof quitCommand.action === "function") {
-        await quitCommand.action(context, "");
+        return (await quitCommand.action(context, ""));
     }
     else {
         throw new Error("quitCommand.action is not a function");
     }
-    return result;
 }
 //# sourceMappingURL=mock-quit.js.map

@@ -3,8 +3,10 @@ import fastifySwagger, { type SwaggerOptions } from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import Fastify from "fastify";
 import { mockAbout } from "./mock-about.js";
+
 import { createId, SessionManager } from "./sessions.js";
 import { modelMetricsSchema } from "./model-schema.js";
+import { registerQuitRoute } from "./route-quit.js";
 
 const fastify = Fastify({
   logger: {
@@ -95,8 +97,8 @@ fastify.post(
     }
   },
 );
-const sessionManager = new SessionManager();
-
+export const sessionManager = new SessionManager();
+registerQuitRoute(fastify);
 // 会话相关JSON Schema
 const createSessionRequestSchema = {
   type: "object",

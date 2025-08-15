@@ -1,14 +1,14 @@
 import { statsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/statsCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
-import type { HistoryItemAbout } from "@qwen-code/qwen-code/dist/src/ui/types.js";
+import type { HistoryItemStats } from "@qwen-code/qwen-code/dist/src/ui/types.js";
 import type { SessionManager } from "./sessions.js";
 
 export async function mockStats(
   model: string,
   sessionId: string,
   sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
+): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
+  const result: { itemData?: HistoryItemStats; baseTimestamp?: number } = {};
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
@@ -29,8 +29,8 @@ export async function mockStats(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemAbout;
+      addItem(itemData: HistoryItemStats, baseTimestamp): void {
+        result.itemData = itemData as HistoryItemStats;
         result.baseTimestamp = baseTimestamp;
       },
     },
@@ -47,8 +47,8 @@ export async function mockStatsModel(
   model: string,
   sessionId: string,
   sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
+): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
+  const result: { itemData?: HistoryItemStats; baseTimestamp?: number } = {};
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
@@ -69,8 +69,8 @@ export async function mockStatsModel(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemAbout;
+      addItem(itemData: HistoryItemStats, baseTimestamp): void {
+        result.itemData = itemData as HistoryItemStats;
         result.baseTimestamp = baseTimestamp;
       },
     },
@@ -90,8 +90,8 @@ export async function mockStatsTools(
   model: string,
   sessionId: string,
   sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
+): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
+  const result: { itemData?: HistoryItemStats; baseTimestamp?: number } = {};
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
@@ -112,8 +112,8 @@ export async function mockStatsTools(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemAbout;
+      addItem(itemData: HistoryItemStats, baseTimestamp): void {
+        result.itemData = itemData as HistoryItemStats;
         result.baseTimestamp = baseTimestamp;
       },
     },

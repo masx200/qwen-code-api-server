@@ -1,7 +1,11 @@
-import type { HistoryItemAbout } from "@qwen-code/qwen-code/dist/src/ui/types.js";
 import type { SessionManager } from "./sessions.js";
-export declare function mockQuit(model: string, sessionId: string, sessionManager: SessionManager): Promise<{
-    itemData?: HistoryItemAbout;
-    baseTimestamp?: number;
+export declare function mockQuit(sessionId: string, sessionManager: SessionManager): Promise<{
+    type: string;
+    messages: {
+        type: string;
+        text?: string | undefined;
+        id: number;
+        duration?: undefined | string;
+    }[];
 }>;
 //# sourceMappingURL=mock-quit.d.ts.map
