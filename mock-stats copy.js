@@ -1,15 +1,7 @@
 import { statsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/statsCommand.js";
-import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
-import type { HistoryItemAbout } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import type { SessionManager } from "./sessions.js";
-
-export async function mockStats(
-  model: string,
-  sessionId: string,
-  sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
-  const context: CommandContext = {
+export async function mockStats(model, sessionId, sessionManager) {
+  const result = {};
+  const context = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
       sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
@@ -29,12 +21,12 @@ export async function mockStats(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemAbout;
+      addItem(itemData, baseTimestamp) {
+        result.itemData = itemData;
         result.baseTimestamp = baseTimestamp;
       },
     },
-  } as CommandContext;
+  };
   if (typeof statsCommand.action === "function") {
     await statsCommand.action(context, "");
   } else {
@@ -42,14 +34,9 @@ export async function mockStats(
   }
   return result;
 }
-
-export async function mockStatsModel(
-  model: string,
-  sessionId: string,
-  sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
-  const context: CommandContext = {
+export async function mockStatsModel(model, sessionId, sessionManager) {
+  const result = {};
+  const context = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
       sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
@@ -69,14 +56,14 @@ export async function mockStatsModel(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemAbout;
+      addItem(itemData, baseTimestamp) {
+        result.itemData = itemData;
         result.baseTimestamp = baseTimestamp;
       },
     },
-  } as CommandContext;
-  const modelCommand = statsCommand.subCommands?.find(
-    (command) => command.name === "model",
+  };
+  const modelCommand = statsCommand.subCommands?.find((command) =>
+    command.name === "model"
   );
   if (typeof modelCommand?.action === "function") {
     await modelCommand.action(context, "");
@@ -85,14 +72,9 @@ export async function mockStatsModel(
   }
   return result;
 }
-
-export async function mockStatsTools(
-  model: string,
-  sessionId: string,
-  sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
-  const context: CommandContext = {
+export async function mockStatsTools(model, sessionId, sessionManager) {
+  const result = {};
+  const context = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
       sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
@@ -112,14 +94,14 @@ export async function mockStatsTools(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemAbout;
+      addItem(itemData, baseTimestamp) {
+        result.itemData = itemData;
         result.baseTimestamp = baseTimestamp;
       },
     },
-  } as CommandContext;
-  const toolsCommand = statsCommand.subCommands?.find(
-    (command) => command.name === "tools",
+  };
+  const toolsCommand = statsCommand.subCommands?.find((command) =>
+    command.name === "tools"
   );
   if (typeof toolsCommand?.action === "function") {
     await toolsCommand.action(context, "");
@@ -128,3 +110,4 @@ export async function mockStatsTools(
   }
   return result;
 }
+//# sourceMappingURL=mock-stats%20copy.js.map

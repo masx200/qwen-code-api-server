@@ -3,7 +3,7 @@ import fastifySwagger, {} from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import Fastify from "fastify";
 import { mockAbout } from "./mock-about.js";
-import { SessionManager, createId } from "./sessions.js";
+import { createId, SessionManager } from "./sessions.js";
 import { modelMetricsSchema } from "./model-schema.js";
 const fastify = Fastify({
     logger: {
@@ -177,6 +177,57 @@ const deleteSessionResponseSchema = {
         success: { type: "boolean", description: "是否成功" },
         error: { type: "string", description: "错误信息" },
         message: { type: "string", description: "错误信息" },
+        sessionId: { type: "string", description: "会话ID" },
+        session: {
+            type: "object",
+            description: "会话信息",
+            properties: {
+                sessionStartTime: {
+                    type: "string",
+                    format: "date-time",
+                    description: "会话开始时间",
+                },
+                promptCount: { type: "number", description: "提示词计数" },
+                lastPromptTokenCount: {
+                    type: "number",
+                    description: "最后提示词token计数",
+                },
+                metrics: {
+                    type: "object",
+                    description: "指标数据",
+                    properties: {
+                        models: modelMetricsSchema,
+                        tools: {
+                            type: "object",
+                            description: "工具调用统计",
+                            properties: {
+                                totalCalls: { type: "number", description: "总调用次数" },
+                                totalSuccess: { type: "number", description: "成功调用次数" },
+                                totalFail: { type: "number", description: "失败调用次数" },
+                                totalDurationMs: {
+                                    type: "number",
+                                    description: "总耗时(毫秒)",
+                                },
+                                totalDecisions: {
+                                    type: "object",
+                                    description: "决策统计",
+                                    properties: {
+                                        accept: { type: "number", description: "接受次数" },
+                                        reject: { type: "number", description: "拒绝次数" },
+                                        modify: { type: "number", description: "修改次数" },
+                                    },
+                                },
+                                byName: {
+                                    type: "object",
+                                    description: "按工具名称统计",
+                                    properties: {},
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
     },
 };
 const getSessionRequestSchema = {
@@ -189,6 +240,7 @@ const getSessionRequestSchema = {
 const getSessionResponseSchema = {
     type: "object",
     properties: {
+        sessionId: { type: "string", description: "会话ID" },
         success: { type: "boolean", description: "是否成功" },
         error: { type: "string", description: "错误信息" },
         message: { type: "string", description: "错误信息" },
@@ -328,14 +380,19 @@ fastify.delete("/sessions/delete", {
         const { sessionId } = request.body;
         if (!sessionManager.getSession(sessionId)) {
             return {
-                success: false,
+                sessionId,
+                success: true,
                 error: "Session not found",
                 message: `Session ${sessionId} not found`,
             };
         }
+        const session = sessionManager.getSession(sessionId);
         sessionManager.deleteSession(sessionId);
         return {
             success: true,
+            message: `Session ${sessionId} deleted`,
+            sessionId,
+            session,
         };
     }
     catch (error) {
@@ -372,6 +429,7 @@ fastify.post("/sessions/get", {
         }
         return {
             success: true,
+            sessionId,
             session: {
                 sessionStartTime: session.sessionStartTime.toISOString(),
                 promptCount: session.promptCount,
