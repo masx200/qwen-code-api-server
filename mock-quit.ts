@@ -7,21 +7,22 @@ import type { SessionManager } from "./sessions.js";
 
 export async function mockQuit(
   sessionId: string,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ): Promise<{
   type: string;
   messages: {
     type: string;
     text?: string | undefined;
     id: number;
-    duration?: undefined|string;
+    duration?: undefined | string;
   }[];
 }> {
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist:
-        sessionManager.sessionShellAllowlist.get(sessionId),
+      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
+        sessionId,
+      ),
     },
     services: {
       settings: {

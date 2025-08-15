@@ -5,7 +5,7 @@ const quitRequestSchema = {
     sessionId: { type: "string", description: "会话ID" },
   },
   required: ["sessionId"],
-  additionalProperties:false
+  additionalProperties: false,
 };
 import type { FastifyInstance } from "fastify";
 import { sessionManager } from "./index.js";
@@ -16,13 +16,13 @@ const quitResponseSchema = {
   type: "object",
   properties: {
     duration: { type: "string", description: "耗时(毫秒)" },
-   
+
     success: { type: "boolean", description: "是否成功" },
     error: { type: "string", description: "错误信息" },
     message: { type: "string", description: "错误信息" },
-    type: { 
-      type: "string", 
-      description: "返回类型 - 对应 mock-quit.ts 中的 type 字段" 
+    type: {
+      type: "string",
+      description: "返回类型 - 对应 mock-quit.ts 中的 type 字段",
     },
     messages: {
       type: "array",
@@ -32,24 +32,24 @@ const quitResponseSchema = {
         properties: {
           type: {
             type: "string",
-            description: "消息类型"
+            description: "消息类型",
           },
           text: {
             type: ["string", "null"],
-            description: "消息文本内容"
+            description: "消息文本内容",
           },
           id: {
             type: "number",
-            description: "消息ID"
+            description: "消息ID",
           },
           duration: {
             type: ["string", "null"],
-            description: "持续时间"
-          }
+            description: "持续时间",
+          },
         },
         required: ["type", "id"],
         additionalProperties: false,
-      }
+      },
     },
     sessionId: { type: "string", description: "会话ID" },
     sessionStats: {
@@ -122,16 +122,14 @@ export function registerQuitRoute(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        const { sessionId,  } = request.body as {
+        const { sessionId } = request.body as {
           sessionId: string;
-        
         };
 
         // 获取会话信息
         const session = sessionManager.getSession(sessionId);
         if (!session) {
           return {
-           
             success: true,
             error: "Session not found",
             message: `Session ${sessionId} not found`,
@@ -142,9 +140,9 @@ export function registerQuitRoute(fastify: FastifyInstance) {
         // 调用 mockQuit
         const result = await mockQuit(sessionId, sessionManager);
         console.log(
-          JSON.stringify({ result },null,4),
-          );
-        
+          JSON.stringify({ result }, null, 4),
+        );
+
         // 保存会话统计信息
         const sessionStats = {
           sessionStartTime: session.sessionStartTime.toISOString(),
@@ -172,6 +170,6 @@ export function registerQuitRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    }
+    },
   );
 }
