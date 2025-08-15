@@ -95,13 +95,80 @@ npm test
 
 **错误响应**:
 
-```json
+````json
 {
   "error": "Internal server error",
   "message": "test error"
 }
+
+### MCP 工具函数
+
+#### mockmcpList 函数
+
+用于获取配置的 MCP (Model Context Protocol) 服务器列表信息。
+
+**函数签名**:
+```typescript
+async function mockmcpList(
+  cwd: string,
+  argv: string[],
+  args: string = ""
+): Promise<{
+  type?: string;
+  messageType?: string;
+  content?: string;
+}>{}
+````
+
+**参数说明**:
+
+- `cwd`: 当前工作目录路径
+- `argv`: 命令行参数数组
+- `args`: 额外参数，可选值包括：
+  - `""` (默认): 显示基础服务器列表
+  - `"desc"`: 显示服务器详细描述信息
+  - `"schema"`: 显示服务器架构信息
+
+**使用示例**:
+
+```typescript
+import { mockmcpList } from "./mcp/mock-mcp.js";
+import * as os from "os";
+
+// 获取 MCP 服务器列表
+const result = await mockmcpList(os.homedir(), [], "");
+console.log(result.content);
+
+// 获取详细描述信息
+const descResult = await mockmcpList(os.homedir(), [], "desc");
+console.log(descResult.content);
+
+// 获取服务器架构信息
+const schemaResult = await mockmcpList(os.homedir(), [], "schema");
+console.log(schemaResult.content);
 ```
 
+**响应格式**: 当配置有 MCP 服务器时:
+
+```
+Configured MCP servers:
+- server-name-1: description
+- server-name-2: description
+```
+
+当没有配置 MCP 服务器时:
+
+```
+No MCP servers configured.
+```
+
+**注意事项**:
+
+- 该函数会读取用户的配置文件中的 `mcpServers` 设置
+- 返回的内容格式为纯文本字符串，包含在 `content` 字段中
+- 函数会自动处理配置文件不存在或配置为空的情况
+
+````
 ## 开发指南
 
 ### 环境要求
@@ -126,7 +193,7 @@ yarn format
 
 # 代码检查
 yarn lint
-```
+````
 
 ### 添加新接口
 

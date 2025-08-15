@@ -17,7 +17,7 @@ describe("mockmcp refresh", () => {
       //@ts-ignore
       if (settings?.mcpServers && Object.keys(settings.mcpServers).length > 0) {
         expect(
-          result[1].content?.slice(0, "Configured MCP servers:".length)
+          result[1].content?.slice(0, "Configured MCP servers:".length),
         ).toBe("Configured MCP servers:");
       } else {
         //@ts-ignore
@@ -34,7 +34,7 @@ describe("mockmcp refresh", () => {
     } catch (error) {
       console.error(error);
     }
-  },{
+  }, {
     timeout: 10000,
   });
 });
