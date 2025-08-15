@@ -3,16 +3,16 @@ import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/t
 
 import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { ToolRegistry } from "@qwen-code/qwen-code-core/dist/src/tools/tool-registry.js";
-import type { ConfigParameters } from "@qwen-code/qwen-code-core/dist/src/index.js";
-export async function mockmcp(): Promise<
-  Promise<{
-    type?: string;
-    messageType?: string;
-    content?: string;
-  }>
-> {
-  const params: ConfigParameters = {} satisfies ConfigParameters;
-  const config: Config = new Config(params);
+import { creategeminiconfig } from "./gemini.js";
+export async function mockmcp(
+  cwd: string,
+  argv: string[]
+): Promise<{
+  type?: string;
+  messageType?: string;
+  content?: string;
+}> {
+  const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = {
     services: {
       settings: {
@@ -42,16 +42,15 @@ export async function mockmcp(): Promise<
   }
 }
 
-export async function mockmcpList(): Promise<
-  Promise<{
-    type?: string;
-    messageType?: string;
-    content?: string;
-  }>
-> {
- 
-  const params: ConfigParameters = {} satisfies ConfigParameters;
-  const config: Config = new Config(params);
+export async function mockmcpList(
+  cwd: string,
+  argv: string[]
+): Promise<{
+  type?: string;
+  messageType?: string;
+  content?: string;
+}> {
+  const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = {
     services: {
       settings: {
@@ -84,16 +83,15 @@ export async function mockmcpList(): Promise<
   }
 }
 
-export async function mockmcpRefresh(): Promise<
-  Promise<{
-    type?: string;
-    messageType?: string;
-    content?: string;
-  }>
-> {
- 
-  const params: ConfigParameters = {} satisfies ConfigParameters;
-  const config: Config = new Config(params);
+export async function mockmcpRefresh(
+  cwd: string,
+  argv: string[]
+): Promise<{
+  type?: string;
+  messageType?: string;
+  content?: string;
+}> {
+  const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = {
     services: {
       settings: {
@@ -126,16 +124,15 @@ export async function mockmcpRefresh(): Promise<
   }
 }
 
-export async function mockmcpAuth(): Promise<
-  Promise<{
-    type?: string;
-    messageType?: string;
-    content?: string;
-  }>
-> {
-  
-  const params: ConfigParameters = {} satisfies ConfigParameters;
-  const config: Config = new Config(params);
+export async function mockmcpAuth(
+  cwd: string,
+  argv: string[]
+): Promise<{
+  type?: string;
+  messageType?: string;
+  content?: string;
+}> {
+  const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = {
     services: {
       settings: {

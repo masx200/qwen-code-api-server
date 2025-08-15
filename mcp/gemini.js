@@ -1,15 +1,15 @@
 import { AuthType, Config, sessionId } from "@qwen-code/qwen-code-core";
+import { getOauthClient } from "@qwen-code/qwen-code-core";
 import { loadCliConfig } from "@qwen-code/qwen-code/dist/src/config/config.js";
+import { loadExtensions } from "@qwen-code/qwen-code/dist/src/config/extension.js";
 import { SettingScope, loadSettings, } from "@qwen-code/qwen-code/dist/src/config/settings.js";
 import { setupUnhandledRejectionHandler, validateDnsResolutionOrder, } from "@qwen-code/qwen-code/dist/src/gemini.js";
 import { setMaxSizedBoxDebugging } from "@qwen-code/qwen-code/dist/src/ui/components/shared/MaxSizedBox.js";
 import { cleanupCheckpoints } from "@qwen-code/qwen-code/dist/src/utils/cleanup.js";
-import dns from "node:dns";
 import { start_sandbox } from "@qwen-code/qwen-code/dist/src/utils/sandbox.js";
-import { getOauthClient } from "@qwen-code/qwen-code-core";
-import { loadExtensions } from "@qwen-code/qwen-code/dist/src/config/extension.js";
+import dns from "node:dns";
 import { parseArguments } from "./parseArguments.js";
-export async function geminicreateconfig(cwd, argv) {
+export async function creategeminiconfig(cwd, argv) {
     setupUnhandledRejectionHandler();
     const workspaceRoot = cwd; //process.cwd();
     const settings = loadSettings(workspaceRoot);

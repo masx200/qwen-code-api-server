@@ -1,8 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { mockmcpList } from "./mock-mcp.js";
+import * as os from "os";
 describe("mockmcpList", () => {
     it("应该返回 MCP 服务器列表", async () => {
-        const result = await mockmcpList();
+        const result = await mockmcpList(os.homedir(), []);
         console.log(result);
         expect(result).toEqual({
             type: "response",
@@ -14,7 +15,7 @@ describe("mockmcpList", () => {
         });
     });
     it("应该正确处理空的服务器列表", async () => {
-        const result = await mockmcpList();
+        const result = await mockmcpList(os.homedir(), []);
         console.log(result);
         expect(result).toEqual({
             type: "response",

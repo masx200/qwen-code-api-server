@@ -1,9 +1,9 @@
 import { mcpCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/mcpCommand.js";
 import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { ToolRegistry } from "@qwen-code/qwen-code-core/dist/src/tools/tool-registry.js";
-export async function mockmcp() {
-    const params = {};
-    const config = new Config(params);
+import { creategeminiconfig } from "./gemini.js";
+export async function mockmcp(cwd, argv) {
+    const config = (await creategeminiconfig(cwd, argv));
     const context = {
         services: {
             settings: {
@@ -29,9 +29,8 @@ export async function mockmcp() {
         throw new Error("mcpCommand.action is not a function");
     }
 }
-export async function mockmcpList() {
-    const params = {};
-    const config = new Config(params);
+export async function mockmcpList(cwd, argv) {
+    const config = (await creategeminiconfig(cwd, argv));
     const context = {
         services: {
             settings: {
@@ -58,9 +57,8 @@ export async function mockmcpList() {
         throw new Error("listCommand.action is not a function");
     }
 }
-export async function mockmcpRefresh() {
-    const params = {};
-    const config = new Config(params);
+export async function mockmcpRefresh(cwd, argv) {
+    const config = (await creategeminiconfig(cwd, argv));
     const context = {
         services: {
             settings: {
@@ -87,9 +85,8 @@ export async function mockmcpRefresh() {
         throw new Error("refreshCommand.action is not a function");
     }
 }
-export async function mockmcpAuth() {
-    const params = {};
-    const config = new Config(params);
+export async function mockmcpAuth(cwd, argv) {
+    const config = (await creategeminiconfig(cwd, argv));
     const context = {
         services: {
             settings: {
