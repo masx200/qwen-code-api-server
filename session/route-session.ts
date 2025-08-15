@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { sessionManager } from "../index.js";
+
 import {
   createSessionRequestSchema,
   createSessionResponseSchema,
@@ -13,9 +13,12 @@ import {
   getSessionResponseSchema,
 } from "./getSessionRequestSchema.js";
 import { listSessionsResponseSchema } from "./listSessionsResponseSchema.js";
-import { createId } from "./sessions.js";
+import { SessionManager, createId } from "./sessions.js";
 
-export function registerSessionRoute(fastify: FastifyInstance) {
+export function registerSessionRoute(
+  fastify: FastifyInstance,
+  sessionManager: SessionManager
+) {
   // 注册会话相关路由
   // 创建会话
   fastify.post(
@@ -58,7 +61,7 @@ export function registerSessionRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
   // 列出所有会话
   fastify.get(
@@ -89,7 +92,7 @@ export function registerSessionRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
   // 删除会话
   fastify.delete(
@@ -134,7 +137,7 @@ export function registerSessionRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
   // 获取会话详情
   fastify.post(
@@ -182,6 +185,6 @@ export function registerSessionRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }

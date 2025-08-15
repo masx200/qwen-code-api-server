@@ -1,10 +1,11 @@
 import type { FastifyInstance } from "fastify";
-import { sessionManager } from "../index.js";
+
 import { mockQuit } from "./mock-quit.js";
 import { quitRequestSchema } from "./quitRequestSchema.js";
 import { quitResponseSchema } from "./quitResponseSchema.js";
+import type { SessionManager } from "../session/sessions.js";
 
-export function registerQuitRoute(fastify: FastifyInstance) {
+export function registerQuitRoute(fastify: FastifyInstance,sessionManager:SessionManager) {
   // 注册 quit 命令路由
   fastify.post(
     "/command/quit",
