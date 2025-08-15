@@ -6,39 +6,17 @@ import { ToolRegistry } from "@qwen-code/qwen-code-core/dist/src/tools/tool-regi
 import { creategeminiconfig } from "./gemini.js";
 export async function mockmcp(
   cwd: string,
-  argv: string[]
+  argv: string[],
+  args: string=""
 ): Promise<{
   type?: string;
   messageType?: string;
   content?: string;
 }> {
   const config = (await creategeminiconfig(cwd, argv)) as Config;
-  const context: CommandContext = {
-    services: {
-      settings: {
-        merged: {
-          selectedAuthType: "openai",
-        },
-      },
-      config: {
-        getPromptRegistry() {
-          console.log("getPromptRegistry");
-        },
-        getBlockedMcpServers() {
-          console.log("getBlockedMcpServers");
-        },
-        async getToolRegistry(): Promise<ToolRegistry> {
-          return new ToolRegistry(config);
-        },
-        getMcpServers() {
-          console.log("getMcpServers");
-        },
-      },
-    },
-    ui: {},
-  } as CommandContext;
+  const context: CommandContext = createcontext(config) as CommandContext;
   if (typeof mcpCommand.action === "function") {
-    return (await mcpCommand.action(context, "")) as {
+    return (await mcpCommand.action(context, args)) as {
       type?: string;
       messageType?: string;
       content?: string;
@@ -50,42 +28,20 @@ export async function mockmcp(
 
 export async function mockmcpList(
   cwd: string,
-  argv: string[]
+  argv: string[],
+args: string=""
 ): Promise<{
   type?: string;
   messageType?: string;
   content?: string;
 }> {
   const config = (await creategeminiconfig(cwd, argv)) as Config;
-  const context: CommandContext = {
-    services: {
-      settings: {
-        merged: {
-          selectedAuthType: "openai",
-        },
-      },
-      config: {
-         getPromptRegistry() {
-          console.log("getPromptRegistry");
-        },
-        getBlockedMcpServers() {
-          console.log("getBlockedMcpServers");
-        },
-        async getToolRegistry(): Promise<ToolRegistry> {
-          return new ToolRegistry(config);
-        },
-        getMcpServers() {
-          console.log("getMcpServers");
-        },
-      },
-    },
-    ui: {},
-  } as CommandContext;
+  const context: CommandContext = createcontext(config) as CommandContext;
   const listCommand = mcpCommand.subCommands?.find(
     (command) => command.name === "list"
   );
   if (typeof listCommand?.action === "function") {
-    return (await listCommand.action(context, "")) as {
+    return (await listCommand.action(context, args)) as {
       type?: string;
       messageType?: string;
       content?: string;
@@ -97,42 +53,20 @@ export async function mockmcpList(
 
 export async function mockmcpRefresh(
   cwd: string,
-  argv: string[]
+  argv: string[],
+  args: string=""
 ): Promise<{
   type?: string;
   messageType?: string;
   content?: string;
 }> {
   const config = (await creategeminiconfig(cwd, argv)) as Config;
-  const context: CommandContext = {
-    services: {
-      settings: {
-        merged: {
-          selectedAuthType: "openai",
-        },
-      },
-      config: {
-       getPromptRegistry() {
-          console.log("getPromptRegistry");
-        },
-        getBlockedMcpServers() {
-          console.log("getBlockedMcpServers");
-        },
-        async getToolRegistry(): Promise<ToolRegistry> {
-          return new ToolRegistry(config);
-        },
-        getMcpServers() {
-          console.log("getMcpServers");
-        },
-      },
-    },
-    ui: {},
-  } as CommandContext;
+  const context: CommandContext = createcontext(config) as CommandContext;
   const refreshCommand = mcpCommand.subCommands?.find(
     (command) => command.name === "refresh"
   );
   if (typeof refreshCommand?.action === "function") {
-    return (await refreshCommand.action(context, "")) as {
+    return (await refreshCommand.action(context, args)) as {
       type?: string;
       messageType?: string;
       content?: string;
@@ -141,16 +75,7 @@ export async function mockmcpRefresh(
     throw new Error("refreshCommand.action is not a function");
   }
 }
-
-export async function mockmcpAuth(
-  cwd: string,
-  argv: string[]
-): Promise<{
-  type?: string;
-  messageType?: string;
-  content?: string;
-}> {
-  const config = (await creategeminiconfig(cwd, argv)) as Config;
+export function createcontext(config: Config) {
   const context: CommandContext = {
     services: {
       settings: {
@@ -160,26 +85,39 @@ export async function mockmcpAuth(
       },
       config: {
         getPromptRegistry() {
-          console.log("getPromptRegistry");
+          return config.getPromptRegistry();
         },
         getBlockedMcpServers() {
-          console.log("getBlockedMcpServers");
+          return config.getBlockedMcpServers();
         },
         async getToolRegistry(): Promise<ToolRegistry> {
-          return new ToolRegistry(config);
+          return Promise.resolve(config.getToolRegistry());
         },
         getMcpServers() {
-          console.log("getMcpServers");
+          return config.getMcpServers();
         },
       },
     },
     ui: {},
   } as CommandContext;
+  return context;
+}
+export async function mockmcpAuth(
+  cwd: string,
+  argv: string[],
+  args: string=""
+): Promise<{
+  type?: string;
+  messageType?: string;
+  content?: string;
+}> {
+  const config = (await creategeminiconfig(cwd, argv)) as Config;
+  const context: CommandContext = createcontext(config) as CommandContext;
   const authCommand = mcpCommand.subCommands?.find(
     (command) => command.name === "auth"
   );
   if (typeof authCommand?.action === "function") {
-    return (await authCommand.action(context, "")) as {
+    return (await authCommand.action(context, args)) as {
       type?: string;
       messageType?: string;
       content?: string;
