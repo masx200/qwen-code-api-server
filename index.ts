@@ -5,7 +5,12 @@ import Fastify from "fastify";
 import { mockAbout } from "./mock-about.js";
 
 const fastify = Fastify({
-  logger: true,
+  logger: {
+    level: "info",
+    transport: {
+      target: "pino-pretty",
+    },
+  },
 });
 
 const swaggerOptions: SwaggerOptions = {
@@ -86,7 +91,7 @@ fastify.post(
         message: String(error),
       });
     }
-  },
+  }
 );
 /**
  * Run the server!
@@ -95,7 +100,7 @@ async function start() {
   try {
     console.log(
       "address",
-      await fastify.listen({ port: 3000, host: "0.0.0.0" }),
+      await fastify.listen({ port: 3000, host: "0.0.0.0" })
     );
   } catch (err) {
     fastify.log.error(err);
@@ -105,6 +110,6 @@ async function start() {
 }
 
 fastify.ready().then(() => {
-  console.log("document", fastify.swagger());
+  console.log("document", JSON.stringify(fastify.swagger(), null, 4));
 }, console.error);
 start().then(console.log, console.error);

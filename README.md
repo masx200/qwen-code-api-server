@@ -83,10 +83,11 @@ npm test
 {
   "itemData": {
     "type": "about",
-    "model": "qwen-coder",
-    "content": "模型信息内容",
-    "timestamp": 1234567890,
-    "tokens": 100
+    "cliVersion": "qwen-coder",
+    "osVersion": "macos",
+    "modelVersion": "qwen-coder",
+    "selectedAuthType": "openai",
+    "gcpProject": ""
   },
   "baseTimestamp": 1234567890
 }
