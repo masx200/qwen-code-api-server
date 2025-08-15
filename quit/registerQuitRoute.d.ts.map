@@ -1,1 +1,1 @@
-{"version":3,"file":"registerQuitRoute.d.ts","sourceRoot":"","sources":["registerQuitRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAK/C,wBAAgB,iBAAiB,CAAC,OAAO,EAAE,eAAe,QAiEzD"}
+{"version":3,"file":"registerQuitRoute.d.ts","sourceRoot":"","sources":["registerQuitRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAM/C,wBAAgB,iBAAiB,CAAC,OAAO,EAAE,eAAe,QAiEzD"}

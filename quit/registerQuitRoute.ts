@@ -1,7 +1,8 @@
 import type { FastifyInstance } from "fastify";
 import { sessionManager } from "../index.js";
 import { mockQuit } from "./mock-quit.js";
-import { quitRequestSchema, quitResponseSchema } from "./route-quit.js";
+import { quitRequestSchema } from "./quitRequestSchema.js";
+import { quitResponseSchema } from "./quitResponseSchema.js";
 
 export function registerQuitRoute(fastify: FastifyInstance) {
   // 注册 quit 命令路由
@@ -66,6 +67,6 @@ export function registerQuitRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    }
+    },
   );
 }

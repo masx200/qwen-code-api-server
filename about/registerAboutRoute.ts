@@ -1,5 +1,8 @@
 import type { FastifyInstance } from "fastify";
-import { aboutRequestSchema, aboutResponseSchema } from "./aboutRequestSchema.js";
+import {
+  aboutRequestSchema,
+  aboutResponseSchema,
+} from "./aboutRequestSchema.js";
 import { mockAbout } from "./mock-about.js";
 
 export function registerAboutRoute(fastify: FastifyInstance) {
@@ -32,6 +35,6 @@ export function registerAboutRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    }
+    },
   );
 }

@@ -54,7 +54,7 @@ fastify.post(
         message: String(error),
       });
     }
-  }
+  },
 );
 // 列出所有会话
 fastify.get(
@@ -85,7 +85,7 @@ fastify.get(
         message: String(error),
       });
     }
-  }
+  },
 );
 // 删除会话
 fastify.delete(
@@ -129,7 +129,7 @@ fastify.delete(
         message: String(error),
       });
     }
-  }
+  },
 );
 // 获取会话详情
 fastify.post(
@@ -175,6 +175,6 @@ fastify.post(
         message: String(error),
       });
     }
-  }
+  },
 );
 //# sourceMappingURL=newFile.js.map

@@ -1,21 +1,49 @@
 import { modelMetricsSchema } from "../stats/model-schema.js";
-export const getSessionRequestSchema = {
+
+// 基于 mock-quit.ts 实际返回数据结构的响应 schema
+export const quitResponseSchema = {
   type: "object",
   properties: {
-    sessionId: { type: "string", description: "要获取的会话ID" },
-  },
-  required: ["sessionId"],
-};
-export const getSessionResponseSchema = {
-  type: "object",
-  properties: {
-    sessionId: { type: "string", description: "会话ID" },
+    duration: { type: "string", description: "耗时(毫秒)" },
+
     success: { type: "boolean", description: "是否成功" },
     error: { type: "string", description: "错误信息" },
     message: { type: "string", description: "错误信息" },
-    session: {
+    type: {
+      type: "string",
+      description: "返回类型 - 对应 mock-quit.ts 中的 type 字段",
+    },
+    messages: {
+      type: "array",
+      description: "消息列表 - 对应 mock-quit.ts 中的 messages 字段",
+      items: {
+        type: "object",
+        properties: {
+          type: {
+            type: "string",
+            description: "消息类型",
+          },
+          text: {
+            type: ["string", "null"],
+            description: "消息文本内容",
+          },
+          id: {
+            type: "number",
+            description: "消息ID",
+          },
+          duration: {
+            type: ["string", "null"],
+            description: "持续时间",
+          },
+        },
+        required: ["type", "id"],
+        additionalProperties: false,
+      },
+    },
+    sessionId: { type: "string", description: "会话ID" },
+    sessionStats: {
       type: "object",
-      description: "会话信息",
+      description: "会话统计信息",
       properties: {
         sessionStartTime: {
           type: "string",
@@ -65,4 +93,3 @@ export const getSessionResponseSchema = {
     },
   },
 };
-//# sourceMappingURL=getSessionRequestSchema.js.map

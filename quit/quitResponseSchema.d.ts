@@ -1,14 +1,3 @@
-export declare const quitRequestSchema: {
-  type: string;
-  properties: {
-    sessionId: {
-      type: string;
-      description: string;
-    };
-  };
-  required: string[];
-  additionalProperties: boolean;
-};
 export declare const quitResponseSchema: {
   type: string;
   properties: {
@@ -208,4 +197,4 @@ export declare const quitResponseSchema: {
     };
   };
 };
-//# sourceMappingURL=route-quit.d.ts.map
+//# sourceMappingURL=quitResponseSchema.d.ts.map
