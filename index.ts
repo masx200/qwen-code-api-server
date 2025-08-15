@@ -4,6 +4,7 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import Fastify from "fastify";
 import { mockAbout } from "./mock-about.js";
 import { SessionManager, createId } from "./sessions.js";
+import { modelMetricsSchema } from "./model-schema.js";
 
 const fastify = Fastify({
   logger: {
@@ -127,11 +128,7 @@ const createSessionResponseSchema = {
           type: "object",
           description: "指标数据",
           properties: {
-            models: {
-              type: "object",
-              description: "模型使用统计",
-              properties: {},
-            },
+            models: modelMetricsSchema,
             tools: {
               type: "object",
               description: "工具调用统计",
@@ -229,11 +226,7 @@ const getSessionResponseSchema = {
           type: "object",
           description: "指标数据",
           properties: {
-            models: {
-              type: "object",
-              description: "模型使用统计",
-              properties: {},
-            },
+            models: modelMetricsSchema,
             tools: {
               type: "object",
               description: "工具调用统计",
