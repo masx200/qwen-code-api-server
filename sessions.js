@@ -42,9 +42,11 @@ export class SessionManager {
     }
     deleteSession(sessionId) {
         this.sessions.delete(sessionId);
+        this.sessionShellAllowlist.delete(sessionId);
     }
     setSession(sessionId, session) {
         this.sessions.set(sessionId, session);
+        this.sessionShellAllowlist.set(sessionId, new Set());
     }
 }
 //# sourceMappingURL=sessions.js.map

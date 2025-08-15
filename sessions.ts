@@ -44,8 +44,10 @@ export class SessionManager {
   }
   deleteSession(sessionId: string) {
     this.sessions.delete(sessionId);
+    this.sessionShellAllowlist.delete(sessionId);
   }
   setSession(sessionId: string, session: SessionStatsState) {
     this.sessions.set(sessionId, session);
+    this.sessionShellAllowlist.set(sessionId, new Set());
   }
 }
