@@ -13,11 +13,11 @@ import {
   getSessionResponseSchema,
 } from "./getSessionRequestSchema.js";
 import { listSessionsResponseSchema } from "./listSessionsResponseSchema.js";
-import { SessionManager, createId } from "./sessions.js";
+import { createId, SessionManager } from "./sessions.js";
 
 export function registerSessionRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ) {
   // 注册会话相关路由
   // 创建会话
@@ -61,7 +61,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
   // 列出所有会话
   fastify.get(
@@ -92,7 +92,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
   // 删除会话
   fastify.delete(
@@ -137,7 +137,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
   // 获取会话详情
   fastify.post(
@@ -185,6 +185,6 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
 }
