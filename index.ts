@@ -31,4 +31,4 @@ async function main() {
     console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
   }, console.error);
 }
-await main();
+await main().then(console.log, console.error);

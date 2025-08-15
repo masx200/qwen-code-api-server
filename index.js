@@ -7,23 +7,23 @@ import { SessionManager } from "./session/sessions.js";
 import { start } from "./start.js";
 import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
 async function main() {
-  const fastify = Fastify({
-    logger: {
-      level: "info",
-      transport: {
-        target: "pino-pretty",
-      },
-    },
-  });
-  await registerSwaggerPlugin(fastify);
-  const sessionManager = new SessionManager();
-  registerAboutRoute(fastify);
-  registerQuitRoute(fastify, sessionManager);
-  registerSessionRoute(fastify, sessionManager);
-  await start(fastify).then(console.log, console.error);
-  await fastify.ready().then(() => {
-    console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
-  }, console.error);
+    const fastify = Fastify({
+        logger: {
+            level: "info",
+            transport: {
+                target: "pino-pretty",
+            },
+        },
+    });
+    await registerSwaggerPlugin(fastify);
+    const sessionManager = new SessionManager();
+    registerAboutRoute(fastify);
+    registerQuitRoute(fastify, sessionManager);
+    registerSessionRoute(fastify, sessionManager);
+    await start(fastify).then(console.log, console.error);
+    await fastify.ready().then(() => {
+        console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
+    }, console.error);
 }
-await main();
+await main().then(console.log, console.error);
 //# sourceMappingURL=index.js.map

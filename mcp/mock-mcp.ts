@@ -1,6 +1,9 @@
 import { mcpCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/mcpCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 
+import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
+import { ToolRegistry } from "@qwen-code/qwen-code-core/dist/src/tools/tool-registry.js";
+import type { ConfigParameters } from "@qwen-code/qwen-code-core/dist/src/index.js";
 export async function mockmcp(): Promise<
   Promise<{
     type?: string;
@@ -8,6 +11,8 @@ export async function mockmcp(): Promise<
     content?: string;
   }>
 > {
+  const params: ConfigParameters = {} satisfies ConfigParameters;
+  const config: Config = new Config(params);
   const context: CommandContext = {
     services: {
       settings: {
@@ -18,7 +23,9 @@ export async function mockmcp(): Promise<
       config: {
         getPromptRegistry() {},
         getBlockedMcpServers() {},
-        getToolRegistry() {},
+        async getToolRegistry(): Promise<ToolRegistry> {
+          return new ToolRegistry(config);
+        },
         getMcpServers() {},
       },
     },
@@ -42,6 +49,9 @@ export async function mockmcpList(): Promise<
     content?: string;
   }>
 > {
+ 
+  const params: ConfigParameters = {} satisfies ConfigParameters;
+  const config: Config = new Config(params);
   const context: CommandContext = {
     services: {
       settings: {
@@ -52,14 +62,16 @@ export async function mockmcpList(): Promise<
       config: {
         getPromptRegistry() {},
         getBlockedMcpServers() {},
-        getToolRegistry() {},
+        async getToolRegistry(): Promise<ToolRegistry> {
+          return new ToolRegistry(config);
+        },
         getMcpServers() {},
       },
     },
     ui: {},
   } as CommandContext;
   const listCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "list",
+    (command) => command.name === "list"
   );
   if (typeof listCommand?.action === "function") {
     return (await listCommand.action(context, "")) as {
@@ -79,6 +91,9 @@ export async function mockmcpRefresh(): Promise<
     content?: string;
   }>
 > {
+ 
+  const params: ConfigParameters = {} satisfies ConfigParameters;
+  const config: Config = new Config(params);
   const context: CommandContext = {
     services: {
       settings: {
@@ -89,14 +104,16 @@ export async function mockmcpRefresh(): Promise<
       config: {
         getPromptRegistry() {},
         getBlockedMcpServers() {},
-        getToolRegistry() {},
+        async getToolRegistry(): Promise<ToolRegistry> {
+          return new ToolRegistry(config);
+        },
         getMcpServers() {},
       },
     },
     ui: {},
   } as CommandContext;
   const refreshCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "refresh",
+    (command) => command.name === "refresh"
   );
   if (typeof refreshCommand?.action === "function") {
     return (await refreshCommand.action(context, "")) as {
@@ -116,6 +133,9 @@ export async function mockmcpAuth(): Promise<
     content?: string;
   }>
 > {
+  
+  const params: ConfigParameters = {} satisfies ConfigParameters;
+  const config: Config = new Config(params);
   const context: CommandContext = {
     services: {
       settings: {
@@ -126,14 +146,16 @@ export async function mockmcpAuth(): Promise<
       config: {
         getPromptRegistry() {},
         getBlockedMcpServers() {},
-        getToolRegistry() {},
+        async getToolRegistry(): Promise<ToolRegistry> {
+          return new ToolRegistry(config);
+        },
         getMcpServers() {},
       },
     },
     ui: {},
   } as CommandContext;
   const authCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "auth",
+    (command) => command.name === "auth"
   );
   if (typeof authCommand?.action === "function") {
     return (await authCommand.action(context, "")) as {
