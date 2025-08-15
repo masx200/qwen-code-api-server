@@ -1,7 +1,3 @@
-export declare const createSessionRequestSchema: {
-  type: string;
-  properties: {};
-};
 export declare const createSessionResponseSchema: {
   type: string;
   properties: {

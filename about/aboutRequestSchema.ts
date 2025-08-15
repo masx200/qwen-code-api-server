@@ -9,6 +9,7 @@ export const aboutRequestSchema = {
 export const aboutResponseSchema = {
   type: "object",
   properties: {
+    gitCommit: { type: "string", description: "Git提交信息" },
     success: { type: "boolean", description: "是否成功" },
     error: { type: "string", description: "错误信息" },
     message: { type: "string", description: "错误信息" },

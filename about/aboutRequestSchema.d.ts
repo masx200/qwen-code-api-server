@@ -11,6 +11,10 @@ export declare const aboutRequestSchema: {
 export declare const aboutResponseSchema: {
   type: string;
   properties: {
+    gitCommit: {
+      type: string;
+      description: string;
+    };
     success: {
       type: string;
       description: string;

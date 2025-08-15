@@ -3,6 +3,7 @@ import {
   aboutResponseSchema,
 } from "./aboutRequestSchema.js";
 import { mockAbout } from "./mock-about.js";
+import { GIT_COMMIT_INFO } from "@qwen-code/qwen-code/dist/src/generated/git-commit.js";
 export function registerAboutRoute(fastify) {
   // 注册路由
   fastify.post("/command/about", {
@@ -20,7 +21,7 @@ export function registerAboutRoute(fastify) {
       const { model } = request.body;
       const result = await mockAbout(model);
       // throw new Error("test error");
-      return { ...result, success: true };
+      return { ...result, success: true, gitCommit: GIT_COMMIT_INFO };
     } catch (error) {
       request.log.error(error);
       console.error(error);

@@ -456,7 +456,7 @@ __metadata:
   dependencies:
     "@fastify/swagger": "npm:9.5.1"
     "@fastify/swagger-ui": "npm:5.2.3"
-    "@qwen-code/qwen-code": "npm:0.0.6"
+    "@qwen-code/qwen-code": "npm:0.0.7"
     "@types/node": "npm:24.2.1"
     fastify: "npm:5.5.0"
     nodemon: "npm:^3.1.10"
@@ -951,9 +951,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@qwen-code/qwen-code-core@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@qwen-code/qwen-code-core@npm:0.0.6"
+"@qwen-code/qwen-code-core@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@qwen-code/qwen-code-core@npm:0.0.7"
   dependencies:
     "@google/genai": "npm:1.9.0"
     "@modelcontextprotocol/sdk": "npm:^1.11.0"
@@ -968,32 +968,35 @@ __metadata:
     chardet: "npm:^2.1.0"
     diff: "npm:^7.0.0"
     dotenv: "npm:^17.1.0"
+    fdir: "npm:^6.4.6"
     glob: "npm:^10.4.5"
     google-auth-library: "npm:^9.11.0"
     html-to-text: "npm:^9.0.5"
     https-proxy-agent: "npm:^7.0.6"
     ignore: "npm:^7.0.0"
+    jsonrepair: "npm:^3.13.0"
     marked: "npm:^15.0.12"
     micromatch: "npm:^4.0.8"
     open: "npm:^10.1.2"
-    openai: "npm:^5.7.0"
+    openai: "npm:5.11.0"
+    picomatch: "npm:^4.0.1"
     shell-quote: "npm:^1.8.3"
     simple-git: "npm:^3.28.0"
     strip-ansi: "npm:^7.1.0"
     tiktoken: "npm:^1.0.21"
     undici: "npm:^7.10.0"
     ws: "npm:^8.18.0"
-  checksum: 10c0/5391b628c15599a5fc793e1be039f37592858300bf7becd012147b4254bee464bd8929f0b77a4e6f556a9b6384fcb06fb8f61ee773f1709a18f42d2460198dd1
+  checksum: 10c0/fe5059926f654feaaa8fdf89d38a9b32a486c85112355d636964d43ac34795c838992f1a0d646ab4d57cd306a618d573931b7850cc707638aff3166f36a013c0
   languageName: node
   linkType: hard
 
-"@qwen-code/qwen-code@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@qwen-code/qwen-code@npm:0.0.6"
+"@qwen-code/qwen-code@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@qwen-code/qwen-code@npm:0.0.7"
   dependencies:
     "@google/genai": "npm:1.9.0"
     "@iarna/toml": "npm:^2.2.5"
-    "@qwen-code/qwen-code-core": "npm:0.0.6"
+    "@qwen-code/qwen-code-core": "npm:0.0.7"
     "@types/update-notifier": "npm:^6.0.8"
     command-exists: "npm:^1.2.9"
     diff: "npm:^7.0.0"
@@ -1022,7 +1025,7 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     qwen: dist/index.js
-  checksum: 10c0/64ae10dc923ecc732366f0d1d06f6bf8818d2386f16aed214f629bccfefc02e8bef90959a017f6e97da893cf4a72d92faea1f1eac5f3800b0f772503c6864f8c
+  checksum: 10c0/6177cb65fa3a65f927ed0e5d529495e66e021bf4d6504695f04861adadb4f3ccf9c0dc633fa7951b9576c9bde77db172df1c75057310eb798b624b13b1b9d6d5
   languageName: node
   linkType: hard
 
@@ -3575,6 +3578,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonrepair@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "jsonrepair@npm:3.13.0"
+  bin:
+    jsonrepair: bin/cli.js
+  checksum: 10c0/054206c07492fe3c90d85131859c5336128880915d0a8dca444ce10055613f041eee8a56af62bfc156d96d6e7e46bdee7caf72b28aafeb5e56543e9bde2cbce3
+  languageName: node
+  linkType: hard
+
 "jwa@npm:^2.0.0":
   version: 2.0.1
   resolution: "jwa@npm:2.0.1"
@@ -4095,9 +4107,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:^5.7.0":
-  version: 5.12.2
-  resolution: "openai@npm:5.12.2"
+"openai@npm:5.11.0":
+  version: 5.11.0
+  resolution: "openai@npm:5.11.0"
   peerDependencies:
     ws: ^8.18.0
     zod: ^3.23.8
@@ -4108,7 +4120,7 @@ __metadata:
       optional: true
   bin:
     openai: bin/cli
-  checksum: 10c0/7737b9b24edc81fcf9e6dcfb18a196cc0f8e29b6e839adf06a2538558c03908e3aa4cd94901b1a7f4a9dd62676fe9e34d6202281b2395090d998618ea1614c0c
+  checksum: 10c0/b65918f03ceda49fd295d698d75b0d2395465cdb33571bf5b29929fcc91df7efc56b3a58bdbeabcc7cdb976239314da1b028e5efd0404b90a20d1a8bfc83e81d
   languageName: node
   linkType: hard
 
@@ -4256,7 +4268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^4.0.2, picomatch@npm:^4.0.3":
+"picomatch@npm:^4.0.1, picomatch@npm:^4.0.2, picomatch@npm:^4.0.3":
   version: 4.0.3
   resolution: "picomatch@npm:4.0.3"
   checksum: 10c0/9582c951e95eebee5434f59e426cddd228a7b97a0161a375aed4be244bd3fe8e3a31b846808ea14ef2c8a2527a6eeab7b3946a67d5979e81694654f939473ae2

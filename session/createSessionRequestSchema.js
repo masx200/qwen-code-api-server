@@ -1,9 +1,5 @@
 import { modelMetricsSchema } from "../stats/model-schema.js";
 // 会话相关JSON Schema
-export const createSessionRequestSchema = {
-  type: "object",
-  properties: {},
-};
 export const createSessionResponseSchema = {
   type: "object",
   properties: {

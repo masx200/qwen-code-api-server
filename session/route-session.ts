@@ -1,9 +1,6 @@
 import type { FastifyInstance } from "fastify";
 
-import {
-
-  createSessionResponseSchema,
-} from "./createSessionRequestSchema.js";
+import { createSessionResponseSchema } from "./createSessionRequestSchema.js";
 import {
   deleteSessionRequestSchema,
   deleteSessionResponseSchema,
@@ -27,7 +24,7 @@ export function registerSessionRoute(
       schema: {
         description: "创建新的会话",
         tags: ["sessions"],
-        
+
         response: {
           200: createSessionResponseSchema,
           500: createSessionResponseSchema,
