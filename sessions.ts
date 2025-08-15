@@ -7,12 +7,17 @@ export function createId() {
     .map(() => Math.random().toString(36).substring(2))
     .join("");
 }
-export function createSession() {
+export function createSession(): SessionStatsState {
   const uiTelemetryService = new UiTelemetryService();
   return {
     sessionStartTime: new Date(),
-    metrics: uiTelemetryService.getMetrics(),
-    lastPromptTokenCount: uiTelemetryService.getLastPromptTokenCount(),
+
+    get metrics() {
+      return uiTelemetryService.getMetrics();
+    },
+    get lastPromptTokenCount() {
+      return uiTelemetryService.getLastPromptTokenCount();
+    },
     promptCount: 0,
   };
 }
@@ -23,6 +28,10 @@ export function getSession(sessionId: string) {
   return sessions.get(sessionId);
 }
 export class SessionManager {
+  sessionShellAllowlist = new Map<string, Set<string>>();
+  createId() {
+    return createId();
+  }
   listSessions() {
     return Array.from(this.sessions.keys());
   }

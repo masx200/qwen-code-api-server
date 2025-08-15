@@ -1,6 +1,5 @@
 import { statsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/statsCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
-import type { SessionStatsState } from "@qwen-code/qwen-code/dist/src/ui/contexts/SessionContext.js";
 import type { HistoryItemAbout } from "@qwen-code/qwen-code/dist/src/ui/types.js";
 import type { SessionManager } from "./sessions.js";
 
@@ -13,7 +12,7 @@ export async function mockStats(
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: new Set<string>(),
+      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
     },
     services: {
       settings: {
@@ -51,7 +50,7 @@ export async function mockStatsModel(
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: new Set<string>(),
+      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
     },
     services: {
       settings: {
@@ -92,7 +91,7 @@ export async function mockStatsTools(
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: new Set<string>(),
+      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
     },
     services: {
       settings: {
