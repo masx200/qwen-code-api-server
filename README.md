@@ -95,11 +95,12 @@ npm test
 
 **错误响应**:
 
-````json
+```json
 {
   "error": "Internal server error",
   "message": "test error"
 }
+```
 
 ### MCP 工具函数
 
@@ -108,6 +109,7 @@ npm test
 用于获取配置的 MCP (Model Context Protocol) 服务器列表信息。
 
 **函数签名**:
+
 ```typescript
 async function mockmcpList(
   cwd: string,
@@ -117,8 +119,8 @@ async function mockmcpList(
   type?: string;
   messageType?: string;
   content?: string;
-}>{}
-````
+}> {}
+```
 
 **参数说明**:
 
@@ -168,7 +170,6 @@ No MCP servers configured.
 - 返回的内容格式为纯文本字符串，包含在 `content` 字段中
 - 函数会自动处理配置文件不存在或配置为空的情况
 
-````
 ## 开发指南
 
 ### 环境要求
@@ -193,7 +194,7 @@ yarn format
 
 # 代码检查
 yarn lint
-````
+```
 
 ### 添加新接口
 
