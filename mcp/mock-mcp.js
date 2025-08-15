@@ -12,12 +12,18 @@ export async function mockmcp(cwd, argv) {
                 },
             },
             config: {
-                getPromptRegistry() { },
-                getBlockedMcpServers() { },
+                getPromptRegistry() {
+                    console.log("getPromptRegistry");
+                },
+                getBlockedMcpServers() {
+                    console.log("getBlockedMcpServers");
+                },
                 async getToolRegistry() {
                     return new ToolRegistry(config);
                 },
-                getMcpServers() { },
+                getMcpServers() {
+                    console.log("getMcpServers");
+                },
             },
         },
         ui: {},
@@ -39,12 +45,18 @@ export async function mockmcpList(cwd, argv) {
                 },
             },
             config: {
-                getPromptRegistry() { },
-                getBlockedMcpServers() { },
+                getPromptRegistry() {
+                    console.log("getPromptRegistry");
+                },
+                getBlockedMcpServers() {
+                    console.log("getBlockedMcpServers");
+                },
                 async getToolRegistry() {
                     return new ToolRegistry(config);
                 },
-                getMcpServers() { },
+                getMcpServers() {
+                    console.log("getMcpServers");
+                },
             },
         },
         ui: {},
@@ -67,12 +79,18 @@ export async function mockmcpRefresh(cwd, argv) {
                 },
             },
             config: {
-                getPromptRegistry() { },
-                getBlockedMcpServers() { },
+                getPromptRegistry() {
+                    console.log("getPromptRegistry");
+                },
+                getBlockedMcpServers() {
+                    console.log("getBlockedMcpServers");
+                },
                 async getToolRegistry() {
                     return new ToolRegistry(config);
                 },
-                getMcpServers() { },
+                getMcpServers() {
+                    console.log("getMcpServers");
+                },
             },
         },
         ui: {},
@@ -95,12 +113,18 @@ export async function mockmcpAuth(cwd, argv) {
                 },
             },
             config: {
-                getPromptRegistry() { },
-                getBlockedMcpServers() { },
+                getPromptRegistry() {
+                    console.log("getPromptRegistry");
+                },
+                getBlockedMcpServers() {
+                    console.log("getBlockedMcpServers");
+                },
                 async getToolRegistry() {
                     return new ToolRegistry(config);
                 },
-                getMcpServers() { },
+                getMcpServers() {
+                    console.log("getMcpServers");
+                },
             },
         },
         ui: {},

@@ -21,12 +21,18 @@ export async function mockmcp(
         },
       },
       config: {
-        getPromptRegistry() {},
-        getBlockedMcpServers() {},
+        getPromptRegistry() {
+          console.log("getPromptRegistry");
+        },
+        getBlockedMcpServers() {
+          console.log("getBlockedMcpServers");
+        },
         async getToolRegistry(): Promise<ToolRegistry> {
           return new ToolRegistry(config);
         },
-        getMcpServers() {},
+        getMcpServers() {
+          console.log("getMcpServers");
+        },
       },
     },
     ui: {},
@@ -59,12 +65,18 @@ export async function mockmcpList(
         },
       },
       config: {
-        getPromptRegistry() {},
-        getBlockedMcpServers() {},
+         getPromptRegistry() {
+          console.log("getPromptRegistry");
+        },
+        getBlockedMcpServers() {
+          console.log("getBlockedMcpServers");
+        },
         async getToolRegistry(): Promise<ToolRegistry> {
           return new ToolRegistry(config);
         },
-        getMcpServers() {},
+        getMcpServers() {
+          console.log("getMcpServers");
+        },
       },
     },
     ui: {},
@@ -100,12 +112,18 @@ export async function mockmcpRefresh(
         },
       },
       config: {
-        getPromptRegistry() {},
-        getBlockedMcpServers() {},
+       getPromptRegistry() {
+          console.log("getPromptRegistry");
+        },
+        getBlockedMcpServers() {
+          console.log("getBlockedMcpServers");
+        },
         async getToolRegistry(): Promise<ToolRegistry> {
           return new ToolRegistry(config);
         },
-        getMcpServers() {},
+        getMcpServers() {
+          console.log("getMcpServers");
+        },
       },
     },
     ui: {},
@@ -141,12 +159,18 @@ export async function mockmcpAuth(
         },
       },
       config: {
-        getPromptRegistry() {},
-        getBlockedMcpServers() {},
+        getPromptRegistry() {
+          console.log("getPromptRegistry");
+        },
+        getBlockedMcpServers() {
+          console.log("getBlockedMcpServers");
+        },
         async getToolRegistry(): Promise<ToolRegistry> {
           return new ToolRegistry(config);
         },
-        getMcpServers() {},
+        getMcpServers() {
+          console.log("getMcpServers");
+        },
       },
     },
     ui: {},
