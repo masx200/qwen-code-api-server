@@ -1,5 +1,5 @@
 import { statsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/statsCommand.js";
-export async function mockStats(model, sessionId, sessionManager) {
+export async function mockStats(sessionId, sessionManager) {
   const result = {};
   const context = {
     session: {
@@ -14,11 +14,7 @@ export async function mockStats(model, sessionId, sessionManager) {
           selectedAuthType: "openai",
         },
       },
-      config: {
-        getModel() {
-          return model;
-        },
-      },
+      config: {},
     },
     ui: {
       addItem(itemData, baseTimestamp) {
@@ -34,7 +30,7 @@ export async function mockStats(model, sessionId, sessionManager) {
   }
   return result;
 }
-export async function mockStatsModel(model, sessionId, sessionManager) {
+export async function mockStatsModel(sessionId, sessionManager) {
   const result = {};
   const context = {
     session: {
@@ -49,11 +45,7 @@ export async function mockStatsModel(model, sessionId, sessionManager) {
           selectedAuthType: "openai",
         },
       },
-      config: {
-        getModel() {
-          return model;
-        },
-      },
+      config: {},
     },
     ui: {
       addItem(itemData, baseTimestamp) {
@@ -72,7 +64,7 @@ export async function mockStatsModel(model, sessionId, sessionManager) {
   }
   return result;
 }
-export async function mockStatsTools(model, sessionId, sessionManager) {
+export async function mockStatsTools(sessionId, sessionManager) {
   const result = {};
   const context = {
     session: {
@@ -87,11 +79,7 @@ export async function mockStatsTools(model, sessionId, sessionManager) {
           selectedAuthType: "openai",
         },
       },
-      config: {
-        getModel() {
-          return model;
-        },
-      },
+      config: {},
     },
     ui: {
       addItem(itemData, baseTimestamp) {

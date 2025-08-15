@@ -1,10 +1,13 @@
 import { statsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/statsCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
-import type { HistoryItemStats } from "@qwen-code/qwen-code/dist/src/ui/types.js";
+import type {
+  HistoryItemModelStats,
+  HistoryItemStats,
+  HistoryItemToolStats,
+} from "@qwen-code/qwen-code/dist/src/ui/types.js";
 import type { SessionManager } from "../session/sessions.js";
 
 export async function mockStats(
-  model: string,
   sessionId: string,
   sessionManager: SessionManager,
 ): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
@@ -22,11 +25,7 @@ export async function mockStats(
           selectedAuthType: "openai",
         },
       },
-      config: {
-        getModel() {
-          return model;
-        },
-      },
+      config: {},
     },
     ui: {
       addItem(itemData: HistoryItemStats, baseTimestamp): void {
@@ -44,11 +43,11 @@ export async function mockStats(
 }
 
 export async function mockStatsModel(
-  model: string,
   sessionId: string,
   sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemStats; baseTimestamp?: number } = {};
+): Promise<{ itemData?: HistoryItemModelStats; baseTimestamp?: number }> {
+  const result: { itemData?: HistoryItemModelStats; baseTimestamp?: number } =
+    {};
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
@@ -62,15 +61,11 @@ export async function mockStatsModel(
           selectedAuthType: "openai",
         },
       },
-      config: {
-        getModel() {
-          return model;
-        },
-      },
+      config: {},
     },
     ui: {
-      addItem(itemData: HistoryItemStats, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemStats;
+      addItem(itemData: HistoryItemModelStats, baseTimestamp): void {
+        result.itemData = itemData as HistoryItemModelStats;
         result.baseTimestamp = baseTimestamp;
       },
     },
@@ -87,11 +82,11 @@ export async function mockStatsModel(
 }
 
 export async function mockStatsTools(
-  model: string,
   sessionId: string,
   sessionManager: SessionManager,
-): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
-  const result: { itemData?: HistoryItemStats; baseTimestamp?: number } = {};
+): Promise<{ itemData?: HistoryItemToolStats; baseTimestamp?: number }> {
+  const result: { itemData?: HistoryItemToolStats; baseTimestamp?: number } =
+    {};
   const context: CommandContext = {
     session: {
       stats: sessionManager.sessions.get(sessionId),
@@ -105,15 +100,11 @@ export async function mockStatsTools(
           selectedAuthType: "openai",
         },
       },
-      config: {
-        getModel() {
-          return model;
-        },
-      },
+      config: {},
     },
     ui: {
-      addItem(itemData: HistoryItemStats, baseTimestamp): void {
-        result.itemData = itemData as HistoryItemStats;
+      addItem(itemData: HistoryItemToolStats, baseTimestamp): void {
+        result.itemData = itemData as HistoryItemToolStats;
         result.baseTimestamp = baseTimestamp;
       },
     },

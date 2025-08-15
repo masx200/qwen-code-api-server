@@ -1,7 +1,10 @@
-import type { HistoryItemStats } from "@qwen-code/qwen-code/dist/src/ui/types.js";
+import type {
+  HistoryItemModelStats,
+  HistoryItemStats,
+  HistoryItemToolStats,
+} from "@qwen-code/qwen-code/dist/src/ui/types.js";
 import type { SessionManager } from "../session/sessions.js";
 export declare function mockStats(
-  model: string,
   sessionId: string,
   sessionManager: SessionManager,
 ): Promise<{
@@ -9,19 +12,17 @@ export declare function mockStats(
   baseTimestamp?: number;
 }>;
 export declare function mockStatsModel(
-  model: string,
   sessionId: string,
   sessionManager: SessionManager,
 ): Promise<{
-  itemData?: HistoryItemStats;
+  itemData?: HistoryItemModelStats;
   baseTimestamp?: number;
 }>;
 export declare function mockStatsTools(
-  model: string,
   sessionId: string,
   sessionManager: SessionManager,
 ): Promise<{
-  itemData?: HistoryItemStats;
+  itemData?: HistoryItemToolStats;
   baseTimestamp?: number;
 }>;
 //# sourceMappingURL=mock-stats.d.ts.map
