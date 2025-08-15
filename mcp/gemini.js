@@ -2,7 +2,7 @@ import { AuthType, Config, sessionId } from "@qwen-code/qwen-code-core";
 import { getOauthClient } from "@qwen-code/qwen-code-core";
 import { loadCliConfig } from "@qwen-code/qwen-code/dist/src/config/config.js";
 import { loadExtensions } from "@qwen-code/qwen-code/dist/src/config/extension.js";
-import { SettingScope, loadSettings, } from "@qwen-code/qwen-code/dist/src/config/settings.js";
+import { loadSettings, SettingScope, } from "@qwen-code/qwen-code/dist/src/config/settings.js";
 import { setupUnhandledRejectionHandler, validateDnsResolutionOrder, } from "@qwen-code/qwen-code/dist/src/gemini.js";
 import { setMaxSizedBoxDebugging } from "@qwen-code/qwen-code/dist/src/ui/components/shared/MaxSizedBox.js";
 import { cleanupCheckpoints } from "@qwen-code/qwen-code/dist/src/utils/cleanup.js";
@@ -30,8 +30,7 @@ export async function creategeminiconfig(cwd, argv) {
     const cliargv = await parseArguments(argv);
     //   const argv = await parseArguments(argv);
     const extensions = loadExtensions(workspaceRoot);
-    const config = await loadCliConfig(settings.merged, extensions, sessionId, cliargv //argv
-    );
+    const config = await loadCliConfig(settings.merged, extensions, sessionId, cliargv);
     dns.setDefaultResultOrder(validateDnsResolutionOrder(settings.merged.dnsResolutionOrder));
     //   if (argv.promptInteractive && !process.stdin.isTTY) {
     //     console.error(

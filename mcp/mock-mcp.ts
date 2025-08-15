@@ -7,7 +7,7 @@ import { creategeminiconfig } from "./gemini.js";
 export async function mockmcp(
   cwd: string,
   argv: string[],
-  args: string=""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;
@@ -29,7 +29,7 @@ export async function mockmcp(
 export async function mockmcpList(
   cwd: string,
   argv: string[],
-args: string=""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;
@@ -38,7 +38,7 @@ args: string=""
   const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = createcontext(config) as CommandContext;
   const listCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "list"
+    (command) => command.name === "list",
   );
   if (typeof listCommand?.action === "function") {
     return (await listCommand.action(context, args)) as {
@@ -54,7 +54,7 @@ args: string=""
 export async function mockmcpRefresh(
   cwd: string,
   argv: string[],
-  args: string=""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;
@@ -63,7 +63,7 @@ export async function mockmcpRefresh(
   const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = createcontext(config) as CommandContext;
   const refreshCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "refresh"
+    (command) => command.name === "refresh",
   );
   if (typeof refreshCommand?.action === "function") {
     return (await refreshCommand.action(context, args)) as {
@@ -105,7 +105,7 @@ export function createcontext(config: Config) {
 export async function mockmcpAuth(
   cwd: string,
   argv: string[],
-  args: string=""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;
@@ -114,7 +114,7 @@ export async function mockmcpAuth(
   const config = (await creategeminiconfig(cwd, argv)) as Config;
   const context: CommandContext = createcontext(config) as CommandContext;
   const authCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "auth"
+    (command) => command.name === "auth",
   );
   if (typeof authCommand?.action === "function") {
     return (await authCommand.action(context, args)) as {

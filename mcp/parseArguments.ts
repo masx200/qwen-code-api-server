@@ -10,7 +10,7 @@ export async function parseArguments(argv: string[]): Promise<CliArgs> {
     .scriptName("qwen")
     .usage(
       "$0 [options]",
-      "Qwen Code - Launch an interactive CLI, use -p/--prompt for non-interactive mode"
+      "Qwen Code - Launch an interactive CLI, use -p/--prompt for non-interactive mode",
     )
     .option("model", {
       alias: "m",
@@ -58,7 +58,7 @@ export async function parseArguments(argv: string[]): Promise<CliArgs> {
     })
     .deprecateOption(
       "all_files",
-      "Use --all-files instead. We will be removing --all_files in the coming weeks."
+      "Use --all-files instead. We will be removing --all_files in the coming weeks.",
     )
     .option("show-memory-usage", {
       type: "boolean",
@@ -72,7 +72,7 @@ export async function parseArguments(argv: string[]): Promise<CliArgs> {
     })
     .deprecateOption(
       "show_memory_usage",
-      "Use --show-memory-usage instead. We will be removing --show_memory_usage in the coming weeks."
+      "Use --show-memory-usage instead. We will be removing --show_memory_usage in the coming weeks.",
     )
     .option("yolo", {
       alias: "y",
@@ -179,7 +179,7 @@ export async function parseArguments(argv: string[]): Promise<CliArgs> {
       //@ts-ignore
       if (argv.prompt && argv.promptInteractive) {
         throw new Error(
-          "Cannot use both --prompt (-p) and --prompt-interactive (-i) together"
+          "Cannot use both --prompt (-p) and --prompt-interactive (-i) together",
         );
       }
       return true;

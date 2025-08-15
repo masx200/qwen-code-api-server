@@ -4,8 +4,8 @@ import { getOauthClient } from "@qwen-code/qwen-code-core";
 import { loadCliConfig } from "@qwen-code/qwen-code/dist/src/config/config.js";
 import { loadExtensions } from "@qwen-code/qwen-code/dist/src/config/extension.js";
 import {
-  SettingScope,
   loadSettings,
+  SettingScope,
 } from "@qwen-code/qwen-code/dist/src/config/settings.js";
 import {
   setupUnhandledRejectionHandler,
@@ -18,7 +18,7 @@ import dns from "node:dns";
 import { parseArguments } from "./parseArguments.js";
 export async function creategeminiconfig(
   cwd: string,
-  argv: string[]
+  argv: string[],
 ): Promise<Config> {
   setupUnhandledRejectionHandler();
   const workspaceRoot = cwd; //process.cwd();
@@ -46,11 +46,11 @@ export async function creategeminiconfig(
     settings.merged,
     extensions,
     sessionId,
-    cliargv //argv
+    cliargv, //argv
   );
 
   dns.setDefaultResultOrder(
-    validateDnsResolutionOrder(settings.merged.dnsResolutionOrder)
+    validateDnsResolutionOrder(settings.merged.dnsResolutionOrder),
   );
 
   //   if (argv.promptInteractive && !process.stdin.isTTY) {
@@ -76,7 +76,7 @@ export async function creategeminiconfig(
       settings.setValue(
         SettingScope.User,
         "selectedAuthType",
-        AuthType.CLOUD_SHELL
+        AuthType.CLOUD_SHELL,
       );
     }
   }
@@ -153,7 +153,7 @@ import v8 from "node:v8";
 import { spawn } from "node:child_process";
 async function relaunchWithAdditionalArgs(
   additionalArgs: string[],
-  argv: string[]
+  argv: string[],
 ) {
   //   const nodeArgs = [...additionalArgs, ...process.argv.slice(1)];
   const nodeArgs = [...additionalArgs, ...argv];
@@ -172,14 +172,14 @@ function getNodeMemoryArgs(config: Config): string[] {
   const totalMemoryMB = os.totalmem() / (1024 * 1024);
   const heapStats = v8.getHeapStatistics();
   const currentMaxOldSpaceSizeMb = Math.floor(
-    heapStats.heap_size_limit / 1024 / 1024
+    heapStats.heap_size_limit / 1024 / 1024,
   );
 
   // Set target to 50% of total memory
   const targetMaxOldSpaceSizeInMB = Math.floor(totalMemoryMB * 0.5);
   if (config.getDebugMode()) {
     console.debug(
-      `Current heap size ${currentMaxOldSpaceSizeMb.toFixed(2)} MB`
+      `Current heap size ${currentMaxOldSpaceSizeMb.toFixed(2)} MB`,
     );
   }
 
@@ -191,9 +191,11 @@ function getNodeMemoryArgs(config: Config): string[] {
   if (targetMaxOldSpaceSizeInMB > currentMaxOldSpaceSizeMb) {
     if (config.getDebugMode()) {
       console.debug(
-        `Need to relaunch with more memory: ${targetMaxOldSpaceSizeInMB.toFixed(
-          2
-        )} MB`
+        `Need to relaunch with more memory: ${
+          targetMaxOldSpaceSizeInMB.toFixed(
+            2,
+          )
+        } MB`,
       );
     }
     return [`--max-old-space-size=${targetMaxOldSpaceSizeInMB}`];
