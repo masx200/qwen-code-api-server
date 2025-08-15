@@ -83,7 +83,7 @@ npm test
 {
   "itemData": {
     "type": "about",
-    "cliVersion": "qwen-coder",
+    "cliVersion": "0.0.6",
     "osVersion": "macos",
     "modelVersion": "qwen-coder",
     "selectedAuthType": "openai",
