@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 
 import {
-  createSessionRequestSchema,
+
   createSessionResponseSchema,
 } from "./createSessionRequestSchema.js";
 import {
@@ -27,7 +27,7 @@ export function registerSessionRoute(
       schema: {
         description: "创建新的会话",
         tags: ["sessions"],
-        body: createSessionRequestSchema,
+        
         response: {
           200: createSessionResponseSchema,
           500: createSessionResponseSchema,
