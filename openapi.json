@@ -1,29 +1,55 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
-    "title": "Fastify API",
-    "description": "Building a blazing fast REST API",
+    "title": "qwen-code-api-server",
+    "description": "",
     "version": "1.0.0"
   },
-  "components": { "schemas": {} },
+  "tags": [
+    {
+      "name": "command"
+    },
+    {
+      "name": "sessions"
+    },
+    {
+      "name": "mcp"
+    },
+    {
+      "name": "stats"
+    }
+  ],
   "paths": {
     "/command/about": {
       "post": {
-        "tags": ["command"],
+        "summary": "/command/about",
+        "deprecated": false,
         "description": "调用about命令获取模型信息",
+        "tags": [
+          "command"
+        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "model": { "type": "string", "description": "模型名称" }
+                  "model": {
+                    "type": "string",
+                    "description": "模型名称"
+                  }
                 },
-                "required": ["model"]
+                "required": [
+                  "model"
+                ],
+                "x-apifox-orders": [
+                  "model"
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -33,29 +59,74 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "gitCommit": {
+                      "type": "string",
+                      "description": "Git提交信息"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "itemData": {
                       "type": "object",
                       "description": "show version info",
                       "properties": {
-                        "type": { "type": "string" },
-                        "cliVersion": { "type": "string" },
-                        "osVersion": { "type": "string" },
-                        "modelVersion": { "type": "string" },
-                        "selectedAuthType": { "type": "string" },
-                        "gcpProject": { "type": "string" }
-                      }
+                        "type": {
+                          "type": "string"
+                        },
+                        "cliVersion": {
+                          "type": "string"
+                        },
+                        "osVersion": {
+                          "type": "string"
+                        },
+                        "modelVersion": {
+                          "type": "string"
+                        },
+                        "selectedAuthType": {
+                          "type": "string"
+                        },
+                        "gcpProject": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "type",
+                        "cliVersion",
+                        "osVersion",
+                        "modelVersion",
+                        "selectedAuthType",
+                        "gcpProject"
+                      ],
+                      "x-apifox-ignore-properties": []
                     },
                     "baseTimestamp": {
                       "type": "number",
                       "description": "基础时间戳"
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "gitCommit",
+                    "success",
+                    "error",
+                    "message",
+                    "itemData",
+                    "baseTimestamp"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
           },
           "500": {
             "description": "Default Response",
@@ -64,51 +135,113 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "gitCommit": {
+                      "type": "string",
+                      "description": "Git提交信息"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "itemData": {
                       "type": "object",
                       "description": "show version info",
                       "properties": {
-                        "type": { "type": "string" },
-                        "cliVersion": { "type": "string" },
-                        "osVersion": { "type": "string" },
-                        "modelVersion": { "type": "string" },
-                        "selectedAuthType": { "type": "string" },
-                        "gcpProject": { "type": "string" }
-                      }
+                        "type": {
+                          "type": "string"
+                        },
+                        "cliVersion": {
+                          "type": "string"
+                        },
+                        "osVersion": {
+                          "type": "string"
+                        },
+                        "modelVersion": {
+                          "type": "string"
+                        },
+                        "selectedAuthType": {
+                          "type": "string"
+                        },
+                        "gcpProject": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "type",
+                        "cliVersion",
+                        "osVersion",
+                        "modelVersion",
+                        "selectedAuthType",
+                        "gcpProject"
+                      ],
+                      "x-apifox-ignore-properties": []
                     },
                     "baseTimestamp": {
                       "type": "number",
                       "description": "基础时间戳"
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "gitCommit",
+                    "success",
+                    "error",
+                    "message",
+                    "itemData",
+                    "baseTimestamp"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
           }
-        }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336751237-run"
       }
     },
     "/command/quit": {
       "post": {
-        "tags": ["command"],
+        "summary": "/command/quit",
+        "deprecated": false,
         "description": "调用quit命令并删除会话",
+        "tags": [
+          "command"
+        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "sessionId": { "type": "string", "description": "会话ID" }
+                  "sessionId": {
+                    "type": "string",
+                    "description": "会话ID"
+                  }
                 },
-                "required": ["sessionId"],
-                "additionalProperties": false
+                "required": [
+                  "sessionId"
+                ],
+                "additionalProperties": false,
+                "x-apifox-orders": [
+                  "sessionId"
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -122,9 +255,18 @@
                       "type": "string",
                       "description": "耗时(毫秒)"
                     },
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "type": {
                       "type": "string",
                       "description": "返回类型 - 对应 mock-quit.ts 中的 type 字段"
@@ -140,20 +282,42 @@
                             "description": "消息类型"
                           },
                           "text": {
-                            "type": ["null", "string"],
+                            "type": [
+                              "null",
+                              "string"
+                            ],
                             "description": "消息文本内容"
                           },
-                          "id": { "type": "number", "description": "消息ID" },
+                          "id": {
+                            "type": "number",
+                            "description": "消息ID"
+                          },
                           "duration": {
-                            "type": ["null", "string"],
+                            "type": [
+                              "null",
+                              "string"
+                            ],
                             "description": "持续时间"
                           }
                         },
-                        "required": ["type", "id"],
-                        "additionalProperties": false
+                        "required": [
+                          "type",
+                          "id"
+                        ],
+                        "additionalProperties": false,
+                        "x-apifox-orders": [
+                          "type",
+                          "text",
+                          "id",
+                          "duration"
+                        ],
+                        "x-apifox-ignore-properties": []
                       }
                     },
-                    "sessionId": { "type": "string", "description": "会话ID" },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
                     "sessionStats": {
                       "type": "object",
                       "description": "会话统计信息",
@@ -205,7 +369,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -249,12 +418,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -292,23 +479,65 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "duration",
+                    "success",
+                    "error",
+                    "message",
+                    "type",
+                    "messages",
+                    "sessionId",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
           },
           "500": {
             "description": "Default Response",
@@ -321,9 +550,18 @@
                       "type": "string",
                       "description": "耗时(毫秒)"
                     },
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "type": {
                       "type": "string",
                       "description": "返回类型 - 对应 mock-quit.ts 中的 type 字段"
@@ -339,20 +577,42 @@
                             "description": "消息类型"
                           },
                           "text": {
-                            "type": ["null", "string"],
+                            "type": [
+                              "null",
+                              "string"
+                            ],
                             "description": "消息文本内容"
                           },
-                          "id": { "type": "number", "description": "消息ID" },
+                          "id": {
+                            "type": "number",
+                            "description": "消息ID"
+                          },
                           "duration": {
-                            "type": ["null", "string"],
+                            "type": [
+                              "null",
+                              "string"
+                            ],
                             "description": "持续时间"
                           }
                         },
-                        "required": ["type", "id"],
-                        "additionalProperties": false
+                        "required": [
+                          "type",
+                          "id"
+                        ],
+                        "additionalProperties": false,
+                        "x-apifox-orders": [
+                          "type",
+                          "text",
+                          "id",
+                          "duration"
+                        ],
+                        "x-apifox-ignore-properties": []
                       }
                     },
-                    "sessionId": { "type": "string", "description": "会话ID" },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
                     "sessionStats": {
                       "type": "object",
                       "description": "会话统计信息",
@@ -404,7 +664,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -448,12 +713,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -491,38 +774,1019 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "duration",
+                    "success",
+                    "error",
+                    "message",
+                    "type",
+                    "messages",
+                    "sessionId",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336751238-run"
+      }
+    },
+    "/command/mcp/list": {
+      "post": {
+        "summary": "/command/mcp/list",
+        "deprecated": false,
+        "description": "调用mcp list命令获取MCP服务器列表",
+        "tags": [
+          "command",
+          "mcp"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cwd": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "argv": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "args": {
+                    "default": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cwd",
+                  "argv",
+                  "args"
+                ],
+                "additionalProperties": false,
+                "x-apifox-orders": [
+                  "cwd",
+                  "argv",
+                  "args"
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "messageType": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "type",
+                    "messageType",
+                    "content",
+                    "error",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "messageType": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "type",
+                    "messageType",
+                    "content",
+                    "error",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336876752-run"
+      }
+    },
+    "/command/mcp/refresh": {
+      "post": {
+        "summary": "/command/mcp/refresh",
+        "deprecated": false,
+        "description": "调用mcp refresh命令获取MCP服务器列表",
+        "tags": [
+          "command",
+          "mcp"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cwd": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "argv": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "args": {
+                    "default": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cwd",
+                  "argv",
+                  "args"
+                ],
+                "additionalProperties": false,
+                "x-apifox-orders": [
+                  "cwd",
+                  "argv",
+                  "args"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "messageType": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "type",
+                    "messageType",
+                    "content",
+                    "error",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "messageType": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "type",
+                    "messageType",
+                    "content",
+                    "error",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336882383-run"
+      }
+    },
+    "/command/stats": {
+      "post": {
+        "summary": "/command/stats",
+        "deprecated": false,
+        "description": "调用stats命令获取会话统计信息",
+        "tags": [
+          "command",
+          "stats"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "description": "会话ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "sessionId"
+                ],
+                "additionalProperties": false,
+                "x-apifox-orders": [
+                  "sessionId"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "操作是否成功",
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "description": "错误信息",
+                      "type": "string"
+                    },
+                    "message": {
+                      "description": "提示信息",
+                      "type": "string"
+                    },
+                    "sessionId": {
+                      "description": "会话ID",
+                      "type": "string"
+                    },
+                    "itemData": {
+                      "description": "统计信息数据"
+                    },
+                    "baseTimestamp": {
+                      "description": "基准时间戳",
+                      "type": "number"
+                    },
+                    "sessionStats": {
+                      "description": "会话统计信息",
+                      "type": "object",
+                      "properties": {
+                        "sessionStartTime": {
+                          "description": "会话开始时间",
+                          "type": "string"
+                        },
+                        "promptCount": {
+                          "description": "提示次数",
+                          "type": "number"
+                        },
+                        "lastPromptTokenCount": {
+                          "description": "最后提示token数",
+                          "type": "number"
+                        },
+                        "metrics": {
+                          "description": "会话指标"
+                        }
+                      },
+                      "required": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "additionalProperties": false,
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "sessionId"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "itemData",
+                    "baseTimestamp",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "操作是否成功",
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "description": "错误信息",
+                      "type": "string"
+                    },
+                    "message": {
+                      "description": "提示信息",
+                      "type": "string"
+                    },
+                    "sessionId": {
+                      "description": "会话ID",
+                      "type": "string"
+                    },
+                    "itemData": {
+                      "description": "统计信息数据"
+                    },
+                    "baseTimestamp": {
+                      "description": "基准时间戳",
+                      "type": "number"
+                    },
+                    "sessionStats": {
+                      "description": "会话统计信息",
+                      "type": "object",
+                      "properties": {
+                        "sessionStartTime": {
+                          "description": "会话开始时间",
+                          "type": "string"
+                        },
+                        "promptCount": {
+                          "description": "提示次数",
+                          "type": "number"
+                        },
+                        "lastPromptTokenCount": {
+                          "description": "最后提示token数",
+                          "type": "number"
+                        },
+                        "metrics": {
+                          "description": "会话指标"
+                        }
+                      },
+                      "required": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "additionalProperties": false,
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "sessionId"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "itemData",
+                    "baseTimestamp",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336882384-run"
+      }
+    },
+    "/command/stats/model": {
+      "post": {
+        "summary": "/command/stats/model",
+        "deprecated": false,
+        "description": "调用stats model命令获取模型统计信息",
+        "tags": [
+          "command",
+          "stats"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "description": "会话ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "sessionId"
+                ],
+                "additionalProperties": false,
+                "x-apifox-orders": [
+                  "sessionId"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "操作是否成功",
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "description": "错误信息",
+                      "type": "string"
+                    },
+                    "message": {
+                      "description": "提示信息",
+                      "type": "string"
+                    },
+                    "sessionId": {
+                      "description": "会话ID",
+                      "type": "string"
+                    },
+                    "itemData": {
+                      "description": "统计信息数据"
+                    },
+                    "baseTimestamp": {
+                      "description": "基准时间戳",
+                      "type": "number"
+                    },
+                    "sessionStats": {
+                      "description": "会话统计信息",
+                      "type": "object",
+                      "properties": {
+                        "sessionStartTime": {
+                          "description": "会话开始时间",
+                          "type": "string"
+                        },
+                        "promptCount": {
+                          "description": "提示次数",
+                          "type": "number"
+                        },
+                        "lastPromptTokenCount": {
+                          "description": "最后提示token数",
+                          "type": "number"
+                        },
+                        "metrics": {
+                          "description": "会话指标"
+                        }
+                      },
+                      "required": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "additionalProperties": false,
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "sessionId"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "itemData",
+                    "baseTimestamp",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "操作是否成功",
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "description": "错误信息",
+                      "type": "string"
+                    },
+                    "message": {
+                      "description": "提示信息",
+                      "type": "string"
+                    },
+                    "sessionId": {
+                      "description": "会话ID",
+                      "type": "string"
+                    },
+                    "itemData": {
+                      "description": "统计信息数据"
+                    },
+                    "baseTimestamp": {
+                      "description": "基准时间戳",
+                      "type": "number"
+                    },
+                    "sessionStats": {
+                      "description": "会话统计信息",
+                      "type": "object",
+                      "properties": {
+                        "sessionStartTime": {
+                          "description": "会话开始时间",
+                          "type": "string"
+                        },
+                        "promptCount": {
+                          "description": "提示次数",
+                          "type": "number"
+                        },
+                        "lastPromptTokenCount": {
+                          "description": "最后提示token数",
+                          "type": "number"
+                        },
+                        "metrics": {
+                          "description": "会话指标"
+                        }
+                      },
+                      "required": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "additionalProperties": false,
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "sessionId"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "itemData",
+                    "baseTimestamp",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336882385-run"
+      }
+    },
+    "/command/stats/tools": {
+      "post": {
+        "summary": "/command/stats/tools",
+        "deprecated": false,
+        "description": "调用stats tools命令获取工具统计信息",
+        "tags": [
+          "command",
+          "stats"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "description": "会话ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "sessionId"
+                ],
+                "additionalProperties": false,
+                "x-apifox-orders": [
+                  "sessionId"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "操作是否成功",
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "description": "错误信息",
+                      "type": "string"
+                    },
+                    "message": {
+                      "description": "提示信息",
+                      "type": "string"
+                    },
+                    "sessionId": {
+                      "description": "会话ID",
+                      "type": "string"
+                    },
+                    "itemData": {
+                      "description": "统计信息数据"
+                    },
+                    "baseTimestamp": {
+                      "description": "基准时间戳",
+                      "type": "number"
+                    },
+                    "sessionStats": {
+                      "description": "会话统计信息",
+                      "type": "object",
+                      "properties": {
+                        "sessionStartTime": {
+                          "description": "会话开始时间",
+                          "type": "string"
+                        },
+                        "promptCount": {
+                          "description": "提示次数",
+                          "type": "number"
+                        },
+                        "lastPromptTokenCount": {
+                          "description": "最后提示token数",
+                          "type": "number"
+                        },
+                        "metrics": {
+                          "description": "会话指标"
+                        }
+                      },
+                      "required": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "additionalProperties": false,
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "sessionId"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "itemData",
+                    "baseTimestamp",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "操作是否成功",
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "description": "错误信息",
+                      "type": "string"
+                    },
+                    "message": {
+                      "description": "提示信息",
+                      "type": "string"
+                    },
+                    "sessionId": {
+                      "description": "会话ID",
+                      "type": "string"
+                    },
+                    "itemData": {
+                      "description": "统计信息数据"
+                    },
+                    "baseTimestamp": {
+                      "description": "基准时间戳",
+                      "type": "number"
+                    },
+                    "sessionStats": {
+                      "description": "会话统计信息",
+                      "type": "object",
+                      "properties": {
+                        "sessionStartTime": {
+                          "description": "会话开始时间",
+                          "type": "string"
+                        },
+                        "promptCount": {
+                          "description": "提示次数",
+                          "type": "number"
+                        },
+                        "lastPromptTokenCount": {
+                          "description": "最后提示token数",
+                          "type": "number"
+                        },
+                        "metrics": {
+                          "description": "会话指标"
+                        }
+                      },
+                      "required": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "additionalProperties": false,
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "sessionId"
+                  ],
+                  "additionalProperties": false,
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "itemData",
+                    "baseTimestamp",
+                    "sessionStats"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "command",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336882386-run"
       }
     },
     "/sessions/create": {
       "post": {
-        "tags": ["sessions"],
+        "summary": "/sessions/create",
+        "deprecated": false,
         "description": "创建新的会话",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "type": "object", "properties": {} }
-            }
-          }
-        },
+        "tags": [
+          "sessions"
+        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Default Response",
@@ -531,10 +1795,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
-                    "sessionId": { "type": "string", "description": "会话ID" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
                     "session": {
                       "type": "object",
                       "description": "会话信息",
@@ -586,7 +1862,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -630,12 +1911,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -673,23 +1972,62 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "session"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
           },
           "500": {
             "description": "Default Response",
@@ -698,10 +2036,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
-                    "sessionId": { "type": "string", "description": "会话ID" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
                     "session": {
                       "type": "object",
                       "description": "会话信息",
@@ -753,7 +2103,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -797,12 +2152,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -840,31 +2213,79 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "session"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
           }
-        }
+        },
+        "security": [],
+        "x-apifox-folder": "sessions",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336751239-run"
       }
     },
     "/sessions/list": {
       "get": {
-        "tags": ["sessions"],
+        "summary": "/sessions/list",
+        "deprecated": false,
         "description": "获取所有会话ID列表",
+        "tags": [
+          "sessions"
+        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Default Response",
@@ -873,18 +2294,38 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "sessions": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": {
+                        "type": "string"
+                      },
                       "description": "会话ID列表"
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessions"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
           },
           "500": {
             "description": "Default Response",
@@ -893,26 +2334,55 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "sessions": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": {
+                        "type": "string"
+                      },
                       "description": "会话ID列表"
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessions"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
           }
-        }
+        },
+        "security": [],
+        "x-apifox-folder": "sessions",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336751240-run"
       }
     },
     "/sessions/delete": {
       "delete": {
-        "tags": ["sessions"],
+        "summary": "/sessions/delete",
+        "deprecated": false,
         "description": "删除指定会话",
+        "tags": [
+          "sessions"
+        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -924,11 +2394,16 @@
                     "description": "要删除的会话ID"
                   }
                 },
-                "required": ["sessionId"]
+                "required": [
+                  "sessionId"
+                ],
+                "x-apifox-orders": [
+                  "sessionId"
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -938,10 +2413,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
-                    "sessionId": { "type": "string", "description": "会话ID" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
                     "session": {
                       "type": "object",
                       "description": "会话信息",
@@ -993,7 +2480,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -1037,12 +2529,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -1080,23 +2590,62 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "session"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
           },
           "500": {
             "description": "Default Response",
@@ -1105,10 +2654,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
-                    "sessionId": { "type": "string", "description": "会话ID" },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
                     "session": {
                       "type": "object",
                       "description": "会话信息",
@@ -1160,7 +2721,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -1204,12 +2770,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -1247,31 +2831,79 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "error",
+                    "message",
+                    "sessionId",
+                    "session"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
           }
-        }
+        },
+        "security": [],
+        "x-apifox-folder": "sessions",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336751241-run"
       }
     },
     "/sessions/get": {
       "post": {
-        "tags": ["sessions"],
+        "summary": "/sessions/get",
+        "deprecated": false,
         "description": "获取指定会话的详细信息",
+        "tags": [
+          "sessions"
+        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1283,11 +2915,16 @@
                     "description": "要获取的会话ID"
                   }
                 },
-                "required": ["sessionId"]
+                "required": [
+                  "sessionId"
+                ],
+                "x-apifox-orders": [
+                  "sessionId"
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -1297,10 +2934,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "sessionId": { "type": "string", "description": "会话ID" },
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "session": {
                       "type": "object",
                       "description": "会话信息",
@@ -1352,7 +3001,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -1396,12 +3050,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -1439,23 +3111,62 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "sessionId",
+                    "success",
+                    "error",
+                    "message",
+                    "session"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "成功"
           },
           "500": {
             "description": "Default Response",
@@ -1464,10 +3175,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "sessionId": { "type": "string", "description": "会话ID" },
-                    "success": { "type": "boolean", "description": "是否成功" },
-                    "error": { "type": "string", "description": "错误信息" },
-                    "message": { "type": "string", "description": "错误信息" },
+                    "sessionId": {
+                      "type": "string",
+                      "description": "会话ID"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "是否成功"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "错误信息"
+                    },
                     "session": {
                       "type": "object",
                       "description": "会话信息",
@@ -1519,7 +3242,12 @@
                                       "totalErrors",
                                       "totalLatencyMs"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "totalRequests",
+                                      "totalErrors",
+                                      "totalLatencyMs"
+                                    ]
                                   },
                                   "tokens": {
                                     "type": "object",
@@ -1563,12 +3291,30 @@
                                       "thoughts",
                                       "tool"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "x-apifox-orders": [
+                                      "prompt",
+                                      "candidates",
+                                      "total",
+                                      "cached",
+                                      "thoughts",
+                                      "tool"
+                                    ]
                                   }
                                 },
-                                "required": ["api", "tokens"],
-                                "additionalProperties": false
-                              }
+                                "required": [
+                                  "api",
+                                  "tokens"
+                                ],
+                                "additionalProperties": false,
+                                "x-apifox-orders": [
+                                  "api",
+                                  "tokens"
+                                ]
+                              },
+                              "x-apifox-orders": [],
+                              "properties": {},
+                              "x-apifox-ignore-properties": []
                             },
                             "tools": {
                               "type": "object",
@@ -1606,26 +3352,76 @@
                                       "type": "number",
                                       "description": "修改次数"
                                     }
-                                  }
+                                  },
+                                  "x-apifox-orders": [
+                                    "accept",
+                                    "reject",
+                                    "modify"
+                                  ],
+                                  "x-apifox-ignore-properties": []
                                 },
                                 "byName": {
                                   "type": "object",
                                   "description": "按工具名称统计",
-                                  "properties": {}
+                                  "properties": {},
+                                  "x-apifox-orders": [],
+                                  "x-apifox-ignore-properties": []
                                 }
-                              }
+                              },
+                              "x-apifox-orders": [
+                                "totalCalls",
+                                "totalSuccess",
+                                "totalFail",
+                                "totalDurationMs",
+                                "totalDecisions",
+                                "byName"
+                              ],
+                              "x-apifox-ignore-properties": []
                             }
-                          }
+                          },
+                          "x-apifox-orders": [
+                            "models",
+                            "tools"
+                          ],
+                          "x-apifox-ignore-properties": []
                         }
-                      }
+                      },
+                      "x-apifox-orders": [
+                        "sessionStartTime",
+                        "promptCount",
+                        "lastPromptTokenCount",
+                        "metrics"
+                      ],
+                      "x-apifox-ignore-properties": []
                     }
-                  }
+                  },
+                  "x-apifox-orders": [
+                    "sessionId",
+                    "success",
+                    "error",
+                    "message",
+                    "session"
+                  ],
+                  "x-apifox-ignore-properties": []
                 }
               }
-            }
+            },
+            "headers": {},
+            "x-apifox-name": "服务器错误"
           }
-        }
+        },
+        "security": [],
+        "x-apifox-folder": "sessions",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/6956242/apis/api-336751242-run"
       }
     }
-  }
+  },
+  "webhooks": {},
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
 }
