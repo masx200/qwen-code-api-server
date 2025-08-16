@@ -7,12 +7,13 @@ import { registerSessionRoute } from "./session/route-session.js";
 import { SessionManager } from "./session/sessions.js";
 import { start } from "./start.js";
 import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
-import { registerMcpListRoute } from "./mcp/registerMcpListRoute.js";
+import { registerMcpListRoute, registerMcpRoute } from "./mcp/registerMcpListRoute.js";
 import { registerMcprefreshRoute } from "./mcp/registerMcpRefreshRoute.js";
 import { registerStatsRoute } from "./stats/registerStatsRoute.js";
 import { registerStatsModelRoute } from "./stats/registerStatsModelRoute.js";
 import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
 import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
+import { registertoolsRoute } from "./tools/registertoolsRoute.js";
 async function main() {
     const fastify = Fastify({
         logger: {
@@ -35,6 +36,8 @@ async function main() {
     registerStatsModelRoute(fastify, sessionManager);
     registerStatsToolsRoute(fastify, sessionManager);
     registerMcpAuthWebSocketRoute(fastify);
+    registerMcpRoute(fastify);
+    registertoolsRoute(fastify);
     await start(fastify).then(console.log, console.error);
     await fastify.ready().then(() => {
         console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
