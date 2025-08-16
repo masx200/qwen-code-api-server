@@ -29,7 +29,9 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
           args: string;
         };
         const result = await mockmcpRefresh(cwd, argv, args);
-        return { ...result, success: true };
+
+        console.log(JSON.stringify(result, null, 4));
+        return { ...result[0], ...result[1], success: true };
       } catch (error) {
         request.log.error(error);
         console.error(error);
@@ -39,12 +41,12 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }
 // console.log(zodtojsonSchema(mcprefreshRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
   );
 }

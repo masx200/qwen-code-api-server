@@ -13,6 +13,11 @@ export const mcprefreshResponseSchema = z.object({
   content: z.string().optional(),
   error: z.string().optional(),
   message: z.string().optional(),
+  baseTimestamp: z.number().optional(),
+  itemData: z.object({
+    type: z.string().optional(),
+    text: z.string().optional(),
+  }),
 });
 
 export type McprefreshRequest = z.infer<typeof mcprefreshRequestSchema>;
