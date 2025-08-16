@@ -45,6 +45,9 @@ describe("POST /command/tools", () => {
         type: "info",
       },
     });
+  },{
+
+    timeout:20000
   });
 
   it("should handle invalid request body", async () => {

@@ -2,117 +2,110 @@ import * as z from "zod";
 import { validateMcprefreshData } from "./validateMcprefreshData.js";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
 export function registerMcprefreshRoute(fastify) {
-  fastify.register(async function (fastify) {
-    fastify.get("/command/mcp/refresh", { websocket: true }, (socket, req) => {
-      console.log("websocket open,url=", req.url);
-      socket.on("message", async (message) => {
-        try {
-          // 解析客户端发送的消息
-          const data = JSON.parse(message.toString());
-          console.log("websocket message,data=", data);
-          const { id } = data;
-          if (!id) {
-            socket.send(JSON.stringify({
-              type: "error",
-              message: "Missing required parameters: id must be provided",
-            }));
-            socket.close();
-            return;
-          }
-          try {
-            const { cwd, argv, args, id } = validateMcprefreshData(data);
-            if (!cwd || !Array.isArray(argv)) {
-              socket.send(JSON.stringify({
-                id: id,
-                type: "error",
-                message:
-                  "Missing required parameters: cwd and argv must be provided",
-              }));
-              //socket.close()
-              return;
-            }
-            // 调用mockmcprefresh函数获取可读流
-            const stream = await mockmcpRefresh(cwd, argv, args || "");
-            // 读取流中的数据并发送给客户端
-            const reader = stream.getReader();
-            try {
-              while (true) {
-                const { done, value } = await reader.read();
-                if (done) {
-                  socket.send(JSON.stringify({
-                    id,
-                    type: "close",
-                    message: "mcp refresh process completed",
-                  }));
-                  break;
+    fastify.register(async function (fastify) {
+        fastify.get("/command/mcp/refresh", { websocket: true }, (socket, req) => {
+            console.log("websocket open,url=", req.url);
+            socket.on("message", async (message) => {
+                try {
+                    // 解析客户端发送的消息
+                    const data = JSON.parse(message.toString());
+                    console.log("websocket message,data=", data);
+                    const { id } = data;
+                    if (!id) {
+                        socket.send(JSON.stringify({
+                            type: "error",
+                            message: "Missing required parameters: id must be provided",
+                        }));
+                        socket.close();
+                        return;
+                    }
+                    try {
+                        const { cwd, argv, args, id } = validateMcprefreshData(data);
+                        if (!cwd || !Array.isArray(argv)) {
+                            socket.send(JSON.stringify({
+                                id: id,
+                                type: "error",
+                                message: "Missing required parameters: cwd and argv must be provided",
+                            }));
+                            //socket.close()
+                            return;
+                        }
+                        // 调用mockmcprefresh函数获取可读流
+                        const stream = await mockmcpRefresh(cwd, argv, args || "");
+                        // 读取流中的数据并发送给客户端
+                        const reader = stream.getReader();
+                        try {
+                            while (true) {
+                                const { done, value } = await reader.read();
+                                if (done) {
+                                    socket.send(JSON.stringify({
+                                        id,
+                                        type: "close",
+                                        message: "mcp refresh process completed",
+                                    }));
+                                    break;
+                                }
+                                if (value) {
+                                    socket.send(JSON.stringify({
+                                        id,
+                                        type: "data",
+                                        data: value,
+                                    }));
+                                }
+                            }
+                        }
+                        catch (error) {
+                            console.error(error);
+                            socket.send(JSON.stringify({
+                                id,
+                                type: "error",
+                                message: `Stream reading error: ${error instanceof Error ? error.message : String(error)}`,
+                            }));
+                        }
+                        finally {
+                            reader.releaseLock();
+                        }
+                    }
+                    catch (error) {
+                        console.error(error);
+                        socket.send(JSON.stringify({
+                            id,
+                            type: "error",
+                            message: `Server error: ${error instanceof Error ? error.message : String(error)}`,
+                        }));
+                        // 发送连接成功消息
+                        socket.send(JSON.stringify({
+                            id,
+                            type: "close",
+                            message: "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
+                        }));
+                    }
                 }
-                if (value) {
-                  socket.send(JSON.stringify({
-                    id,
-                    type: "data",
-                    data: value,
-                  }));
+                catch (error) {
+                    console.error(error);
+                    socket.send(JSON.stringify({
+                        type: "error",
+                        message: `Server error: ${error instanceof Error ? error.message : String(error)}`,
+                    }));
+                    // 发送连接成功消息
+                    socket.send(JSON.stringify({
+                        type: "close",
+                        message: "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
+                    }));
+                    socket.close();
                 }
-              }
-            } catch (error) {
-              console.error(error);
-              socket.send(JSON.stringify({
-                id,
-                type: "error",
-                message: `Stream reading error: ${
-                  error instanceof Error ? error.message : String(error)
-                }`,
-              }));
-            } finally {
-              reader.releaseLock();
-            }
-          } catch (error) {
-            console.error(error);
-            socket.send(JSON.stringify({
-              id,
-              type: "error",
-              message: `Server error: ${
-                error instanceof Error ? error.message : String(error)
-              }`,
-            }));
-            // 发送连接成功消息
-            socket.send(JSON.stringify({
-              id,
-              type: "close",
-              message:
-                "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
-            }));
-          }
-        } catch (error) {
-          console.error(error);
-          socket.send(JSON.stringify({
-            type: "error",
-            message: `Server error: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          }));
-          // 发送连接成功消息
-          socket.send(JSON.stringify({
-            type: "close",
-            message:
-              "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
-          }));
-          socket.close();
-        }
-      });
-      socket.on("close", () => {
-        console.log("WebSocket connection closed");
-      });
-      socket.on("error", (error) => {
-        console.error("WebSocket error:", error);
-      });
+            });
+            socket.on("close", () => {
+                console.log("WebSocket connection closed");
+            });
+            socket.on("error", (error) => {
+                console.error("WebSocket error:", error);
+            });
+        });
     });
-  });
 }
 // console.log(zodtojsonSchema(mcprefreshRequestSchema));
 export function zodtojsonSchema(schema) {
-  return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
-  );
+    return Object.fromEntries(Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"));
 }
 //# sourceMappingURL=registerMcpRefreshRoute.js.map

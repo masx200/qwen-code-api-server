@@ -49,7 +49,17 @@ async function main() {
   registerMcpRoute(fastify);
 
   registertoolsRoute(fastify);
-  await start(fastify).then(console.log, console.error);
+  await start(
+    fastify,
+    (err, address) => {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      console.log("listening address", address);
+    },
+    3000
+  ).then(console.log, console.error);
   await fastify.ready().then(() => {
     console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
   }, console.error);
