@@ -1,4 +1,4 @@
-import { mockmcpAuth } from "./mock-mcp.js";
+import { mockmcpAuth } from "./mockmcpAuth.js";
 import { validateMcpAuthData } from "./validateMcpAuthData.js";
 export function registerMcpAuthWebSocketRoute(fastify) {
     // 注册WebSocket路由用于MCP认证

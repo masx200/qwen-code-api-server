@@ -34,23 +34,6 @@ export async function mockmcpList(cwd, argv, args = "") {
         throw new Error("listCommand.action is not a function");
     }
 }
-export async function mockmcpRefresh(cwd, argv, args = "") {
-    const result = {};
-    const config = (await creategeminiconfig(cwd, argv));
-    const context = createcontext(config, function (itemData, baseTimestamp) {
-        result.itemData = itemData;
-        result.baseTimestamp = baseTimestamp;
-        return 0;
-    });
-    const refreshCommand = mcpCommand.subCommands?.find((command) => command.name === "refresh");
-    if (typeof refreshCommand?.action === "function") {
-        const result2 = (await refreshCommand.action(context, args));
-        return [result, result2];
-    }
-    else {
-        throw new Error("refreshCommand.action is not a function");
-    }
-}
 export function createcontext(config, addItem) {
     const context = {
         services: {
@@ -84,38 +67,5 @@ export function createcontext(config, addItem) {
         },
     };
     return context;
-}
-export async function mockmcpAuth(cwd, argv, args = "") {
-    const authCommand = mcpCommand.subCommands?.find((command) => command.name === "auth");
-    if (typeof authCommand?.action === "function") {
-        return new ReadableStream({
-            async start(controller) {
-                const config = (await creategeminiconfig(cwd, argv));
-                const context = createcontext(config, function (itemData, baseTimestamp) {
-                    const result = {};
-                    result.itemData = itemData;
-                    result.baseTimestamp = baseTimestamp;
-                    controller.enqueue(result);
-                    return 0;
-                });
-                if (typeof authCommand?.action === "function") {
-                    const slashcommandactionreturn = await authCommand?.action(context, args);
-                    if (slashcommandactionreturn) {
-                        controller.enqueue(slashcommandactionreturn);
-                        controller.close();
-                    }
-                    else {
-                        controller.error("authCommand.action has no return");
-                    }
-                }
-                else {
-                    controller.error("authCommand.action is not a function");
-                }
-            },
-        });
-    }
-    else {
-        throw new Error("authCommand.action is not a function");
-    }
 }
 //# sourceMappingURL=mock-mcp.js.map

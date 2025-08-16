@@ -1,11 +1,11 @@
 import type { FastifyInstance } from "fastify";
+import * as z from "zod";
+import type { JSONSchema } from "zod/v4/core";
 import {
   mcprefreshRequestSchema,
   mcprefreshResponseSchema,
 } from "./mcprefreshRequestSchema.js";
-import { mockmcpRefresh } from "./mock-mcp.js";
-import * as z from "zod";
-import type { JSONSchema } from "zod/v4/core";
+import { mockmcpRefresh } from "./mockmcpRefresh.js";
 export function registerMcprefreshRoute(fastify: FastifyInstance) {
   // 注册路由
   fastify.post(
@@ -41,12 +41,12 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }
 // console.log(zodtojsonSchema(mcprefreshRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
   );
 }

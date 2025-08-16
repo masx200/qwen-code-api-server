@@ -11,23 +11,5 @@ export declare function mockmcpList(cwd: string, argv: string[], args?: string):
     messageType?: string;
     content?: string;
 }>;
-export declare function mockmcpRefresh(cwd: string, argv: string[], args?: string): Promise<[
-    {
-        itemData?: Omit<HistoryItem, "id">;
-        baseTimestamp?: number;
-    },
-    {
-        type?: string;
-        messageType?: string;
-        content?: string;
-    }
-]>;
 export declare function createcontext(config: Config, addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number): CommandContext;
-export declare function mockmcpAuth(cwd: string, argv: string[], args?: string): Promise<ReadableStream<{
-    type?: string;
-    messageType?: string;
-    content?: string;
-    itemData?: Omit<HistoryItem, "id">;
-    baseTimestamp?: number;
-}>>;
 //# sourceMappingURL=mock-mcp.d.ts.map

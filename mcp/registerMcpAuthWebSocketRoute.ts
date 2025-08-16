@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { mockmcpAuth } from "./mock-mcp.js";
+import { mockmcpAuth } from "./mockmcpAuth.js";
 import { validateMcpAuthData } from "./validateMcpAuthData.js";
 
 export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {

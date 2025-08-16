@@ -1,6 +1,6 @@
-import { mcprefreshRequestSchema, mcprefreshResponseSchema, } from "./mcprefreshRequestSchema.js";
-import { mockmcpRefresh } from "./mock-mcp.js";
 import * as z from "zod";
+import { mcprefreshRequestSchema, mcprefreshResponseSchema, } from "./mcprefreshRequestSchema.js";
+import { mockmcpRefresh } from "./mockmcpRefresh.js";
 export function registerMcprefreshRoute(fastify) {
     // 注册路由
     fastify.post("/command/mcp/refresh", {
