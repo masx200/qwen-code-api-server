@@ -1031,6 +1031,11 @@
                   "args"
                 ],
                 "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "cwd": "f:/home",
+                "argv": [],
+                "args": ""
               }
             }
           }
@@ -1055,27 +1060,49 @@
                     "content": {
                       "type": "string"
                     },
-                    "error": {
-                      "type": "string"
+                    "baseTimestamp": {
+                      "type": "integer"
                     },
-                    "message": {
-                      "type": "string"
+                    "itemData": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ],
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": [
+                        "type",
+                        "text"
+                      ]
                     }
                   },
                   "required": [
-                    "success"
+                    "success",
+                    "type",
+                    "messageType",
+                    "content",
+                    "baseTimestamp",
+                    "itemData"
                   ],
-                  "additionalProperties": false,
+                  "x-apifox-ignore-properties": [],
                   "x-apifox-orders": [
                     "success",
                     "type",
                     "messageType",
                     "content",
-                    "error",
-                    "message"
-                  ],
-                  "x-apifox-ignore-properties": []
-                }
+                    "baseTimestamp",
+                    "itemData"
+                  ]
+                },
+                "example": "{\r\n    \"success\": true,\r\n    \"type\": \"message\",\r\n    \"messageType\": \"info\",\r\n    \"content\":\"Configured MCP servers:\\n\\n🟢 \u001b[1mtavily\u001b[0m - Ready (4 tools)\\n\u001b[0m  \u001b[36mTools:\u001b[0m\\n  - \u001b[36mtavily_crawl\u001b[0m\\n  - \u001b[36mtavily_extract\u001b[0m\\n  - \u001b[36mtavily_map\u001b[0m\\n  - \u001b[36mtavily_search\u001b[0m\\n\\n\u001b[0m\",\r\n    \"baseTimestamp\": 1755315058913,\r\n    \"itemData\": {\r\n        \"type\": \"info\",\r\n        \"text\": \"Refreshing MCP servers and tools...\"\r\n    }\r\n}"
               }
             },
             "headers": {},

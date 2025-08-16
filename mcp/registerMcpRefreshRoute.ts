@@ -41,12 +41,12 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    }
+    },
   );
 }
 // console.log(zodtojsonSchema(mcprefreshRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
   );
 }
