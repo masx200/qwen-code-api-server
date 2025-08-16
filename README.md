@@ -65,19 +65,20 @@ npm test
 
 ### 接口列表
 
-| 端点                   | 方法   | 描述                   |
-| ---------------------- | ------ | ---------------------- |
-| `/command/about`       | POST   | 获取模型信息           |
-| `/command/quit`        | POST   | 调用quit命令并删除会话 |
-| `/command/mcp/list`    | POST   | 获取MCP服务器列表      |
-| `/command/mcp/refresh` | POST   | 刷新MCP服务器列表      |
-| `/command/stats`       | POST   | 获取统计信息           |
-| `/command/stats/model` | POST   | 获取模型统计信息       |
-| `/command/stats/tools` | POST   | 获取工具统计信息       |
-| `/sessions/create`     | POST   | 创建新会话             |
-| `/sessions/list`       | GET    | 获取会话列表           |
-| `/sessions/delete`     | DELETE | 删除会话               |
-| `/sessions/get`        | POST   | 获取指定会话信息       |
+| 端点                   | 方法      | 描述                                          |
+| ---------------------- | --------- | --------------------------------------------- |
+| `/command/about`       | POST      | 获取模型信息                                  |
+| `/command/quit`        | POST      | 调用 quit 命令并删除会话                      |
+| `/command/mcp/list`    | POST      | 获取 MCP 服务器列表                           |
+| `/command/mcp/refresh` | POST      | 刷新 MCP 服务器列表                           |
+| `/command/stats`       | POST      | 获取统计信息                                  |
+| `/command/stats/model` | POST      | 获取模型统计信息                              |
+| `/command/stats/tools` | POST      | 获取工具统计信息                              |
+| `/sessions/create`     | POST      | 创建新会话                                    |
+| `/sessions/list`       | GET       | 获取会话列表                                  |
+| `/sessions/delete`     | DELETE    | 删除会话                                      |
+| `/sessions/get`        | POST      | 获取指定会话信息                              |
+| `/command/mcp/auth`    | WEBSOCKET | Authenticate with an OAuth-enabled MCP server |
 
 ### 主要接口详情
 
@@ -111,7 +112,7 @@ npm test
 
 #### POST /command/quit
 
-调用quit命令并删除会话。
+调用 quit 命令并删除会话。
 
 **请求格式**:
 
@@ -123,7 +124,7 @@ npm test
 
 #### POST /command/mcp/list
 
-获取MCP服务器列表。
+获取 MCP 服务器列表。
 
 **请求格式**:
 
