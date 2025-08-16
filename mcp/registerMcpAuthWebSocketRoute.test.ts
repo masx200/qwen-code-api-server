@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { createId } from "../session/sessions.js";
 test("registerMcpAuthWebSocketRoute no args", async () => {
   return new Promise<void>((resolve, reject) => {
     const id = createId();
@@ -43,13 +44,6 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
       );
     };
   });
-
-  function createId() {
-    return Array(5)
-      .fill(undefined)
-      .map(() => Math.random().toString(36).substring(2))
-      .join("");
-  }
 });
 test("registerMcpAuthWebSocketRoute with args", async () => {
   return new Promise<void>((resolve, reject) => {
@@ -96,11 +90,4 @@ test("registerMcpAuthWebSocketRoute with args", async () => {
       );
     };
   });
-
-  function createId() {
-    return Array(5)
-      .fill(undefined)
-      .map(() => Math.random().toString(36).substring(2))
-      .join("");
-  }
 });

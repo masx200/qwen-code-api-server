@@ -4,7 +4,7 @@ export const sessions = new Map<string, SessionStatsState>();
 export function createId() {
   return Array(5)
     .fill(undefined)
-    .map(() => Math.random().toString(36).substring(2))
+    .map(() => Math.random().toString(36).substring(2).padStart(12, "0"))
     .join("");
 }
 export function createSession(): SessionStatsState {
