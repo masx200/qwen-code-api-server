@@ -15,6 +15,8 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
             args?: string;
             id?: string;
           };
+
+          console.log("websocket message,data=", data);
           const { cwd, argv, args, id } = data;
           if (!id) {
             socket.send(
@@ -70,6 +72,7 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
               }
             }
           } catch (error) {
+            console.error(error);
             socket.send(
               JSON.stringify({
                 id,

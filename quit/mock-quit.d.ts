@@ -1,14 +1,11 @@
 import type { SessionManager } from "../session/sessions.js";
-export declare function mockQuit(
-  sessionId: string,
-  sessionManager: SessionManager,
-): Promise<{
-  type: string;
-  messages: {
+export declare function mockQuit(sessionId: string, sessionManager: SessionManager): Promise<{
     type: string;
-    text?: string | undefined;
-    id: number;
-    duration?: undefined | string;
-  }[];
+    messages: {
+        type: string;
+        text?: string | undefined;
+        id: number;
+        duration?: undefined | string;
+    }[];
 }>;
 //# sourceMappingURL=mock-quit.d.ts.map

@@ -1,60 +1,60 @@
 export declare const aboutRequestSchema: {
-  type: string;
-  properties: {
-    model: {
-      type: string;
-      description: string;
+    type: string;
+    properties: {
+        model: {
+            type: string;
+            description: string;
+        };
     };
-  };
-  required: string[];
+    required: string[];
 };
 export declare const aboutResponseSchema: {
-  type: string;
-  properties: {
-    gitCommit: {
-      type: string;
-      description: string;
-    };
-    success: {
-      type: string;
-      description: string;
-    };
-    error: {
-      type: string;
-      description: string;
-    };
-    message: {
-      type: string;
-      description: string;
-    };
-    itemData: {
-      type: string;
-      description: string;
-      properties: {
-        type: {
-          type: string;
+    type: string;
+    properties: {
+        gitCommit: {
+            type: string;
+            description: string;
         };
-        cliVersion: {
-          type: string;
+        success: {
+            type: string;
+            description: string;
         };
-        osVersion: {
-          type: string;
+        error: {
+            type: string;
+            description: string;
         };
-        modelVersion: {
-          type: string;
+        message: {
+            type: string;
+            description: string;
         };
-        selectedAuthType: {
-          type: string;
+        itemData: {
+            type: string;
+            description: string;
+            properties: {
+                type: {
+                    type: string;
+                };
+                cliVersion: {
+                    type: string;
+                };
+                osVersion: {
+                    type: string;
+                };
+                modelVersion: {
+                    type: string;
+                };
+                selectedAuthType: {
+                    type: string;
+                };
+                gcpProject: {
+                    type: string;
+                };
+            };
         };
-        gcpProject: {
-          type: string;
+        baseTimestamp: {
+            type: string;
+            description: string;
         };
-      };
     };
-    baseTimestamp: {
-      type: string;
-      description: string;
-    };
-  };
 };
 //# sourceMappingURL=aboutRequestSchema.d.ts.map
