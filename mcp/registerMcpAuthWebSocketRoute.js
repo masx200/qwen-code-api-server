@@ -1,4 +1,5 @@
 import { mockmcpAuth } from "./mock-mcp.js";
+import { validateMcpAuthData } from "./validateMcpAuthData.js";
 export function registerMcpAuthWebSocketRoute(fastify) {
     // 注册WebSocket路由用于MCP认证
     fastify.register(async function (fastify) {
@@ -9,7 +10,7 @@ export function registerMcpAuthWebSocketRoute(fastify) {
                     // 解析客户端发送的消息
                     const data = JSON.parse(message.toString());
                     console.log("websocket message,data=", data);
-                    const { cwd, argv, args, id } = data;
+                    const { id } = data;
                     if (!id) {
                         socket.send(JSON.stringify({
                             type: "error",
@@ -19,6 +20,7 @@ export function registerMcpAuthWebSocketRoute(fastify) {
                         return;
                     }
                     try {
+                        const { cwd, argv, args, id } = validateMcpAuthData(data);
                         if (!cwd || !Array.isArray(argv)) {
                             socket.send(JSON.stringify({
                                 id: id,
