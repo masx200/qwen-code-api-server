@@ -63,7 +63,23 @@ npm test
 - **服务地址**: `http://localhost:3000`
 - **文档地址**: `http://localhost:3000/documentation`
 
-### 接口详情
+### 接口列表
+
+| 端点                   | 方法   | 描述                   |
+| ---------------------- | ------ | ---------------------- |
+| `/command/about`       | POST   | 获取模型信息           |
+| `/command/quit`        | POST   | 调用quit命令并删除会话 |
+| `/command/mcp/list`    | POST   | 获取MCP服务器列表      |
+| `/command/mcp/refresh` | POST   | 刷新MCP服务器列表      |
+| `/command/stats`       | POST   | 获取统计信息           |
+| `/command/stats/model` | POST   | 获取模型统计信息       |
+| `/command/stats/tools` | POST   | 获取工具统计信息       |
+| `/sessions/create`     | POST   | 创建新会话             |
+| `/sessions/list`       | GET    | 获取会话列表           |
+| `/sessions/delete`     | DELETE | 删除会话               |
+| `/sessions/get`        | POST   | 获取指定会话信息       |
+
+### 主要接口详情
 
 #### POST /command/about
 
@@ -93,14 +109,48 @@ npm test
 }
 ```
 
-**错误响应**:
+#### POST /command/quit
+
+调用quit命令并删除会话。
+
+**请求格式**:
 
 ```json
 {
-  "error": "Internal server error",
-  "message": "test error"
+  "sessionId": "session-123"
 }
 ```
+
+#### POST /command/mcp/list
+
+获取MCP服务器列表。
+
+**请求格式**:
+
+```json
+{
+  "cwd": "/path/to/workspace",
+  "argv": [],
+  "args": ""
+}
+```
+
+#### POST /sessions/create
+
+创建新会话。
+
+**请求格式**:
+
+```json
+{
+  "model": "qwen-coder",
+  "provider": "openai"
+}
+```
+
+#### GET /sessions/list
+
+获取所有会话列表。
 
 ### MCP 工具函数
 
