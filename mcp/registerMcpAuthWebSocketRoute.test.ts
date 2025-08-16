@@ -8,7 +8,7 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
       const data = JSON.parse(e.data);
       console.log(data);
       // ws.close();
-      if (data?.type === "close") {
+      if (data?.type === "close" || data?.type === "error") {
         ws.close();
         resolve();
       }
@@ -30,7 +30,7 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
           cwd: "f:/home",
           argv: [],
           args: "",
-        }),
+        })
       );
     };
   });
@@ -51,7 +51,7 @@ test("registerMcpAuthWebSocketRoute with args", async () => {
       const data = JSON.parse(e.data);
       console.log(data);
       // ws.close();
-      if (data?.type === "close") {
+      if (data?.type === "close" || data?.type === "error") {
         ws.close();
         resolve();
       }
@@ -73,7 +73,7 @@ test("registerMcpAuthWebSocketRoute with args", async () => {
           cwd: "f:/home",
           argv: [],
           args: "tavily",
-        }),
+        })
       );
     };
   });
