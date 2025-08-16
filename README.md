@@ -114,7 +114,7 @@ npm test
 async function mockmcpList(
   cwd: string,
   argv: string[],
-  args: string = ""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;

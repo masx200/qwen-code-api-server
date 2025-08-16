@@ -8,6 +8,7 @@ import { registerSessionRoute } from "./session/route-session.js";
 import { SessionManager } from "./session/sessions.js";
 import { start } from "./start.js";
 import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
+import { registerMcpListRoute } from "./mcp/registerMcpListRoute.js";
 async function main() {
   const fastify = Fastify({
     logger: {
@@ -25,7 +26,7 @@ async function main() {
 
   registerQuitRoute(fastify, sessionManager);
   registerSessionRoute(fastify, sessionManager);
-
+  registerMcpListRoute(fastify);
   await start(fastify).then(console.log, console.error);
   await fastify.ready().then(() => {
     console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
