@@ -9,7 +9,7 @@ describe("mockmcp refresh", () => {
     "应该返回 MCP 服务器列表",
     async () => {
       const result = await readStreamToArray(
-        await mockmcpRefresh(os.homedir(), [], "")
+        await mockmcpRefresh(os.homedir(), [], ""),
       );
       console.log(JSON.stringify(result, null, 4));
       expect(result[1]).toMatchObject({
@@ -27,8 +27,8 @@ describe("mockmcp refresh", () => {
           Object.keys(settings.mcpServers).length > 0
         ) {
           expect(
-              //@ts-ignore
-            result[1].content?.slice(0, "Configured MCP servers:".length)
+            //@ts-ignore
+            result[1].content?.slice(0, "Configured MCP servers:".length),
           ).toBe("Configured MCP servers:");
         } else {
           //@ts-ignore
@@ -39,7 +39,7 @@ describe("mockmcp refresh", () => {
             Object.keys(settings.mcpServers).length == 0
           ) {
             const message = "No MCP servers configured.";
-              //@ts-ignore
+            //@ts-ignore
             expect(result[1].content?.slice(0, message.length)).toBe(message);
           }
         }
@@ -49,6 +49,6 @@ describe("mockmcp refresh", () => {
     },
     {
       timeout: 10000,
-    }
+    },
   );
 });

@@ -8,7 +8,7 @@ import { createcontext } from "./mock-mcp.js";
 export async function mockmcpRefresh(
   cwd: string,
   argv: string[],
-  args: string = ""
+  args: string = "",
 ): Promise<
   ReadableStream<{
     type?: string;
@@ -18,8 +18,8 @@ export async function mockmcpRefresh(
     baseTimestamp?: number;
   }>
 > {
-    const refreshCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "refresh"
+  const refreshCommand = mcpCommand.subCommands?.find(
+    (command) => command.name === "refresh",
   );
   if (typeof refreshCommand?.action === "function") {
     return new ReadableStream<{
@@ -42,12 +42,12 @@ export async function mockmcpRefresh(
             result.baseTimestamp = baseTimestamp;
             controller.enqueue(result);
             return 0;
-          }
+          },
         ) as CommandContext;
         if (typeof refreshCommand?.action === "function") {
           const slashcommandactionreturn = await refreshCommand?.action(
             context,
-            args
+            args,
           );
           if (slashcommandactionreturn) {
             controller.enqueue(slashcommandactionreturn);

@@ -70,7 +70,7 @@ npm test
 | `/command/about`       | POST      | 获取模型信息                                  |
 | `/command/quit`        | POST      | 调用 quit 命令并删除会话                      |
 | `/command/mcp/list`    | POST      | 获取 MCP 服务器列表                           |
-| `/command/mcp/refresh` | WEBSOCKET      | 刷新 MCP 服务器列表                           |
+| `/command/mcp/refresh` | WEBSOCKET | 刷新 MCP 服务器列表                           |
 | `/command/stats`       | POST      | 获取统计信息                                  |
 | `/command/stats/model` | POST      | 获取模型统计信息                              |
 | `/command/stats/tools` | POST      | 获取工具统计信息                              |

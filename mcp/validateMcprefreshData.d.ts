@@ -1,9 +1,9 @@
 import { z } from "zod";
 declare const mcprefreshDataSchema: z.ZodObject<{
-    cwd: z.ZodString;
-    argv: z.ZodArray<z.ZodString>;
-    args: z.ZodString;
-    id: z.ZodString;
+  cwd: z.ZodString;
+  argv: z.ZodArray<z.ZodString>;
+  args: z.ZodString;
+  id: z.ZodString;
 }, z.core.$strip>;
 export type McprefreshData = z.infer<typeof mcprefreshDataSchema>;
 /**

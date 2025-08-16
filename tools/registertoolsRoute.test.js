@@ -1,78 +1,78 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import fastify from "fastify";
 import { registertoolsRoute } from "./registertoolsRoute.js";
 describe("POST /command/tools", () => {
-    let app;
-    beforeEach(async () => {
-        app = fastify();
-        registertoolsRoute(app);
-        await app.ready();
+  let app;
+  beforeEach(async () => {
+    app = fastify();
+    registertoolsRoute(app);
+    await app.ready();
+  });
+  afterEach(async () => {
+    await app.close();
+  });
+  it("should return tools information for valid request with desc args", async () => {
+    const requestBody = {
+      cwd: "f:/home",
+      argv: [],
+      args: "desc",
+    };
+    const response = await app.inject({
+      method: "POST",
+      url: "/command/tools",
+      payload: requestBody,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    afterEach(async () => {
-        await app.close();
+    expect(response.statusCode).toBe(200);
+    const responseBody = JSON.parse(response.body);
+    expect(responseBody.baseTimestamp).toBeDefined();
+    expect(typeof responseBody.baseTimestamp).toBe("number");
+    expect(responseBody.itemData.text).toBeDefined();
+    expect(responseBody).toMatchObject({
+      success: true,
+      itemData: {
+        type: "info",
+      },
     });
-    it("should return tools information for valid request with desc args", async () => {
-        const requestBody = {
-            cwd: "f:/home",
-            argv: [],
-            args: "desc",
-        };
-        const response = await app.inject({
-            method: "POST",
-            url: "/command/tools",
-            payload: requestBody,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        expect(response.statusCode).toBe(200);
-        const responseBody = JSON.parse(response.body);
-        expect(responseBody.baseTimestamp).toBeDefined();
-        expect(typeof responseBody.baseTimestamp).toBe("number");
-        expect(responseBody.itemData.text).toBeDefined();
-        expect(responseBody).toMatchObject({
-            success: true,
-            itemData: {
-                type: "info",
-            },
-        });
+  });
+  it("should handle invalid request body", async () => {
+    const invalidRequestBody = {
+      // 缺少必需的cwd字段
+      argv: [],
+      args: "desc",
+    };
+    const response = await app.inject({
+      method: "POST",
+      url: "/command/tools",
+      payload: invalidRequestBody,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    it("should handle invalid request body", async () => {
-        const invalidRequestBody = {
-            // 缺少必需的cwd字段
-            argv: [],
-            args: "desc",
-        };
-        const response = await app.inject({
-            method: "POST",
-            url: "/command/tools",
-            payload: invalidRequestBody,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(400);
+  });
+  it("should handle empty args parameter", async () => {
+    const requestBody = {
+      cwd: "f:/home",
+      argv: [],
+      args: "",
+    };
+    const response = await app.inject({
+      method: "POST",
+      url: "/command/tools",
+      payload: requestBody,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    it("should handle empty args parameter", async () => {
-        const requestBody = {
-            cwd: "f:/home",
-            argv: [],
-            args: "",
-        };
-        const response = await app.inject({
-            method: "POST",
-            url: "/command/tools",
-            payload: requestBody,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        expect(response.statusCode).toBe(200);
-        const responseBody = JSON.parse(response.body);
-        expect(responseBody.success).toBe(true);
-        expect(responseBody.itemData).toBeDefined();
-        expect(responseBody.itemData.type).toBe("info");
-        expect(typeof responseBody.itemData.text).toBe("string");
-    });
+    expect(response.statusCode).toBe(200);
+    const responseBody = JSON.parse(response.body);
+    expect(responseBody.success).toBe(true);
+    expect(responseBody.itemData).toBeDefined();
+    expect(responseBody.itemData.type).toBe("info");
+    expect(typeof responseBody.itemData.text).toBe("string");
+  });
 });
 //# sourceMappingURL=registertoolsRoute.test.js.map

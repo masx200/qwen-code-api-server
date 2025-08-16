@@ -8,7 +8,7 @@ import { createcontext } from "./mock-mcp.js";
 export async function mockmcpAuth(
   cwd: string,
   argv: string[],
-  args: string = ""
+  args: string = "",
 ): Promise<
   ReadableStream<{
     type?: string;
@@ -19,7 +19,7 @@ export async function mockmcpAuth(
   }>
 > {
   const authCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "auth"
+    (command) => command.name === "auth",
   );
   if (typeof authCommand?.action === "function") {
     return new ReadableStream<{
@@ -42,12 +42,12 @@ export async function mockmcpAuth(
             result.baseTimestamp = baseTimestamp;
             controller.enqueue(result);
             return 0;
-          }
+          },
         ) as CommandContext;
         if (typeof authCommand?.action === "function") {
           const slashcommandactionreturn = await authCommand?.action(
             context,
-            args
+            args,
           );
           if (slashcommandactionreturn) {
             controller.enqueue(slashcommandactionreturn);

@@ -50,6 +50,6 @@ export function registertoolsRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    }
+    },
   );
 }

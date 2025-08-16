@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import fastify from "fastify";
 import { registertoolsRoute } from "./registertoolsRoute.js";
 import type { FastifyInstance } from "fastify";
@@ -35,7 +35,7 @@ describe("POST /command/tools", () => {
     expect(response.statusCode).toBe(200);
     const responseBody = JSON.parse(response.body);
 
-    console.log(JSON.stringify(responseBody,null,4))
+    console.log(JSON.stringify(responseBody, null, 4));
     expect(responseBody.baseTimestamp).toBeDefined();
     expect(typeof responseBody.baseTimestamp).toBe("number");
     expect(responseBody.itemData.text).toBeDefined();
@@ -63,7 +63,7 @@ describe("POST /command/tools", () => {
       },
     });
 
-    console.log(JSON.stringify(response,null,4))
+    console.log(JSON.stringify(response, null, 4));
     expect(response.statusCode).toBe(400);
   });
 
@@ -86,7 +86,7 @@ describe("POST /command/tools", () => {
     expect(response.statusCode).toBe(200);
     const responseBody = JSON.parse(response.body);
 
-    console.log(JSON.stringify(responseBody,null,4))
+    console.log(JSON.stringify(responseBody, null, 4));
     expect(responseBody.success).toBe(true);
     expect(responseBody.itemData).toBeDefined();
     expect(responseBody.itemData.type).toBe("info");

@@ -9,7 +9,7 @@ import { creategeminiconfig } from "../mcp/gemini.js";
 export async function mocktools(
   cwd: string,
   argv: string[],
-  args: string = ""
+  args: string = "",
 ): Promise<{
   itemData?: Omit<HistoryItem, "id">;
   baseTimestamp?: number;
@@ -23,7 +23,7 @@ export async function mocktools(
       result.itemData = itemData;
       result.baseTimestamp = baseTimestamp;
       return 0;
-    }
+    },
   ) as CommandContext;
   if (typeof toolsCommand.action === "function") {
     await toolsCommand.action(context, args);
@@ -35,7 +35,7 @@ export async function mocktools(
 
 export function createcontext(
   config: Config,
-  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number
+  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number,
 ) {
   const context: CommandContext = {
     services: {
@@ -65,7 +65,7 @@ export function createcontext(
     ui: {
       addItem(
         itemData: Omit<HistoryItem, "id">,
-        baseTimestamp: number
+        baseTimestamp: number,
       ): number {
         return addItem(itemData, baseTimestamp);
       },

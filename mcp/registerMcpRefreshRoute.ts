@@ -24,7 +24,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
               JSON.stringify({
                 type: "error",
                 message: "Missing required parameters: id must be provided",
-              })
+              }),
             );
             socket.close();
             return;
@@ -38,7 +38,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
                   type: "error",
                   message:
                     "Missing required parameters: cwd and argv must be provided",
-                })
+                }),
               );
               //socket.close()
               return;
@@ -60,7 +60,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
                       id,
                       type: "close",
                       message: "mcp refresh process completed",
-                    })
+                    }),
                   );
                   break;
                 }
@@ -71,7 +71,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
                       id,
                       type: "data",
                       data: value,
-                    })
+                    }),
                   );
                 }
               }
@@ -84,7 +84,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
                   message: `Stream reading error: ${
                     error instanceof Error ? error.message : String(error)
                   }`,
-                })
+                }),
               );
             } finally {
               reader.releaseLock();
@@ -98,7 +98,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
                 message: `Server error: ${
                   error instanceof Error ? error.message : String(error)
                 }`,
-              })
+              }),
             );
 
             // 发送连接成功消息
@@ -108,7 +108,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
                 type: "close",
                 message:
                   "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
-              })
+              }),
             );
           }
         } catch (error) {
@@ -119,7 +119,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
               message: `Server error: ${
                 error instanceof Error ? error.message : String(error)
               }`,
-            })
+            }),
           );
 
           // 发送连接成功消息
@@ -128,7 +128,7 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
               type: "close",
               message:
                 "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
-            })
+            }),
           );
           socket.close();
         }
@@ -147,6 +147,6 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
 // console.log(zodtojsonSchema(mcprefreshRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
   );
 }
