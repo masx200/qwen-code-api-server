@@ -25,51 +25,67 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
                 message: "Missing required parameters: id must be provided",
               }),
             );
+            socket.close();
             return;
           }
-
-          if (!cwd || !Array.isArray(argv)) {
-            socket.send(
-              JSON.stringify({
-                id: id,
-                type: "error",
-                message:
-                  "Missing required parameters: cwd and argv must be provided",
-              }),
-            );
-            return;
-          }
-
-          // 调用mockmcpAuth函数获取可读流
-          const stream = await mockmcpAuth(cwd, argv, args || "");
-
-          // 读取流中的数据并发送给客户端
-          const reader = stream.getReader();
-
           try {
-            while (true) {
-              const { done, value } = await reader.read();
+            if (!cwd || !Array.isArray(argv)) {
+              socket.send(
+                JSON.stringify({
+                  id: id,
+                  type: "error",
+                  message:
+                    "Missing required parameters: cwd and argv must be provided",
+                }),
+              );
+              //socket.close()
+              return;
+            }
 
-              if (done) {
-                socket.send(
-                  JSON.stringify({
-                    id,
-                    type: "close",
-                    message: "Authentication process completed",
-                  }),
-                );
-                break;
-              }
+            // 调用mockmcpAuth函数获取可读流
+            const stream = await mockmcpAuth(cwd, argv, args || "");
 
-              if (value) {
-                socket.send(
-                  JSON.stringify({
-                    id,
-                    type: "data",
-                    data: value,
-                  }),
-                );
+            // 读取流中的数据并发送给客户端
+            const reader = stream.getReader();
+
+            try {
+              while (true) {
+                const { done, value } = await reader.read();
+
+                if (done) {
+                  socket.send(
+                    JSON.stringify({
+                      id,
+                      type: "close",
+                      message: "Authentication process completed",
+                    }),
+                  );
+                  break;
+                }
+
+                if (value) {
+                  socket.send(
+                    JSON.stringify({
+                      id,
+                      type: "data",
+                      data: value,
+                    }),
+                  );
+                }
               }
+            } catch (error) {
+              console.error(error);
+              socket.send(
+                JSON.stringify({
+                  id,
+                  type: "error",
+                  message: `Stream reading error: ${
+                    error instanceof Error ? error.message : String(error)
+                  }`,
+                }),
+              );
+            } finally {
+              reader.releaseLock();
             }
           } catch (error) {
             console.error(error);
@@ -77,13 +93,21 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
               JSON.stringify({
                 id,
                 type: "error",
-                message: `Stream reading error: ${
+                message: `Server error: ${
                   error instanceof Error ? error.message : String(error)
                 }`,
               }),
             );
-          } finally {
-            reader.releaseLock();
+
+            // 发送连接成功消息
+            socket.send(
+              JSON.stringify({
+                id,
+                type: "close",
+                message:
+                  "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start authentication.",
+              }),
+            );
           }
         } catch (error) {
           console.error(error);
@@ -95,6 +119,16 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
               }`,
             }),
           );
+
+          // 发送连接成功消息
+          socket.send(
+            JSON.stringify({
+              type: "close",
+              message:
+                "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start authentication.",
+            }),
+          );
+          socket.close();
         }
       });
 
@@ -105,15 +139,6 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
       socket.on("error", (error: any) => {
         console.error("WebSocket error:", error);
       });
-
-      // 发送连接成功消息
-      socket.send(
-        JSON.stringify({
-          type: "open",
-          message:
-            "WebSocket connection established. Send {cwd, argv, args,id} to start authentication.",
-        }),
-      );
     });
   });
 }

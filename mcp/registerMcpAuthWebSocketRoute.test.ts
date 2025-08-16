@@ -1,12 +1,14 @@
-import { test } from "vitest";
+import { expect, test } from "vitest";
 test("registerMcpAuthWebSocketRoute no args", async () => {
   return new Promise<void>((resolve, reject) => {
+    const id = createId();
     const ws = new WebSocket("http://127.0.0.1:3000/command/mcp/auth");
 
     ws.onmessage = function (e) {
       console.log(e);
       const data = JSON.parse(e.data);
       console.log(data);
+      expect(data.id).toEqual(id);
       // ws.close();
       if (data?.type === "close") {
         ws.close();
@@ -33,11 +35,11 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
       console.log(e);
       ws.send(
         JSON.stringify({
-          id: createId(),
+          id,
           cwd: "f:/home",
           argv: [],
           args: "",
-        })
+        }),
       );
     };
   });
@@ -51,12 +53,15 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
 });
 test("registerMcpAuthWebSocketRoute with args", async () => {
   return new Promise<void>((resolve, reject) => {
+    const id = createId();
     const ws = new WebSocket("http://127.0.0.1:3000/command/mcp/auth");
 
     ws.onmessage = function (e) {
       console.log(e);
       const data = JSON.parse(e.data);
       console.log(data);
+
+      expect(data.id).toEqual(id);
       // ws.close();
       if (data?.type === "close") {
         ws.close();
@@ -83,11 +88,11 @@ test("registerMcpAuthWebSocketRoute with args", async () => {
       console.log(e);
       ws.send(
         JSON.stringify({
-          id: createId(),
+          id,
           cwd: "f:/home",
           argv: [],
           args: "tavily",
-        })
+        }),
       );
     };
   });
