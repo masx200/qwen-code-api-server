@@ -8,9 +8,16 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
       const data = JSON.parse(e.data);
       console.log(data);
       // ws.close();
-      if (data?.type === "close" || data?.type === "error") {
+      if (data?.type === "close") {
         ws.close();
         resolve();
+        return;
+      }
+
+      if (data?.type === "error") {
+        ws.close();
+        reject(data);
+        return;
       }
     };
 
@@ -51,9 +58,16 @@ test("registerMcpAuthWebSocketRoute with args", async () => {
       const data = JSON.parse(e.data);
       console.log(data);
       // ws.close();
-      if (data?.type === "close" || data?.type === "error") {
+      if (data?.type === "close") {
         ws.close();
         resolve();
+        return;
+      }
+
+      if (data?.type === "error") {
+        ws.close();
+        reject(data);
+        return;
       }
     };
 
