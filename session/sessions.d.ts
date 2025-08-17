@@ -1,17 +1,17 @@
-import type { SessionStatsState } from "@qwen-code/qwen-code/dist/src/ui/contexts/SessionContext.js";
-export declare const sessions: Map<string, SessionStatsState>;
+import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 export declare function createId(): string;
-export declare function createSession(): SessionStatsState;
-export declare function deleteSession(sessionId: string): void;
-export declare function getSession(sessionId: string): SessionStatsState | undefined;
+export interface SessionContext {
+    session: CommandContext["session"];
+    services: CommandContext["services"];
+}
+export declare function createSession(cwd: string, argv: string[]): Promise<SessionContext>;
 export declare class SessionManager {
-    sessionShellAllowlist: Map<string, Set<string>>;
     createId(): string;
     listSessions(): string[];
-    createSession(): SessionStatsState;
-    sessions: Map<string, SessionStatsState>;
-    getSession(sessionId: string): SessionStatsState | undefined;
+    createSession(cwd: string, argv: string[]): Promise<SessionContext>;
+    sessions: Map<string, SessionContext>;
+    getSession(sessionId: string): SessionContext | undefined;
     deleteSession(sessionId: string): void;
-    setSession(sessionId: string, session: SessionStatsState): void;
+    setSession(sessionId: string, session: SessionContext): void;
 }
 //# sourceMappingURL=sessions.d.ts.map

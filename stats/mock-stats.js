@@ -1,19 +1,16 @@
 import { statsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/statsCommand.js";
 export async function mockStats(sessionId, sessionManager) {
+    const session = sessionManager.getSession(sessionId);
+    if (!session) {
+        throw new Error(`Session ${sessionId} not found`);
+    }
     const result = {};
     const context = {
         session: {
-            stats: sessionManager.sessions.get(sessionId),
-            sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
+            stats: session.session.stats,
+            sessionShellAllowlist: session.session.sessionShellAllowlist,
         },
-        services: {
-            settings: {
-                merged: {
-                    selectedAuthType: "openai",
-                },
-            },
-            config: {},
-        },
+        services: session.services,
         ui: {
             addItem(itemData, baseTimestamp) {
                 result.itemData = itemData;
@@ -30,20 +27,17 @@ export async function mockStats(sessionId, sessionManager) {
     return result;
 }
 export async function mockStatsModel(sessionId, sessionManager) {
+    const session = sessionManager.getSession(sessionId);
+    if (!session) {
+        throw new Error(`Session ${sessionId} not found`);
+    }
     const result = {};
     const context = {
         session: {
-            stats: sessionManager.sessions.get(sessionId),
-            sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
+            stats: session.session.stats,
+            sessionShellAllowlist: session.session.sessionShellAllowlist,
         },
-        services: {
-            settings: {
-                merged: {
-                    selectedAuthType: "openai",
-                },
-            },
-            config: {},
-        },
+        services: session.services,
         ui: {
             addItem(itemData, baseTimestamp) {
                 result.itemData = itemData;
@@ -61,20 +55,17 @@ export async function mockStatsModel(sessionId, sessionManager) {
     return result;
 }
 export async function mockStatsTools(sessionId, sessionManager) {
+    const session = sessionManager.getSession(sessionId);
+    if (!session) {
+        throw new Error(`Session ${sessionId} not found`);
+    }
     const result = {};
     const context = {
         session: {
-            stats: sessionManager.sessions.get(sessionId),
-            sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
+            stats: session.session.stats,
+            sessionShellAllowlist: session.session.sessionShellAllowlist,
         },
-        services: {
-            settings: {
-                merged: {
-                    selectedAuthType: "openai",
-                },
-            },
-            config: {},
-        },
+        services: session.services,
         ui: {
             addItem(itemData, baseTimestamp) {
                 result.itemData = itemData;

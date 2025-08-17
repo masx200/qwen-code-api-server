@@ -1,40 +1,49 @@
+import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { UiTelemetryService } from "@qwen-code/qwen-code-core/dist/src/telemetry/uiTelemetry.js";
-export const sessions = new Map();
+import { creategeminiconfig } from "../mcp/gemini.js";
 export function createId() {
     return Array(5)
         .fill(undefined)
         .map(() => Math.random().toString(36).substring(2).padStart(12, "0"))
         .join("");
 }
-export function createSession() {
+export async function createSession(cwd, argv) {
+    const sessionShellAllowlist = new Set();
+    const config = (await creategeminiconfig(cwd, argv));
     const uiTelemetryService = new UiTelemetryService();
     return {
-        sessionStartTime: new Date(),
-        get metrics() {
-            return uiTelemetryService.getMetrics();
+        session: {
+            stats: {
+                sessionStartTime: new Date(),
+                get metrics() {
+                    return uiTelemetryService.getMetrics();
+                },
+                get lastPromptTokenCount() {
+                    return uiTelemetryService.getLastPromptTokenCount();
+                },
+                promptCount: 0,
+            },
+            sessionShellAllowlist: sessionShellAllowlist,
         },
-        get lastPromptTokenCount() {
-            return uiTelemetryService.getLastPromptTokenCount();
+        services: {
+            settings: {
+                merged: {
+                    selectedAuthType: "openai",
+                },
+            },
+            config: config,
         },
-        promptCount: 0,
     };
 }
-export function deleteSession(sessionId) {
-    sessions.delete(sessionId);
-}
-export function getSession(sessionId) {
-    return sessions.get(sessionId);
-}
 export class SessionManager {
-    sessionShellAllowlist = new Map();
     createId() {
         return createId();
     }
     listSessions() {
         return Array.from(this.sessions.keys());
     }
-    createSession() {
-        return createSession();
+    createSession(cwd, argv) {
+        return createSession(cwd, argv);
     }
     sessions = new Map();
     getSession(sessionId) {
@@ -42,11 +51,9 @@ export class SessionManager {
     }
     deleteSession(sessionId) {
         this.sessions.delete(sessionId);
-        this.sessionShellAllowlist.delete(sessionId);
     }
     setSession(sessionId, session) {
         this.sessions.set(sessionId, session);
-        this.sessionShellAllowlist.set(sessionId, new Set());
     }
 }
 //# sourceMappingURL=sessions.js.map
