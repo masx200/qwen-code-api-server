@@ -11,10 +11,15 @@ import {
 } from "./getSessionRequestSchema.js";
 import { listSessionsResponseSchema } from "./listSessionsResponseSchema.js";
 import { createId, SessionManager } from "./sessions.js";
-
+import z from "zod";
+import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
+const createSessionRequestSchema = z.object({
+  cwd: z.string(),
+  argv: z.array(z.string()),
+});
 export function registerSessionRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ) {
   // 注册会话相关路由
   // 创建会话
@@ -24,6 +29,7 @@ export function registerSessionRoute(
       schema: {
         description: "创建新的会话",
         tags: ["sessions"],
+        request: zodtojsonSchema(createSessionRequestSchema),
 
         response: {
           200: createSessionResponseSchema,
@@ -34,18 +40,21 @@ export function registerSessionRoute(
     async (request, reply) => {
       try {
         let actualSessionId = createId();
-
-        const session = sessionManager.createSession();
+        const { cwd, argv } = request.body as z.infer<
+          typeof createSessionRequestSchema
+        >;
+        const session = await sessionManager.createSession(cwd, argv);
         sessionManager.setSession(actualSessionId, session);
         console.log(JSON.stringify(session, null, 4));
         reply.send({
           success: true,
           sessionId: actualSessionId,
           session: {
-            sessionStartTime: session.sessionStartTime.toISOString(),
-            promptCount: session.promptCount,
-            lastPromptTokenCount: session.lastPromptTokenCount,
-            metrics: session.metrics,
+            sessionStartTime:
+              session.session.stats.sessionStartTime.toISOString(),
+            promptCount: session.session.stats.promptCount,
+            lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
+            metrics: session.session.stats.metrics,
           },
         });
         return;
@@ -58,7 +67,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
   // 列出所有会话
   fastify.get(
@@ -89,7 +98,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
   // 删除会话
   fastify.delete(
@@ -134,7 +143,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
   // 获取会话详情
   fastify.post(
@@ -167,10 +176,11 @@ export function registerSessionRoute(
           success: true,
           sessionId,
           session: {
-            sessionStartTime: session.sessionStartTime.toISOString(),
-            promptCount: session.promptCount,
-            lastPromptTokenCount: session.lastPromptTokenCount,
-            metrics: session.metrics,
+            sessionStartTime:
+              session.session.stats.sessionStartTime.toISOString(),
+            promptCount: session.session.stats.promptCount,
+            lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
+            metrics: session.session.stats.metrics,
           },
         };
       } catch (error) {
@@ -182,6 +192,6 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
 }
