@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import * as z from "zod";
+import os from "os"
 import type { JSONSchema } from "zod/v4/core";
 import { validateMcprefreshData } from "./validateMcprefreshData.js";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
@@ -30,7 +31,9 @@ export function registerMcprefreshRoute(fastify: FastifyInstance) {
             return;
           }
           try {
-            const { cwd, argv, args, id } = validateMcprefreshData(data);
+            
+            let { cwd, argv, args, id } = validateMcprefreshData(data);
+         cwd=cwd.length?cwd:os.homedir()
             if (!cwd || !Array.isArray(argv)) {
               socket.send(
                 JSON.stringify({
