@@ -3,7 +3,7 @@
     "test": "vitest run",
     "dev": "nodemon index.js",
     "build": "tsc",
-    "start": "node index.js",
+    "start": "tsc && node index.js",
     "watch": "tsc --watch"
   },
   "name": "@masx200/qwen-code-api-server",

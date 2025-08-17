@@ -14,7 +14,8 @@ import { registerStatsModelRoute } from "./stats/registerStatsModelRoute.js";
 import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
 import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
 import { registertoolsRoute } from "./tools/registertoolsRoute.js";
-async function main() {
+import { authOptions, registerBasicAuthMiddleware, } from "./auth/basicAuthMiddleware.js";
+async function main(authOptions) {
     const fastify = Fastify({
         logger: {
             level: "info",
@@ -23,6 +24,10 @@ async function main() {
             },
         },
     });
+    if (authOptions.username && authOptions.password) {
+        // 注册基本身份验证中间件
+        await registerBasicAuthMiddleware(fastify, authOptions);
+    }
     await registerSwaggerPlugin(fastify);
     // 注册WebSocket支持
     await fastify.register(websocket);
@@ -45,9 +50,16 @@ async function main() {
         }
         console.log("listening address", address);
     }, 3000).then(console.log, console.error);
-    await fastify.ready().then(() => {
-        console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
+    await fastify.ready().then(async () => {
+        if (authOptions.document) {
+            console.log("swagger document path", authOptions.document);
+            await fs.promises.writeFile(authOptions.document, JSON.stringify(fastify.swagger(), null, 4));
+        }
+        else {
+            console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
+        }
     }, console.error);
 }
-await main().then(console.log, console.error);
+await main(authOptions).then(console.log, console.error);
+import fs from "fs";
 //# sourceMappingURL=index.js.map

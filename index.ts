@@ -19,7 +19,12 @@ import { registerStatsModelRoute } from "./stats/registerStatsModelRoute.js";
 import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
 import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
 import { registertoolsRoute } from "./tools/registertoolsRoute.js";
-async function main() {
+import {
+  authOptions,
+  registerBasicAuthMiddleware,
+  type AuthOptions,
+} from "./auth/basicAuthMiddleware.js";
+async function main(authOptions: AuthOptions) {
   const fastify = Fastify({
     logger: {
       level: "info",
@@ -28,6 +33,10 @@ async function main() {
       },
     },
   });
+  if (authOptions.username && authOptions.password) {
+    // 注册基本身份验证中间件
+    await registerBasicAuthMiddleware(fastify, authOptions);
+  }
 
   await registerSwaggerPlugin(fastify);
 
@@ -60,8 +69,20 @@ async function main() {
     },
     3000
   ).then(console.log, console.error);
-  await fastify.ready().then(() => {
-    console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
+  await fastify.ready().then(async () => {
+    if (authOptions.document) {
+      console.log("swagger document path", authOptions.document);
+      await fs.promises.writeFile(
+        authOptions.document,
+        JSON.stringify(fastify.swagger(), null, 4)
+      );
+    } else {
+      console.log(
+        "swagger document",
+        JSON.stringify(fastify.swagger(), null, 4)
+      );
+    }
   }, console.error);
 }
-await main().then(console.log, console.error);
+await main(authOptions).then(console.log, console.error);
+import fs from "fs";
