@@ -70,11 +70,12 @@ export function registerMcpRoute(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        const { cwd, argv, args } = request.body as {
+        let { cwd, argv, args } = request.body as {
           cwd: string;
           argv: string[];
           args: string;
         };
+        cwd=cwd.length?cwd:os.homedir()
         const result = await mockmcp(cwd, argv, args);
         return { ...result, success: true };
       } catch (error) {
