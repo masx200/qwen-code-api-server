@@ -9,24 +9,19 @@ import type { SessionManager } from "../session/sessions.js";
 
 export async function mockStats(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
+  const session = sessionManager.getSession(sessionId);
+  if (!session) {
+    throw new Error(`Session ${sessionId} not found`);
+  }
   const result: { itemData?: HistoryItemStats; baseTimestamp?: number } = {};
   const context: CommandContext = {
     session: {
-      stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
-        sessionId,
-      ),
+      stats: session.session.stats,
+      sessionShellAllowlist: session.session.sessionShellAllowlist,
     },
-    services: {
-      settings: {
-        merged: {
-          selectedAuthType: "openai",
-        },
-      },
-      config: {},
-    },
+    services: session.services,
     ui: {
       addItem(itemData: HistoryItemStats, baseTimestamp): void {
         result.itemData = itemData as HistoryItemStats;
@@ -44,25 +39,20 @@ export async function mockStats(
 
 export async function mockStatsModel(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{ itemData?: HistoryItemModelStats; baseTimestamp?: number }> {
+  const session = sessionManager.getSession(sessionId);
+  if (!session) {
+    throw new Error(`Session ${sessionId} not found`);
+  }
   const result: { itemData?: HistoryItemModelStats; baseTimestamp?: number } =
     {};
   const context: CommandContext = {
     session: {
-      stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
-        sessionId,
-      ),
+      stats: session.session.stats,
+      sessionShellAllowlist: session.session.sessionShellAllowlist,
     },
-    services: {
-      settings: {
-        merged: {
-          selectedAuthType: "openai",
-        },
-      },
-      config: {},
-    },
+    services: session.services,
     ui: {
       addItem(itemData: HistoryItemModelStats, baseTimestamp): void {
         result.itemData = itemData as HistoryItemModelStats;
@@ -71,7 +61,7 @@ export async function mockStatsModel(
     },
   } as CommandContext;
   const modelCommand = statsCommand.subCommands?.find(
-    (command) => command.name === "model",
+    (command) => command.name === "model"
   );
   if (typeof modelCommand?.action === "function") {
     await modelCommand.action(context, "");
@@ -83,25 +73,20 @@ export async function mockStatsModel(
 
 export async function mockStatsTools(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{ itemData?: HistoryItemToolStats; baseTimestamp?: number }> {
+  const session = sessionManager.getSession(sessionId);
+  if (!session) {
+    throw new Error(`Session ${sessionId} not found`);
+  }
   const result: { itemData?: HistoryItemToolStats; baseTimestamp?: number } =
     {};
   const context: CommandContext = {
     session: {
-      stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
-        sessionId,
-      ),
+      stats: session.session.stats,
+      sessionShellAllowlist: session.session.sessionShellAllowlist,
     },
-    services: {
-      settings: {
-        merged: {
-          selectedAuthType: "openai",
-        },
-      },
-      config: {},
-    },
+    services: session.services,
     ui: {
       addItem(itemData: HistoryItemToolStats, baseTimestamp): void {
         result.itemData = itemData as HistoryItemToolStats;
@@ -110,7 +95,7 @@ export async function mockStatsTools(
     },
   } as CommandContext;
   const toolsCommand = statsCommand.subCommands?.find(
-    (command) => command.name === "tools",
+    (command) => command.name === "tools"
   );
   if (typeof toolsCommand?.action === "function") {
     await toolsCommand.action(context, "");

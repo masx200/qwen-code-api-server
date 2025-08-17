@@ -1,53 +1,70 @@
-import type { SessionStatsState } from "@qwen-code/qwen-code/dist/src/ui/contexts/SessionContext.js";
+import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { UiTelemetryService } from "@qwen-code/qwen-code-core/dist/src/telemetry/uiTelemetry.js";
-export const sessions = new Map<string, SessionStatsState>();
+import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
+import { creategeminiconfig } from "../mcp/gemini.js";
+
 export function createId() {
   return Array(5)
     .fill(undefined)
     .map(() => Math.random().toString(36).substring(2).padStart(12, "0"))
     .join("");
 }
-export function createSession(): SessionStatsState {
+export interface SessionContext {
+  session: CommandContext["session"];
+  services: CommandContext["services"];
+}
+export async function createSession(
+  cwd: string,
+  argv: string[]
+): Promise<SessionContext> {
+  const sessionShellAllowlist = new Set<string>();
+  const config = (await creategeminiconfig(cwd, argv)) as Config;
   const uiTelemetryService = new UiTelemetryService();
-  return {
-    sessionStartTime: new Date(),
 
-    get metrics() {
-      return uiTelemetryService.getMetrics();
+  return {
+    session: {
+      stats: {
+        sessionStartTime: new Date(),
+
+        get metrics() {
+          return uiTelemetryService.getMetrics();
+        },
+        get lastPromptTokenCount() {
+          return uiTelemetryService.getLastPromptTokenCount();
+        },
+        promptCount: 0,
+      },
+      sessionShellAllowlist: sessionShellAllowlist,
     },
-    get lastPromptTokenCount() {
-      return uiTelemetryService.getLastPromptTokenCount();
+    services: {
+      settings: {
+        merged: {
+          selectedAuthType: "openai",
+        },
+      },
+      config: config,
     },
-    promptCount: 0,
-  };
+  } as SessionContext;
 }
-export function deleteSession(sessionId: string) {
-  sessions.delete(sessionId);
-}
-export function getSession(sessionId: string) {
-  return sessions.get(sessionId);
-}
+
 export class SessionManager {
-  sessionShellAllowlist = new Map<string, Set<string>>();
   createId() {
     return createId();
   }
   listSessions() {
     return Array.from(this.sessions.keys());
   }
-  createSession() {
-    return createSession();
+  createSession(cwd: string, argv: string[]): Promise<SessionContext> {
+    return createSession(cwd, argv);
   }
-  sessions = new Map<string, SessionStatsState>();
-  getSession(sessionId: string) {
+  sessions = new Map<string, SessionContext>();
+  getSession(sessionId: string): SessionContext | undefined {
     return this.sessions.get(sessionId);
   }
   deleteSession(sessionId: string) {
     this.sessions.delete(sessionId);
-    this.sessionShellAllowlist.delete(sessionId);
   }
-  setSession(sessionId: string, session: SessionStatsState) {
+  setSession(sessionId: string, session: SessionContext) {
     this.sessions.set(sessionId, session);
-    this.sessionShellAllowlist.set(sessionId, new Set());
   }
 }
