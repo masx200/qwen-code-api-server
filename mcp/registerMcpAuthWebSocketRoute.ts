@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { mockmcpAuth } from "./mockmcpAuth.js";
 import { validateMcpAuthData } from "./validateMcpAuthData.js";
-
+import os from "os"
 export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
   // 注册WebSocket路由用于MCP认证
   fastify.register(async function (fastify) {
@@ -30,7 +30,8 @@ export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
             return;
           }
           try {
-            const { cwd, argv, args, id } = validateMcpAuthData(data);
+            let { cwd, argv, args, id } = validateMcpAuthData(data);
+            cwd=cwd.length?cwd:os.homedir()
             if (!cwd || !Array.isArray(argv)) {
               socket.send(
                 JSON.stringify({
