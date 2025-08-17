@@ -2,26 +2,22 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { SessionManager } from "../session/sessions.js";
 import type { HistoryItemModelStats } from "@qwen-code/qwen-code/dist/src/ui/types.js";
 import { mockStats, mockStatsModel, mockStatsTools } from "./mock-stats.js";
-
+import os from "node:os";
 // 创建不依赖statsCommand的测试版本
 
-describe("MockStats Functions - Refactored Tests (No statsCommand)", () => {
+describe("MockStats Functions - Refactored Tests (No statsCommand)", async () => {
   let mockSessionManager: SessionManager;
   const mockSessionId = "test-session-123";
 
-  beforeEach(() => {
+  beforeEach(async () => {
     // 创建模拟的SessionManager
     mockSessionManager = new SessionManager();
-
+    const cwd = os.homedir();
+    const argv: string[] = [];
     // 添加测试数据
     mockSessionManager.sessions.set(
       mockSessionId,
-      mockSessionManager.createSession(),
-    );
-
-    mockSessionManager.sessionShellAllowlist.set(
-      mockSessionId,
-      new Set(["bash", "node", "python"]),
+      await mockSessionManager.createSession(cwd, argv)
     );
   });
 

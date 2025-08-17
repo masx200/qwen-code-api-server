@@ -1,15 +1,17 @@
 import { describe, expect, test } from "vitest";
 import { mockQuit } from "./mock-quit.js";
 import { SessionManager } from "../session/sessions.js";
+import os from "node:os";
 describe("mockQuit", () => {
     test("should return expected structure when quitCommand.action is a function", async () => {
         // Setup mock session manager
         const sessionManager = new SessionManager();
         const sessionId = sessionManager.createId();
+        const cwd = os.homedir();
+        const argv = [];
         // Create a mock session
-        const mockSession = sessionManager.createSession();
+        const mockSession = await sessionManager.createSession(cwd, argv);
         sessionManager.sessions.set(sessionId, mockSession);
-        sessionManager.sessionShellAllowlist.set(sessionId, new Set(["bash", "node"]));
         // Mock the quitCommand.action response
         // Execute the function
         const result = await mockQuit(sessionId, sessionManager);

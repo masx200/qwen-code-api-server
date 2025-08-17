@@ -7,7 +7,7 @@ import type { SessionManager } from "../session/sessions.js";
 
 export async function mockQuit(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{
   type: string;
   messages: {
@@ -17,12 +17,14 @@ export async function mockQuit(
     duration?: undefined | string;
   }[];
 }> {
+  const session = sessionManager.sessions.get(sessionId);
+  if (!session) {
+    throw new Error("Session not found");
+  }
   const context: CommandContext = {
     session: {
-      stats: sessionManager.sessions.get(sessionId),
-      sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(
-        sessionId,
-      ),
+      stats: session.session.stats,
+      sessionShellAllowlist: session.session.sessionShellAllowlist,
     },
     services: {
       settings: {
@@ -30,7 +32,7 @@ export async function mockQuit(
           selectedAuthType: "openai",
         },
       },
-      config: {},
+      config: session.services.config,
     },
     ui: {},
   } as CommandContext;

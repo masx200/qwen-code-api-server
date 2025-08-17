@@ -1,9 +1,13 @@
 import { quitCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/quitCommand.js";
 export async function mockQuit(sessionId, sessionManager) {
+    const session = sessionManager.sessions.get(sessionId);
+    if (!session) {
+        throw new Error("Session not found");
+    }
     const context = {
         session: {
-            stats: sessionManager.sessions.get(sessionId),
-            sessionShellAllowlist: sessionManager.sessionShellAllowlist.get(sessionId),
+            stats: session.session.stats,
+            sessionShellAllowlist: session.session.sessionShellAllowlist,
         },
         services: {
             settings: {
@@ -11,7 +15,7 @@ export async function mockQuit(sessionId, sessionManager) {
                     selectedAuthType: "openai",
                 },
             },
-            config: {},
+            config: session.services.config,
         },
         ui: {},
     };

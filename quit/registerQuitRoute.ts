@@ -46,10 +46,10 @@ export function registerQuitRoute(
 
         // 保存会话统计信息
         const sessionStats = {
-          sessionStartTime: session.sessionStartTime.toISOString(),
-          promptCount: session.promptCount,
-          lastPromptTokenCount: session.lastPromptTokenCount,
-          metrics: session.metrics,
+          sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
+          promptCount: session.session.stats.promptCount,
+          lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
+          metrics: session.session.stats.metrics,
         };
 
         // 删除会话

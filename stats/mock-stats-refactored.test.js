@@ -1,16 +1,18 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { SessionManager } from "../session/sessions.js";
 import { mockStats, mockStatsModel, mockStatsTools } from "./mock-stats.js";
+import os from "node:os";
 // 创建不依赖statsCommand的测试版本
-describe("MockStats Functions - Refactored Tests (No statsCommand)", () => {
+describe("MockStats Functions - Refactored Tests (No statsCommand)", async () => {
     let mockSessionManager;
     const mockSessionId = "test-session-123";
-    beforeEach(() => {
+    beforeEach(async () => {
         // 创建模拟的SessionManager
         mockSessionManager = new SessionManager();
+        const cwd = os.homedir();
+        const argv = [];
         // 添加测试数据
-        mockSessionManager.sessions.set(mockSessionId, mockSessionManager.createSession());
-        mockSessionManager.sessionShellAllowlist.set(mockSessionId, new Set(["bash", "node", "python"]));
+        mockSessionManager.sessions.set(mockSessionId, await mockSessionManager.createSession(cwd, argv));
     });
     describe("createMockStats (mockStats equivalent)", () => {
         it("should return correct structure with default mock data", async () => {
