@@ -638,6 +638,32 @@
                     "sessions"
                 ],
                 "description": "创建新的会话",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cwd": {
+                                        "type": "string"
+                                    },
+                                    "argv": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "cwd",
+                                    "argv"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "required": true
+                },
                 "responses": {
                     "200": {
                         "description": "Default Response",

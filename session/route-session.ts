@@ -29,7 +29,7 @@ export function registerSessionRoute(
       schema: {
         description: "创建新的会话",
         tags: ["sessions"],
-        request: zodtojsonSchema(createSessionRequestSchema),
+        body: zodtojsonSchema(createSessionRequestSchema),
 
         response: {
           200: createSessionResponseSchema,
