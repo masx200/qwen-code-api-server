@@ -1,4 +1,6 @@
 import type { FastifyInstance } from "fastify";
+
+import os from "os"
 import {
   mcpListRequestSchema,
   mcpListResponseSchema,
@@ -25,11 +27,12 @@ export function registerMcpListRoute(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        const { cwd, argv, args } = request.body as {
+        let { cwd, argv, args } = request.body as {
           cwd: string;
           argv: string[];
           args: string;
         };
+        cwd=cwd.length?cwd:os.homedir()
         const result = await mockmcpList(cwd, argv, args);
         return { ...result, success: true };
       } catch (error) {
