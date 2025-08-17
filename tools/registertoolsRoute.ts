@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
 import { mocktools } from "./mock-tools.js";
 import z from "zod";
-import os from "os"
+import os from "os";
 const toolsRequestSchema = z.object({
   cwd: z.string(),
   argv: z.array(z.string()),
@@ -40,7 +40,7 @@ export function registertoolsRoute(fastify: FastifyInstance) {
           argv: string[];
           args: string;
         };
-        cwd=cwd.length?cwd:os.homedir()
+        cwd = cwd.length ? cwd : os.homedir();
         const result = await mocktools(cwd, argv, args);
         return { ...result, success: true };
       } catch (error) {

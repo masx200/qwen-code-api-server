@@ -47,11 +47,11 @@ export function registerStatsToolsRoute(
 
         // 保存会话统计信息
         const sessionStats = {
-          sessionStartTime:
-              session.session.stats.sessionStartTime.toISOString(),
-            promptCount: session.session.stats.promptCount,
-            lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
-            metrics: session.session.stats.metrics,
+          sessionStartTime: session.session.stats.sessionStartTime
+            .toISOString(),
+          promptCount: session.session.stats.promptCount,
+          lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
+          metrics: session.session.stats.metrics,
         };
 
         return {

@@ -15,7 +15,7 @@ export interface SessionContext {
 }
 export async function createSession(
   cwd: string,
-  argv: string[]
+  argv: string[],
 ): Promise<SessionContext> {
   const sessionShellAllowlist = new Set<string>();
   const config = (await creategeminiconfig(cwd, argv)) as Config;

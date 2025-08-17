@@ -43,7 +43,7 @@ test(
             }
             console.log("listening", address);
           },
-          port
+          port,
         );
 
         await fastify.ready();
@@ -86,7 +86,7 @@ test(
               cwd: "f:/home",
               argv: [],
               args: "tavily",
-            })
+            }),
           );
         };
       });
@@ -96,5 +96,5 @@ test(
       });
     }
   },
-  { timeout: 30000 }
+  { timeout: 30000 },
 );

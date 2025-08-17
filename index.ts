@@ -20,9 +20,9 @@ import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
 import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
 import { registertoolsRoute } from "./tools/registertoolsRoute.js";
 import {
+  type AuthOptions,
   authOptions,
   registerBasicAuthMiddleware,
-  type AuthOptions,
 } from "./auth/basicAuthMiddleware.js";
 async function main(authOptions: AuthOptions) {
   const fastify = Fastify({
@@ -67,19 +67,19 @@ async function main(authOptions: AuthOptions) {
       }
       console.log("listening address", address);
     },
-    3000
+    3000,
   ).then(console.log, console.error);
   await fastify.ready().then(async () => {
     if (authOptions.document) {
       console.log("swagger document path", authOptions.document);
       await fs.promises.writeFile(
         authOptions.document,
-        JSON.stringify(fastify.swagger(), null, 4)
+        JSON.stringify(fastify.swagger(), null, 4),
       );
     } else {
       console.log(
         "swagger document",
-        JSON.stringify(fastify.swagger(), null, 4)
+        JSON.stringify(fastify.swagger(), null, 4),
       );
     }
   }, console.error);

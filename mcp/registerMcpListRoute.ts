@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 
-import os from "os"
+import os from "os";
 import {
   mcpListRequestSchema,
   mcpListResponseSchema,
@@ -32,7 +32,7 @@ export function registerMcpListRoute(fastify: FastifyInstance) {
           argv: string[];
           args: string;
         };
-        cwd=cwd.length?cwd:os.homedir()
+        cwd = cwd.length ? cwd : os.homedir();
         const result = await mockmcpList(cwd, argv, args);
         return { ...result, success: true };
       } catch (error) {
@@ -75,7 +75,7 @@ export function registerMcpRoute(fastify: FastifyInstance) {
           argv: string[];
           args: string;
         };
-        cwd=cwd.length?cwd:os.homedir()
+        cwd = cwd.length ? cwd : os.homedir();
         const result = await mockmcp(cwd, argv, args);
         return { ...result, success: true };
       } catch (error) {

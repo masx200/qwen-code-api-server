@@ -13,7 +13,6 @@ describe("mockQuit", () => {
     const mockSession = await sessionManager.createSession(cwd, argv);
 
     sessionManager.sessions.set(sessionId, mockSession);
-   
 
     // Mock the quitCommand.action response
 

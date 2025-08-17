@@ -16,39 +16,42 @@ describe("POST /command/tools", () => {
     await app.close();
   });
 
-  it("should return tools information for valid request with desc args", async () => {
-    const requestBody = {
-      cwd: "f:/home",
-      argv: [],
-      args: "desc",
-    };
+  it(
+    "should return tools information for valid request with desc args",
+    async () => {
+      const requestBody = {
+        cwd: "f:/home",
+        argv: [],
+        args: "desc",
+      };
 
-    const response = await app.inject({
-      method: "POST",
-      url: "/command/tools",
-      payload: requestBody,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await app.inject({
+        method: "POST",
+        url: "/command/tools",
+        payload: requestBody,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    expect(response.statusCode).toBe(200);
-    const responseBody = JSON.parse(response.body);
+      expect(response.statusCode).toBe(200);
+      const responseBody = JSON.parse(response.body);
 
-    console.log(JSON.stringify(responseBody, null, 4));
-    expect(responseBody.baseTimestamp).toBeDefined();
-    expect(typeof responseBody.baseTimestamp).toBe("number");
-    expect(responseBody.itemData.text).toBeDefined();
-    expect(responseBody).toMatchObject({
-      success: true,
-      itemData: {
-        type: "info",
-      },
-    });
-  },{
-
-    timeout:20000
-  });
+      console.log(JSON.stringify(responseBody, null, 4));
+      expect(responseBody.baseTimestamp).toBeDefined();
+      expect(typeof responseBody.baseTimestamp).toBe("number");
+      expect(responseBody.itemData.text).toBeDefined();
+      expect(responseBody).toMatchObject({
+        success: true,
+        itemData: {
+          type: "info",
+        },
+      });
+    },
+    {
+      timeout: 20000,
+    },
+  );
 
   it("should handle invalid request body", async () => {
     const invalidRequestBody = {

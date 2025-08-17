@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 export interface AuthOptions {
@@ -60,7 +60,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
         });
       }
       const credentials = Buffer.from(base64Credentials, "base64").toString(
-        "ascii"
+        "ascii",
       );
       const [username, password] = credentials.split(":");
 
@@ -88,7 +88,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
 // 注册中间件的函数
 export async function registerBasicAuthMiddleware(
   fastify: FastifyInstance,
-  options?: AuthOptions
+  options?: AuthOptions,
 ) {
   const authConfig = options || authOptions;
 
@@ -97,7 +97,7 @@ export async function registerBasicAuthMiddleware(
 
   console.log(
     `Basic auth middleware registered with username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
-      `and password : ${authConfig.password}`
+      `and password : ${authConfig.password}`,
   );
 }
 
