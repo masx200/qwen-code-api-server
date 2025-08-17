@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-
+import os from "os"
 import { createSessionResponseSchema } from "./createSessionRequestSchema.js";
 import {
   deleteSessionRequestSchema,
@@ -40,9 +40,10 @@ export function registerSessionRoute(
     async (request, reply) => {
       try {
         let actualSessionId = createId();
-        const { cwd, argv } = request.body as z.infer<
+        let { cwd, argv } = request.body as z.infer<
           typeof createSessionRequestSchema
         >;
+        cwd=cwd.length?cwd:os.homedir()
         const session = await sessionManager.createSession(cwd, argv);
         sessionManager.setSession(actualSessionId, session);
         console.log(JSON.stringify(session, null, 4));
