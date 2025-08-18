@@ -15,7 +15,7 @@ import {
   registerMcpListRoute,
   registerMcpRoute,
 } from "./mcp/registerMcpListRoute.js";
-import { registerMcprefreshRoute } from "./mcp/registerMcpRefreshRoute.js";
+import { registerMcprefreshRouteWebSocket } from "./mcp/registerMcpRefreshRoute.js";
 import { registerQuitRoute } from "./quit/registerQuitRoute.js";
 import { SessionManager } from "./session/SessionManager.js";
 import { registerSessionRoute } from "./session/route-session.js";
@@ -50,15 +50,15 @@ async function main(authOptions: AuthOptions) {
 
   registerQuitRoute(fastify, sessionManager);
   registerSessionRoute(fastify, sessionManager);
-  registerMcpListRoute(fastify,sessionManager);
-  registerMcprefreshRoute(fastify,sessionManager);
+  registerMcpListRoute(fastify, sessionManager);
+  registerMcprefreshRouteWebSocket(fastify, sessionManager);
   registerStatsRoute(fastify, sessionManager);
   registerStatsModelRoute(fastify, sessionManager);
   registerStatsToolsRoute(fastify, sessionManager);
-  registerMcpAuthWebSocketRoute(fastify,sessionManager);
-  registerMcpRoute(fastify,sessionManager);
+  registerMcpAuthWebSocketRoute(fastify, sessionManager);
+  registerMcpRoute(fastify, sessionManager);
 
-  registertoolsRoute(fastify,sessionManager);
+  registertoolsRoute(fastify, sessionManager);
   await start(
     fastify,
     (err, address) => {

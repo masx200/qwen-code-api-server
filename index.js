@@ -5,7 +5,7 @@ import { registerAboutRoute } from "./about/registerAboutRoute.js";
 import { authOptions, registerBasicAuthMiddleware, } from "./auth/basicAuthMiddleware.js";
 import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
 import { registerMcpListRoute, registerMcpRoute, } from "./mcp/registerMcpListRoute.js";
-import { registerMcprefreshRoute } from "./mcp/registerMcpRefreshRoute.js";
+import { registerMcprefreshRouteWebSocket } from "./mcp/registerMcpRefreshRoute.js";
 import { registerQuitRoute } from "./quit/registerQuitRoute.js";
 import { SessionManager } from "./session/SessionManager.js";
 import { registerSessionRoute } from "./session/route-session.js";
@@ -34,7 +34,7 @@ async function main(authOptions) {
     registerQuitRoute(fastify, sessionManager);
     registerSessionRoute(fastify, sessionManager);
     registerMcpListRoute(fastify, sessionManager);
-    registerMcprefreshRoute(fastify, sessionManager);
+    registerMcprefreshRouteWebSocket(fastify, sessionManager);
     registerStatsRoute(fastify, sessionManager);
     registerStatsModelRoute(fastify, sessionManager);
     registerStatsToolsRoute(fastify, sessionManager);

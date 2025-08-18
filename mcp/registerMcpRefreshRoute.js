@@ -1,8 +1,7 @@
 import * as z from "zod";
-import os from "os";
-import { validateMcprefreshData } from "./validateMcprefreshData.js";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
-export function registerMcprefreshRoute(fastify) {
+import { validateMcprefreshData, } from "./validateMcprefreshData.js";
+export function registerMcprefreshRouteWebSocket(fastify, sessionManager) {
     fastify.register(async function (fastify) {
         fastify.get("/command/mcp/refresh", { websocket: true }, (socket, req) => {
             console.log("websocket open,url=", req.url);
@@ -10,34 +9,25 @@ export function registerMcprefreshRoute(fastify) {
                 try {
                     const data = JSON.parse(message.toString());
                     console.log("websocket message,data=", data);
-                    const { id } = data;
-                    if (!id) {
+                    const { sessionId } = data;
+                    if (!sessionId) {
                         socket.send(JSON.stringify({
                             type: "error",
-                            message: "Missing required parameters: id must be provided",
+                            message: "Missing required parameters: sessionId must be provided",
                         }));
                         socket.close();
                         return;
                     }
                     try {
-                        let { cwd, argv, args, id } = validateMcprefreshData(data);
-                        cwd = cwd.length ? cwd : os.homedir();
-                        if (!cwd || !Array.isArray(argv)) {
-                            socket.send(JSON.stringify({
-                                id: id,
-                                type: "error",
-                                message: "Missing required parameters: cwd and argv must be provided",
-                            }));
-                            return;
-                        }
-                        const stream = await mockmcpRefresh(cwd, argv, args || "");
+                        let { args, sessionId } = validateMcprefreshData(data);
+                        const stream = await mockmcpRefresh(sessionId, sessionManager, args || "");
                         const reader = stream.getReader();
                         try {
                             while (true) {
                                 const { done, value } = await reader.read();
                                 if (done) {
                                     socket.send(JSON.stringify({
-                                        id,
+                                        sessionId,
                                         type: "close",
                                         message: "mcp refresh process completed",
                                     }));
@@ -45,7 +35,7 @@ export function registerMcprefreshRoute(fastify) {
                                 }
                                 if (value) {
                                     socket.send(JSON.stringify({
-                                        id,
+                                        sessionId,
                                         type: "data",
                                         data: value,
                                     }));
@@ -55,7 +45,7 @@ export function registerMcprefreshRoute(fastify) {
                         catch (error) {
                             console.error(error);
                             socket.send(JSON.stringify({
-                                id,
+                                sessionId,
                                 type: "error",
                                 message: `Stream reading error: ${error instanceof Error ? error.message : String(error)}`,
                             }));
@@ -67,14 +57,14 @@ export function registerMcprefreshRoute(fastify) {
                     catch (error) {
                         console.error(error);
                         socket.send(JSON.stringify({
-                            id,
+                            sessionId,
                             type: "error",
                             message: `Server error: ${error instanceof Error ? error.message : String(error)}`,
                         }));
                         socket.send(JSON.stringify({
-                            id,
+                            sessionId,
                             type: "close",
-                            message: "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
+                            message: "WebSocket connection closed. Send { args:string,sessionId:string} to start mcp refresh.",
                         }));
                     }
                 }
@@ -86,7 +76,7 @@ export function registerMcprefreshRoute(fastify) {
                     }));
                     socket.send(JSON.stringify({
                         type: "close",
-                        message: "WebSocket connection closed. Send {cwd:string, argv:string[], args:string,id:string} to start mcp refresh.",
+                        message: "WebSocket connection closed. Send { args:string,sessionId:string} to start mcp refresh.",
                     }));
                     socket.close();
                 }

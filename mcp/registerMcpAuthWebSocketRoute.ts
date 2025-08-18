@@ -2,7 +2,8 @@ import type { FastifyInstance } from "fastify";
 import { mockmcpAuth } from "./mockmcpAuth.js";
 import { validateMcpAuthData } from "./validateMcpAuthData.js";
 import os from "os";
-export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance) {
+import type { SessionManager } from "../session/SessionManager.js";
+export function registerMcpAuthWebSocketRoute(fastify: FastifyInstance, sessionManager: SessionManager) {
   // 注册WebSocket路由用于MCP认证
   fastify.register(async function (fastify) {
     fastify.get("/command/mcp/auth", { websocket: true }, (socket, req) => {

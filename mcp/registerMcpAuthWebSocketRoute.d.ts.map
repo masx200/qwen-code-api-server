@@ -1,1 +1,1 @@
-{"version":3,"file":"registerMcpAuthWebSocketRoute.d.ts","sourceRoot":"","sources":["registerMcpAuthWebSocketRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAI/C,wBAAgB,6BAA6B,CAAC,OAAO,EAAE,eAAe,QA8IrE"}
+{"version":3,"file":"registerMcpAuthWebSocketRoute.d.ts","sourceRoot":"","sources":["registerMcpAuthWebSocketRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAI/C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,8BAA8B,CAAC;AACnE,wBAAgB,6BAA6B,CAAC,OAAO,EAAE,eAAe,EAAE,cAAc,EAAE,cAAc,QA8IrG"}

@@ -2,10 +2,8 @@ import { z } from "zod";
 
 // 定义类型验证schema
 const mcprefreshDataSchema = z.object({
-  cwd: z.string(),
-  argv: z.array(z.string()),
   args: z.string(),
-  id: z.string(),
+  sessionId: z.string(),
 });
 
 // 导出类型定义

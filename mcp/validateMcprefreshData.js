@@ -1,9 +1,7 @@
 import { z } from "zod";
 const mcprefreshDataSchema = z.object({
-    cwd: z.string(),
-    argv: z.array(z.string()),
     args: z.string(),
-    id: z.string(),
+    sessionId: z.string(),
 });
 export function validateMcprefreshData(data) {
     try {

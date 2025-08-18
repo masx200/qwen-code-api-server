@@ -1,7 +1,7 @@
 import { mockmcpAuth } from "./mockmcpAuth.js";
 import { validateMcpAuthData } from "./validateMcpAuthData.js";
 import os from "os";
-export function registerMcpAuthWebSocketRoute(fastify) {
+export function registerMcpAuthWebSocketRoute(fastify, sessionManager) {
     fastify.register(async function (fastify) {
         fastify.get("/command/mcp/auth", { websocket: true }, (socket, req) => {
             console.log("websocket open,url=", req.url);
