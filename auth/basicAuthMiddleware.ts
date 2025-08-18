@@ -30,13 +30,13 @@ const argv = yargs(hideBin(process.argv))
     default: "",
   })
   .option("port", {
-    alias: "port",
+    
     type: "number",
     description: "HTTP监听端口",
     default: 3000,
   })
   .option("host", {
-    alias: "host",
+    alias: "h",
     type: "string",
     description: "HTTP监听主机",
     default: "0.0.0.0",

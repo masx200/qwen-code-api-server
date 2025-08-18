@@ -20,13 +20,12 @@ const argv = yargs(hideBin(process.argv))
     default: "",
 })
     .option("port", {
-    alias: "port",
     type: "number",
     description: "HTTP监听端口",
     default: 3000,
 })
     .option("host", {
-    alias: "host",
+    alias: "h",
     type: "string",
     description: "HTTP监听主机",
     default: "0.0.0.0",
@@ -81,7 +80,7 @@ export function createBasicAuthMiddleware(options = authOptions) {
 export async function registerBasicAuthMiddleware(fastify, options) {
     const authConfig = options || authOptions;
     fastify.addHook("onRequest", createBasicAuthMiddleware(authConfig));
-    console.log(`Basic auth middleware registered with username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
+    console.log(`Basic auth middleware registered with \n username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
         `and password : ${authConfig.password}`);
 }
 export { authOptions };
