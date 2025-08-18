@@ -51,7 +51,7 @@ export function registerSessionRoute(
         cwd = cwd.length ? cwd : os.homedir();
         const session = await sessionManager.createSession(cwd, argv);
         sessionManager.setSession(actualSessionId, session);
-        console.log(JSON.stringify(session, null, 4));
+        // console.log(JSON.stringify(session, null, 4));
         reply.send({
           success: true,
           sessionId: actualSessionId,

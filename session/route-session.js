@@ -30,13 +30,11 @@ export function registerSessionRoute(fastify, sessionManager) {
             cwd = cwd.length ? cwd : os.homedir();
             const session = await sessionManager.createSession(cwd, argv);
             sessionManager.setSession(actualSessionId, session);
-            console.log(JSON.stringify(session, null, 4));
             reply.send({
                 success: true,
                 sessionId: actualSessionId,
                 session: {
-                    sessionStartTime: session.session.stats.sessionStartTime
-                        .toISOString(),
+                    sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
                     promptCount: session.session.stats.promptCount,
                     lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                     metrics: session.session.stats.metrics,
@@ -146,8 +144,7 @@ export function registerSessionRoute(fastify, sessionManager) {
                 success: true,
                 sessionId,
                 session: {
-                    sessionStartTime: session.session.stats.sessionStartTime
-                        .toISOString(),
+                    sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
                     promptCount: session.session.stats.promptCount,
                     lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                     metrics: session.session.stats.metrics,
@@ -176,7 +173,8 @@ export function registerSessionRoute(fastify, sessionManager) {
         },
     }, async (request, reply) => {
         try {
-            const { cwd } = request.body;
+            let { cwd } = request.body;
+            cwd = cwd.length ? cwd : os.homedir();
             if (!cwd) {
                 return {
                     success: false,
