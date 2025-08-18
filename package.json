@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "vitest run",
+    "test": "tsc && vitest run",
     "dev": "concurrently \"tsc --watch\" \"nodemon index.js --document openapi.json\"",
     "build": "tsc",
     "start": "tsc && node index.js --document openapi.json",

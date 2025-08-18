@@ -1,9 +1,8 @@
-//@ts-nocheck
 import { describe, expect, it } from "vitest";
+import { SessionManager } from "../session/SessionManager.js";
 import { mockmcp, mockmcpList } from "./mock-mcp.js";
 import { readSettings } from "./settings-reader.js";
-import { SessionManager } from "../session/SessionManager.js";
-//@ts-nocheck
+
 describe("mockmcpList", () => {
   it(
     "应该返回 MCP 服务器列表",
@@ -23,13 +22,12 @@ describe("mockmcpList", () => {
         console.log(JSON.stringify(settings, null, 4));
         //@ts-ignore
 
-        //@ts-nocheck
         if (
           settings?.mcpServers &&
           Object.keys(settings.mcpServers).length > 0
         ) {
           expect(
-            result.content?.slice(0, "Configured MCP servers:".length),
+            result.content?.slice(0, "Configured MCP servers:".length)
           ).toBe("Configured MCP servers:");
         } else {
           //@ts-ignore
@@ -47,7 +45,7 @@ describe("mockmcpList", () => {
         console.error(error);
       }
     },
-    { timeout: 10000 },
+    { timeout: 10000 }
   );
 
   it(
@@ -72,7 +70,7 @@ describe("mockmcpList", () => {
           Object.keys(settings.mcpServers).length > 0
         ) {
           expect(
-            result.content?.slice(0, "Configured MCP servers:".length),
+            result.content?.slice(0, "Configured MCP servers:".length)
           ).toBe("Configured MCP servers:");
         } else {
           //@ts-ignore
@@ -90,7 +88,7 @@ describe("mockmcpList", () => {
         console.error(error);
       }
     },
-    { timeout: 10000 },
+    { timeout: 10000 }
   );
 
   it(
@@ -115,7 +113,7 @@ describe("mockmcpList", () => {
           Object.keys(settings.mcpServers).length > 0
         ) {
           expect(
-            result.content?.slice(0, "Configured MCP servers:".length),
+            result.content?.slice(0, "Configured MCP servers:".length)
           ).toBe("Configured MCP servers:");
         } else {
           //@ts-ignore
@@ -133,6 +131,6 @@ describe("mockmcpList", () => {
         console.error(error);
       }
     },
-    { timeout: 10000 },
+    { timeout: 10000 }
   );
 });

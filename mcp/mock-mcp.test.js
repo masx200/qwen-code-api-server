@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { SessionManager } from "../session/SessionManager.js";
 import { mockmcp, mockmcpList } from "./mock-mcp.js";
 import { readSettings } from "./settings-reader.js";
-import { SessionManager } from "../session/SessionManager.js";
 describe("mockmcpList", () => {
     it("应该返回 MCP 服务器列表", async () => {
         const sessionManager = new SessionManager();
