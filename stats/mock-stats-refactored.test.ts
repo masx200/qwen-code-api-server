@@ -17,7 +17,7 @@ describe("MockStats Functions - Refactored Tests (No statsCommand)", async () =>
     // 添加测试数据
     mockSessionManager.sessions.set(
       mockSessionId,
-      await mockSessionManager.createSession(cwd, argv)
+      await mockSessionManager.createSession(cwd, argv),
     );
   });
 

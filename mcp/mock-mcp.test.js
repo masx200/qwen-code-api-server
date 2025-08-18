@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { mockmcp, mockmcpList } from "./mock-mcp.js";
-import * as os from "os";
 import { readSettings } from "./settings-reader.js";
+import { SessionManager } from "../session/SessionManager.js";
 describe("mockmcpList", () => {
     it("应该返回 MCP 服务器列表", async () => {
-        const result = await mockmcp(os.homedir(), [], "");
+        const sessionManager = new SessionManager();
+        const sessionId = sessionManager.createId();
+        const session = await sessionManager.createSession(process.cwd(), []);
+        sessionManager.setSession(sessionId, session);
+        const result = await mockmcp(sessionId, sessionManager, "");
         console.log(JSON.stringify(result, null, 4));
         expect(result).toMatchObject({
             type: "message",
@@ -30,7 +34,11 @@ describe("mockmcpList", () => {
         }
     }, { timeout: 10000 });
     it("mcp desc", async () => {
-        const result = await mockmcpList(os.homedir(), [], "desc");
+        const sessionManager = new SessionManager();
+        const sessionId = sessionManager.createId();
+        const session = await sessionManager.createSession(process.cwd(), []);
+        sessionManager.setSession(sessionId, session);
+        const result = await mockmcpList(sessionId, sessionManager, "desc");
         console.log(JSON.stringify(result, null, 4));
         expect(result).toMatchObject({
             type: "message",
@@ -56,7 +64,11 @@ describe("mockmcpList", () => {
         }
     }, { timeout: 10000 });
     it("mcp schema", async () => {
-        const result = await mockmcpList(os.homedir(), [], "schema");
+        const sessionManager = new SessionManager();
+        const sessionId = sessionManager.createId();
+        const session = await sessionManager.createSession(process.cwd(), []);
+        sessionManager.setSession(sessionId, session);
+        const result = await mockmcpList(sessionId, sessionManager, "schema");
         console.log(JSON.stringify(result, null, 4));
         expect(result).toMatchObject({
             type: "message",

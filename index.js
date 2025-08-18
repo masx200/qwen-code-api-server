@@ -27,7 +27,9 @@ async function main(authOptions) {
     if (authOptions.username && authOptions.password) {
         await registerBasicAuthMiddleware(fastify, authOptions);
     }
-    await registerSwaggerPlugin(fastify);
+    if (authOptions.document !== "false") {
+        await registerSwaggerPlugin(fastify);
+    }
     await fastify.register(websocket);
     const sessionManager = new SessionManager();
     registerAboutRoute(fastify);
@@ -48,15 +50,17 @@ async function main(authOptions) {
         }
         console.log("listening address", address);
     }, authOptions.port, authOptions.host).then(console.log, console.error);
-    await fastify.ready().then(async () => {
-        if (authOptions.document) {
-            console.log("swagger document path", authOptions.document);
-            await fs.promises.writeFile(authOptions.document, JSON.stringify(fastify.swagger(), null, 4));
-        }
-        else {
-            console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
-        }
-    }, console.error);
+    if (authOptions.document !== "false") {
+        await fastify.ready().then(async () => {
+            if (authOptions.document) {
+                console.log("swagger document path", authOptions.document);
+                await fs.promises.writeFile(authOptions.document, JSON.stringify(fastify.swagger(), null, 4));
+            }
+            else {
+                console.log("swagger document", JSON.stringify(fastify.swagger(), null, 4));
+            }
+        }, console.error);
+    }
 }
 await main(authOptions).then(console.log, console.error);
 //# sourceMappingURL=index.js.map

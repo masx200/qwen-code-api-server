@@ -9,7 +9,7 @@ import type { SessionManager } from "../session/SessionManager.js";
 export async function mockmcp(
   sessionId: string,
   sessionManager: SessionManager,
-  args: string = ""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;
@@ -58,7 +58,7 @@ export async function mockmcp(
 export async function mockmcpList(
   sessionId: string,
   sessionManager: SessionManager,
-  args: string = ""
+  args: string = "",
 ): Promise<{
   type?: string;
   messageType?: string;
@@ -93,7 +93,7 @@ export async function mockmcpList(
   } as CommandContext;
 
   const listCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "list"
+    (command) => command.name === "list",
   );
   if (typeof listCommand?.action === "function") {
     return (await listCommand.action(context, args)) as {
@@ -108,7 +108,7 @@ export async function mockmcpList(
 
 export function createcontext(
   config: Config,
-  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number
+  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number,
 ) {
   const context: CommandContext = {
     services: {
@@ -138,7 +138,7 @@ export function createcontext(
     ui: {
       addItem(
         itemData: Omit<HistoryItem, "id">,
-        baseTimestamp: number
+        baseTimestamp: number,
       ): number {
         return addItem(itemData, baseTimestamp);
       },

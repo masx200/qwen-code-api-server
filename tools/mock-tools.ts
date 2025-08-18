@@ -9,7 +9,7 @@ import type { SessionManager } from "../session/SessionManager.js";
 export async function mocktools(
   sessionId: string,
   sessionManager: SessionManager,
-  args: string = ""
+  args: string = "",
 ): Promise<{
   itemData?: Omit<HistoryItem, "id">;
   baseTimestamp?: number;
@@ -52,7 +52,7 @@ export async function mocktools(
 
 export function createcontext(
   config: Config,
-  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number
+  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number,
 ) {
   const context: CommandContext = {
     services: {
@@ -82,7 +82,7 @@ export function createcontext(
     ui: {
       addItem(
         itemData: Omit<HistoryItem, "id">,
-        baseTimestamp: number
+        baseTimestamp: number,
       ): number {
         return addItem(itemData, baseTimestamp);
       },

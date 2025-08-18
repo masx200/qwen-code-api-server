@@ -47,7 +47,7 @@ test(
             }
             console.log("listening", address);
           },
-          port
+          port,
         );
 
         await fastify.ready();
@@ -86,10 +86,10 @@ test(
           console.log(e);
           ws.send(
             JSON.stringify({
-              id: sessionId,
+              sessionId: sessionId,
 
               args: "",
-            })
+            }),
           );
         };
       });
@@ -99,5 +99,5 @@ test(
       });
     }
   },
-  { timeout: 30000 }
+  { timeout: 30000 },
 );

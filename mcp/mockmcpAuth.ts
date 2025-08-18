@@ -6,7 +6,7 @@ import type { SessionManager } from "../session/SessionManager.js";
 export async function mockmcpAuth(
   sessionId: string,
   sessionManager: SessionManager,
-  args: string = ""
+  args: string = "",
 ): Promise<
   ReadableStream<{
     type?: string;
@@ -21,7 +21,7 @@ export async function mockmcpAuth(
     throw new Error("Session not found");
   }
   const authCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "auth"
+    (command) => command.name === "auth",
   );
   if (typeof authCommand?.action === "function") {
     return new ReadableStream<{
@@ -61,7 +61,7 @@ export async function mockmcpAuth(
         if (typeof authCommand?.action === "function") {
           const slashcommandactionreturn = await authCommand?.action(
             context,
-            args
+            args,
           );
           if (slashcommandactionreturn) {
             controller.enqueue(slashcommandactionreturn);

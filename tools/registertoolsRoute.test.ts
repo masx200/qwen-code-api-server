@@ -54,9 +54,8 @@ describe("POST /command/tools", async () => {
     },
     {
       timeout: 20000,
-    }
+    },
   );
-
 
   it("should handle empty args parameter", async () => {
     const requestBody = {

@@ -6,7 +6,7 @@ import type { SessionManager } from "../session/SessionManager.js";
 export async function mockmcpRefresh(
   sessionId: string,
   sessionManager: SessionManager,
-  args: string = ""
+  args: string = "",
 ): Promise<
   ReadableStream<{
     type?: string;
@@ -21,7 +21,7 @@ export async function mockmcpRefresh(
     throw new Error("Session not found");
   }
   const refreshCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "refresh"
+    (command) => command.name === "refresh",
   );
   if (typeof refreshCommand?.action === "function") {
     return new ReadableStream<{
@@ -61,7 +61,7 @@ export async function mockmcpRefresh(
         if (typeof refreshCommand?.action === "function") {
           const slashcommandactionreturn = await refreshCommand?.action(
             context,
-            args
+            args,
           );
           if (slashcommandactionreturn) {
             controller.enqueue(slashcommandactionreturn);

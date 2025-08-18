@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // 定义类型验证schema
 export const mcpAuthDataSchema = z.object({
- args: z.string(),
+  args: z.string(),
   sessionId: z.string(),
 });
 

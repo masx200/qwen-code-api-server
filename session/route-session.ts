@@ -20,7 +20,7 @@ const createSessionRequestSchema = z.object({
 });
 export function registerSessionRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ) {
   // 注册会话相关路由
   // 创建会话
@@ -52,8 +52,8 @@ export function registerSessionRoute(
           success: true,
           sessionId: actualSessionId,
           session: {
-            sessionStartTime:
-              session.session.stats.sessionStartTime.toISOString(),
+            sessionStartTime: session.session.stats.sessionStartTime
+              .toISOString(),
             promptCount: session.session.stats.promptCount,
             lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
             metrics: session.session.stats.metrics,
@@ -69,7 +69,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
   // 列出所有会话
   fastify.get(
@@ -100,7 +100,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
   // 删除会话
   fastify.delete(
@@ -145,7 +145,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
   // 获取会话详情
   fastify.post(
@@ -178,8 +178,8 @@ export function registerSessionRoute(
           success: true,
           sessionId,
           session: {
-            sessionStartTime:
-              session.session.stats.sessionStartTime.toISOString(),
+            sessionStartTime: session.session.stats.sessionStartTime
+              .toISOString(),
             promptCount: session.session.stats.promptCount,
             lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
             metrics: session.session.stats.metrics,
@@ -194,6 +194,6 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
 }

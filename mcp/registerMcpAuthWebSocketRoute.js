@@ -56,7 +56,7 @@ export function registerMcpAuthWebSocketRoute(fastify, sessionManager) {
                     catch (error) {
                         console.error(error);
                         socket.send(JSON.stringify({
-                            sessionsessionId: sessionId,
+                            sessionId: sessionId,
                             type: "error",
                             message: `Server error: ${error instanceof Error ? error.message : String(error)}`,
                         }));

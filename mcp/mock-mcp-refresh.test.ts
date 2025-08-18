@@ -14,10 +14,10 @@ describe("mockmcp refresh", () => {
 
       sessionManager.setSession(
         sessionid,
-        await sessionManager.createSession(process.cwd(), [])
+        await sessionManager.createSession(process.cwd(), []),
       );
       const result = await readStreamToArray(
-        await mockmcpRefresh(sessionid, sessionManager, "")
+        await mockmcpRefresh(sessionid, sessionManager, ""),
       );
       console.log(JSON.stringify(result, null, 4));
       expect(result[1]).toMatchObject({
@@ -36,7 +36,7 @@ describe("mockmcp refresh", () => {
         ) {
           expect(
             //@ts-ignore
-            result[1].content?.slice(0, "Configured MCP servers:".length)
+            result[1].content?.slice(0, "Configured MCP servers:".length),
           ).toBe("Configured MCP servers:");
         } else {
           //@ts-ignore
@@ -57,6 +57,6 @@ describe("mockmcp refresh", () => {
     },
     {
       timeout: 10000,
-    }
+    },
   );
 });

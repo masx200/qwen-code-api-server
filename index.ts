@@ -1,4 +1,4 @@
-import type{ AuthOptions } from "./auth/basicAuthMiddleware.ts";
+import type { AuthOptions } from "./auth/basicAuthMiddleware.ts";
 // ESM
 
 import websocket from "@fastify/websocket";
@@ -8,7 +8,7 @@ import fs from "fs";
 import { registerAboutRoute } from "./about/registerAboutRoute.js";
 import {
   authOptions,
-  registerBasicAuthMiddleware
+  registerBasicAuthMiddleware,
 } from "./auth/basicAuthMiddleware.js";
 import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
 import {
@@ -70,7 +70,7 @@ async function main(authOptions: AuthOptions) {
       console.log("listening address", address);
     },
     authOptions.port,
-    authOptions.host
+    authOptions.host,
   ).then(console.log, console.error);
 
   if (authOptions.document !== "false") {
@@ -79,12 +79,12 @@ async function main(authOptions: AuthOptions) {
         console.log("swagger document path", authOptions.document);
         await fs.promises.writeFile(
           authOptions.document,
-          JSON.stringify(fastify.swagger(), null, 4)
+          JSON.stringify(fastify.swagger(), null, 4),
         );
       } else {
         console.log(
           "swagger document",
-          JSON.stringify(fastify.swagger(), null, 4)
+          JSON.stringify(fastify.swagger(), null, 4),
         );
       }
     }, console.error);

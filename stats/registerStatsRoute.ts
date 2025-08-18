@@ -8,7 +8,7 @@ import { statsResponseSchema } from "./statsResponseSchema.js";
 
 export function registerStatsRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ) {
   // 注册 stats 命令路由
   fastify.post(
@@ -47,8 +47,8 @@ export function registerStatsRoute(
 
         // 保存会话统计信息
         const sessionStats = {
-          sessionStartTime:
-            session.session.stats.sessionStartTime.toISOString(),
+          sessionStartTime: session.session.stats.sessionStartTime
+            .toISOString(),
           promptCount: session.session.stats.promptCount,
           lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
           metrics: session.session.stats.metrics,
@@ -70,6 +70,6 @@ export function registerStatsRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
 }

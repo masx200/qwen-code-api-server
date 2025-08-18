@@ -7,7 +7,7 @@ import type { SessionManager } from "../session/SessionManager.js";
 
 export async function mockQuit(
   sessionId: string,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ): Promise<{
   type: string;
   messages: {

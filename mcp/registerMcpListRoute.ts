@@ -12,7 +12,7 @@ import type { JSONSchema } from "zod/v4/core";
 import type { SessionManager } from "../session/SessionManager.js";
 export function registerMcpListRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ) {
   // 注册路由
   fastify.post(
@@ -45,16 +45,19 @@ export function registerMcpListRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
 }
 // console.log(zodtojsonSchema(mcpListRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
   );
 }
-export function registerMcpRoute(fastify: FastifyInstance, sessionManager: SessionManager) {
+export function registerMcpRoute(
+  fastify: FastifyInstance,
+  sessionManager: SessionManager,
+) {
   // 注册路由
   fastify.post(
     "/command/mcp",
@@ -86,6 +89,6 @@ export function registerMcpRoute(fastify: FastifyInstance, sessionManager: Sessi
           message: String(error),
         });
       }
-    }
+    },
   );
 }

@@ -34,7 +34,8 @@ export function registerSessionRoute(fastify, sessionManager) {
                 success: true,
                 sessionId: actualSessionId,
                 session: {
-                    sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
+                    sessionStartTime: session.session.stats.sessionStartTime
+                        .toISOString(),
                     promptCount: session.session.stats.promptCount,
                     lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                     metrics: session.session.stats.metrics,
@@ -144,7 +145,8 @@ export function registerSessionRoute(fastify, sessionManager) {
                 success: true,
                 sessionId,
                 session: {
-                    sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
+                    sessionStartTime: session.session.stats.sessionStartTime
+                        .toISOString(),
                     promptCount: session.session.stats.promptCount,
                     lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                     metrics: session.session.stats.metrics,

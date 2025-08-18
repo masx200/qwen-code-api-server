@@ -66,7 +66,7 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
             ws.onopen = function (e) {
                 console.log(e);
                 ws.send(JSON.stringify({
-                    id: sessionId,
+                    sessionId: sessionId,
                     args: "",
                 }));
             };

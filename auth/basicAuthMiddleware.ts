@@ -30,7 +30,6 @@ const argv = yargs(hideBin(process.argv))
     default: "",
   })
   .option("port", {
-    
     type: "number",
     description: "HTTP监听端口",
     default: 3000,
@@ -76,7 +75,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
         });
       }
       const credentials = Buffer.from(base64Credentials, "base64").toString(
-        "ascii"
+        "ascii",
       );
       const [username, password] = credentials.split(":");
 
@@ -104,7 +103,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
 // 注册中间件的函数
 export async function registerBasicAuthMiddleware(
   fastify: FastifyInstance,
-  options?: AuthOptions
+  options?: AuthOptions,
 ) {
   const authConfig = options || authOptions;
 
@@ -113,7 +112,7 @@ export async function registerBasicAuthMiddleware(
 
   console.log(
     `Basic auth middleware registered with \n username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
-      `and password : ${authConfig.password}`
+      `and password : ${authConfig.password}`,
   );
 }
 

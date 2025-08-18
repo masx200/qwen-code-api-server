@@ -47,7 +47,7 @@ test(
             }
             console.log("listening", address);
           },
-          port
+          port,
         );
 
         await fastify.ready();
@@ -88,7 +88,7 @@ test(
             JSON.stringify({
               sessionId: sessionId,
               args: "tavily",
-            })
+            }),
           );
         };
       });
@@ -98,5 +98,5 @@ test(
       });
     }
   },
-  { timeout: 30000 }
+  { timeout: 30000 },
 );

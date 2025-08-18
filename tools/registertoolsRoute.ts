@@ -5,7 +5,7 @@ import { mocktools } from "./mock-tools.js";
 import type { SessionManager } from "../session/SessionManager.js";
 const toolsRequestSchema = z.object({
   sessionId: z.string(),
-  
+
   args: z.string(),
 });
 const toolsResponseSchema = z.object({
@@ -22,7 +22,7 @@ const toolsResponseSchema = z.object({
 });
 export function registertoolsRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager
+  sessionManager: SessionManager,
 ) {
   // 注册路由
   fastify.post(
@@ -56,6 +56,6 @@ export function registertoolsRoute(
           message: String(error),
         });
       }
-    }
+    },
   );
 }

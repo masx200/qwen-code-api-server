@@ -27,7 +27,8 @@ export function registerQuitRoute(fastify, sessionManager) {
             const result = await mockQuit(sessionId, sessionManager);
             console.log(JSON.stringify({ result }, null, 4));
             const sessionStats = {
-                sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
+                sessionStartTime: session.session.stats.sessionStartTime
+                    .toISOString(),
                 promptCount: session.session.stats.promptCount,
                 lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                 metrics: session.session.stats.metrics,

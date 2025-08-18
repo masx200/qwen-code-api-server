@@ -1,4 +1,4 @@
-import { type SessionContext, createId, createSession } from "./sessions.js";
+import { createId, createSession, type SessionContext } from "./sessions.js";
 
 export class SessionManager {
   createId() {
