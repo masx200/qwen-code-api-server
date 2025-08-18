@@ -25,7 +25,7 @@ import { registerStatsRoute } from "./stats/registerStatsRoute.js";
 import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
 import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
 import { registertoolsRoute } from "./tools/registertoolsRoute.js";
-async function main(authOptions: AuthOptions) {
+export async function main(authOptions: AuthOptions) {
   const fastify = Fastify({
     logger: {
       level: "info",
@@ -70,7 +70,7 @@ async function main(authOptions: AuthOptions) {
       console.log("listening address", address);
     },
     authOptions.port,
-    authOptions.host,
+    authOptions.host
   ).then(console.log, console.error);
 
   if (authOptions.document !== "false") {
@@ -79,12 +79,12 @@ async function main(authOptions: AuthOptions) {
         console.log("swagger document path", authOptions.document);
         await fs.promises.writeFile(
           authOptions.document,
-          JSON.stringify(fastify.swagger(), null, 4),
+          JSON.stringify(fastify.swagger(), null, 4)
         );
       } else {
         console.log(
           "swagger document",
-          JSON.stringify(fastify.swagger(), null, 4),
+          JSON.stringify(fastify.swagger(), null, 4)
         );
       }
     }, console.error);
