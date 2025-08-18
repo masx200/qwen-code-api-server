@@ -1,9 +1,9 @@
 {
   "scripts": {
     "test": "tsc && vitest run",
-    "dev": "concurrently \"tsc --watch\" \"nodemon index.js --document openapi.json\"",
+    "dev": "concurrently \"tsc --watch\" \"nodemon index.js --document false\"",
     "build": "tsc",
-    "start": "tsc && node index.js --document openapi.json",
+    "start": "tsc && node index.js --document false",
     "watch": "tsc --watch"
   },
   "name": "@masx200/qwen-code-api-server",

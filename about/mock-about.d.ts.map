@@ -1,1 +1,1 @@
-{"version":3,"file":"mock-about.d.ts","sourceRoot":"","sources":["mock-about.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,gBAAgB,EAAE,MAAM,2CAA2C,CAAC;AAClF,wBAAsB,SAAS,CAC7B,KAAK,EAAE,MAAM,GACZ,OAAO,CAAC;IAAE,QAAQ,CAAC,EAAE,gBAAgB,CAAC;IAAC,aAAa,CAAC,EAAE,MAAM,CAAA;CAAE,CAAC,CA4BlE"}
+{"version":3,"file":"mock-about.d.ts","sourceRoot":"","sources":["mock-about.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,gBAAgB,EAAE,MAAM,2CAA2C,CAAC;AAClF,wBAAsB,SAAS,CAC7B,KAAK,EAAE,MAAM,GACZ,OAAO,CAAC;IAAE,QAAQ,CAAC,EAAE,gBAAgB,CAAC;IAAC,aAAa,CAAC,EAAE,MAAM,CAAA;CAAE,CAAC,CA6BlE"}

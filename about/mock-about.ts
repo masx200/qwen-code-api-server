@@ -2,7 +2,7 @@ import { aboutCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/aboutCom
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 import type { HistoryItemAbout } from "@qwen-code/qwen-code/dist/src/ui/types.js";
 export async function mockAbout(
-  model: string,
+  model: string
 ): Promise<{ itemData?: HistoryItemAbout; baseTimestamp?: number }> {
   const result: { itemData?: HistoryItemAbout; baseTimestamp?: number } = {};
   const context: CommandContext = {
@@ -19,9 +19,10 @@ export async function mockAbout(
       },
     },
     ui: {
-      addItem(itemData: HistoryItemAbout, baseTimestamp): void {
+      addItem(itemData: HistoryItemAbout, baseTimestamp): number {
         result.itemData = itemData as HistoryItemAbout;
         result.baseTimestamp = baseTimestamp;
+        return 0;
       },
     },
   } as CommandContext;

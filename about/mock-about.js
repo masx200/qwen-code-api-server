@@ -18,6 +18,7 @@ export async function mockAbout(model) {
             addItem(itemData, baseTimestamp) {
                 result.itemData = itemData;
                 result.baseTimestamp = baseTimestamp;
+                return 0;
             },
         },
     };
