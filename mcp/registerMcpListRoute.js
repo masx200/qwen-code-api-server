@@ -1,8 +1,7 @@
-import os from "os";
 import { mcpListRequestSchema, mcpListResponseSchema, mcpRequestSchema, mcpResponseSchema, } from "./mcpListRequestSchema.js";
 import { mockmcp, mockmcpList } from "./mock-mcp.js";
 import * as z from "zod";
-export function registerMcpListRoute(fastify) {
+export function registerMcpListRoute(fastify, sessionManager) {
     fastify.post("/command/mcp/list", {
         schema: {
             description: "调用mcp list命令获取MCP服务器列表",
@@ -15,9 +14,8 @@ export function registerMcpListRoute(fastify) {
         },
     }, async (request, reply) => {
         try {
-            let { cwd, argv, args } = request.body;
-            cwd = cwd.length ? cwd : os.homedir();
-            const result = await mockmcpList(cwd, argv, args);
+            let { args, sessionId } = request.body;
+            const result = await mockmcpList(sessionId, sessionManager, args);
             return { ...result, success: true };
         }
         catch (error) {
@@ -34,7 +32,7 @@ export function registerMcpListRoute(fastify) {
 export function zodtojsonSchema(schema) {
     return Object.fromEntries(Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"));
 }
-export function registerMcpRoute(fastify) {
+export function registerMcpRoute(fastify, sessionManager) {
     fastify.post("/command/mcp", {
         schema: {
             description: "调用mcp命令获取MCP服务器列表",
@@ -47,9 +45,8 @@ export function registerMcpRoute(fastify) {
         },
     }, async (request, reply) => {
         try {
-            let { cwd, argv, args } = request.body;
-            cwd = cwd.length ? cwd : os.homedir();
-            const result = await mockmcp(cwd, argv, args);
+            let { args, sessionId } = request.body;
+            const result = await mockmcp(sessionId, sessionManager, args);
             return { ...result, success: true };
         }
         catch (error) {

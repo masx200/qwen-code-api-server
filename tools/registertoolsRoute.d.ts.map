@@ -1,1 +1,1 @@
-{"version":3,"file":"registertoolsRoute.d.ts","sourceRoot":"","sources":["registertoolsRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAoB/C,wBAAgB,kBAAkB,CAAC,OAAO,EAAE,eAAe,QAoC1D"}
+{"version":3,"file":"registertoolsRoute.d.ts","sourceRoot":"","sources":["registertoolsRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAI/C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,8BAA8B,CAAC;AAkBnE,wBAAgB,kBAAkB,CAChC,OAAO,EAAE,eAAe,EACxB,cAAc,EAAE,cAAc,QAoC/B"}

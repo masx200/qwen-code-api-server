@@ -1,24 +1,29 @@
 import type { FastifyInstance } from "fastify";
+import z from "zod";
 import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
 import { mocktools } from "./mock-tools.js";
-import z from "zod";
-import os from "os";
+import type { SessionManager } from "../session/SessionManager.js";
 const toolsRequestSchema = z.object({
-  cwd: z.string(),
-  argv: z.array(z.string()),
+  sessionId: z.string(),
+  
   args: z.string(),
 });
 const toolsResponseSchema = z.object({
   success: z.boolean(),
   error: z.string().optional(),
   message: z.string().optional(),
-  itemData: z.object({
-    type: z.string(),
-    text: z.string(),
-  }).optional(),
+  itemData: z
+    .object({
+      type: z.string(),
+      text: z.string(),
+    })
+    .optional(),
   baseTimestamp: z.number().optional(),
 });
-export function registertoolsRoute(fastify: FastifyInstance) {
+export function registertoolsRoute(
+  fastify: FastifyInstance,
+  sessionManager: SessionManager
+) {
   // 注册路由
   fastify.post(
     "/command/tools",
@@ -35,13 +40,12 @@ export function registertoolsRoute(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        let { cwd, argv, args } = request.body as {
-          cwd: string;
-          argv: string[];
+        let { args, sessionId } = request.body as {
+          sessionId: string;
           args: string;
         };
-        cwd = cwd.length ? cwd : os.homedir();
-        const result = await mocktools(cwd, argv, args);
+
+        const result = await mocktools(sessionId, sessionManager, args);
         return { ...result, success: true };
       } catch (error) {
         request.log.error(error);
@@ -52,6 +56,6 @@ export function registertoolsRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }

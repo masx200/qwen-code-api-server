@@ -1,7 +1,6 @@
 import { z } from "zod";
 export declare const mcpListRequestSchema: z.ZodObject<{
-    cwd: z.ZodDefault<z.ZodString>;
-    argv: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    sessionId: z.ZodDefault<z.ZodString>;
     args: z.ZodDefault<z.ZodString>;
 }, z.core.$strip>;
 export declare const mcpListResponseSchema: z.ZodObject<{
@@ -15,8 +14,7 @@ export declare const mcpListResponseSchema: z.ZodObject<{
 export type McpListRequest = z.infer<typeof mcpListRequestSchema>;
 export type McpListResponse = z.infer<typeof mcpListResponseSchema>;
 export declare const mcpRequestSchema: z.ZodObject<{
-    cwd: z.ZodDefault<z.ZodString>;
-    argv: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    sessionId: z.ZodDefault<z.ZodString>;
     args: z.ZodDefault<z.ZodString>;
 }, z.core.$strip>;
 export declare const mcpResponseSchema: z.ZodObject<{

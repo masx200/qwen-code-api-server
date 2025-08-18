@@ -1,6 +1,5 @@
 import type { FastifyInstance } from "fastify";
 
-import os from "os";
 import {
   mcpListRequestSchema,
   mcpListResponseSchema,
@@ -10,7 +9,11 @@ import {
 import { mockmcp, mockmcpList } from "./mock-mcp.js";
 import * as z from "zod";
 import type { JSONSchema } from "zod/v4/core";
-export function registerMcpListRoute(fastify: FastifyInstance) {
+import type { SessionManager } from "../session/SessionManager.js";
+export function registerMcpListRoute(
+  fastify: FastifyInstance,
+  sessionManager: SessionManager
+) {
   // 注册路由
   fastify.post(
     "/command/mcp/list",
@@ -27,13 +30,11 @@ export function registerMcpListRoute(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        let { cwd, argv, args } = request.body as {
-          cwd: string;
-          argv: string[];
+        let { args, sessionId } = request.body as {
+          sessionId: string;
           args: string;
         };
-        cwd = cwd.length ? cwd : os.homedir();
-        const result = await mockmcpList(cwd, argv, args);
+        const result = await mockmcpList(sessionId, sessionManager, args);
         return { ...result, success: true };
       } catch (error) {
         request.log.error(error);
@@ -44,16 +45,16 @@ export function registerMcpListRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }
 // console.log(zodtojsonSchema(mcpListRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
   );
 }
-export function registerMcpRoute(fastify: FastifyInstance) {
+export function registerMcpRoute(fastify: FastifyInstance, sessionManager: SessionManager) {
   // 注册路由
   fastify.post(
     "/command/mcp",
@@ -70,13 +71,11 @@ export function registerMcpRoute(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        let { cwd, argv, args } = request.body as {
-          cwd: string;
-          argv: string[];
+        let { args, sessionId } = request.body as {
+          sessionId: string;
           args: string;
         };
-        cwd = cwd.length ? cwd : os.homedir();
-        const result = await mockmcp(cwd, argv, args);
+        const result = await mockmcp(sessionId, sessionManager, args);
         return { ...result, success: true };
       } catch (error) {
         request.log.error(error);
@@ -87,6 +86,6 @@ export function registerMcpRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }

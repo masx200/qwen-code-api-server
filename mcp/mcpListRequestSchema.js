@@ -1,7 +1,6 @@
 import { z } from "zod";
 export const mcpListRequestSchema = z.object({
-    cwd: z.string().default(""),
-    argv: z.array(z.string()).default([]),
+    sessionId: z.string().default(""),
     args: z.string().default(""),
 });
 export const mcpListResponseSchema = z.object({
@@ -13,8 +12,7 @@ export const mcpListResponseSchema = z.object({
     message: z.string().optional(),
 });
 export const mcpRequestSchema = z.object({
-    cwd: z.string().default(""),
-    argv: z.array(z.string()).default([]),
+    sessionId: z.string().default(""),
     args: z.string().default(""),
 });
 export const mcpResponseSchema = z.object({

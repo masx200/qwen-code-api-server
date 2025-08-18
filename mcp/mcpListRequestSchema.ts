@@ -1,8 +1,7 @@
 import { z } from "zod";
 
 export const mcpListRequestSchema = z.object({
-  cwd: z.string().default(""),
-  argv: z.array(z.string()).default([]),
+  sessionId: z.string().default(""),
   args: z.string().default(""),
 });
 
@@ -19,8 +18,7 @@ export type McpListRequest = z.infer<typeof mcpListRequestSchema>;
 export type McpListResponse = z.infer<typeof mcpListResponseSchema>;
 
 export const mcpRequestSchema = z.object({
-  cwd: z.string().default(""),
-  argv: z.array(z.string()).default([]),
+  sessionId: z.string().default(""),
   args: z.string().default(""),
 });
 

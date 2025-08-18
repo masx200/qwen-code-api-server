@@ -1,3 +1,4 @@
 import type { FastifyInstance } from "fastify";
-export declare function registertoolsRoute(fastify: FastifyInstance): void;
+import type { SessionManager } from "../session/SessionManager.js";
+export declare function registertoolsRoute(fastify: FastifyInstance, sessionManager: SessionManager): void;
 //# sourceMappingURL=registertoolsRoute.d.ts.map

@@ -50,15 +50,15 @@ async function main(authOptions: AuthOptions) {
 
   registerQuitRoute(fastify, sessionManager);
   registerSessionRoute(fastify, sessionManager);
-  registerMcpListRoute(fastify);
-  registerMcprefreshRoute(fastify);
+  registerMcpListRoute(fastify,sessionManager);
+  registerMcprefreshRoute(fastify,sessionManager);
   registerStatsRoute(fastify, sessionManager);
   registerStatsModelRoute(fastify, sessionManager);
   registerStatsToolsRoute(fastify, sessionManager);
-  registerMcpAuthWebSocketRoute(fastify);
-  registerMcpRoute(fastify);
+  registerMcpAuthWebSocketRoute(fastify,sessionManager);
+  registerMcpRoute(fastify,sessionManager);
 
-  registertoolsRoute(fastify);
+  registertoolsRoute(fastify,sessionManager);
   await start(
     fastify,
     (err, address) => {
