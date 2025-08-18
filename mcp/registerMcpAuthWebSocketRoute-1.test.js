@@ -1,10 +1,14 @@
 import websocket from "@fastify/websocket";
 import Fastify from "fastify";
 import { expect, test } from "vitest";
-import { createId } from "../session/sessions.js";
 import { start } from "../start.js";
 import { registerMcpAuthWebSocketRoute } from "./registerMcpAuthWebSocketRoute.js";
+import { SessionManager } from "../session/SessionManager.js";
 test("registerMcpAuthWebSocketRoute no args", async () => {
+    const sessionManager = new SessionManager();
+    const sessionId = sessionManager.createId();
+    const session = await sessionManager.createSession(process.cwd(), []);
+    sessionManager.setSession(sessionId, session);
     const fastify = Fastify({
         logger: {
             level: "info",
@@ -25,7 +29,7 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
                 },
             });
             await fastify.register(websocket);
-            registerMcpAuthWebSocketRoute(fastify);
+            registerMcpAuthWebSocketRoute(fastify, sessionManager);
             await start(fastify, async (err, address) => {
                 if (err) {
                     reject(err);
@@ -34,13 +38,12 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
                 console.log("listening", address);
             }, port);
             await fastify.ready();
-            const id = createId();
             const ws = new WebSocket(`http://127.0.0.1:${port}/command/mcp/auth`);
             ws.onmessage = function (e) {
                 console.log(e);
                 const data = JSON.parse(e.data);
                 console.log(data);
-                expect(data.id).toEqual(id);
+                expect(data.sessionId).toEqual(sessionId);
                 if (data?.type === "close") {
                     ws.close();
                     resolve();
@@ -63,9 +66,7 @@ test("registerMcpAuthWebSocketRoute no args", async () => {
             ws.onopen = function (e) {
                 console.log(e);
                 ws.send(JSON.stringify({
-                    id,
-                    cwd: "f:/home",
-                    argv: [],
+                    id: sessionId,
                     args: "",
                 }));
             };
