@@ -15,7 +15,7 @@ import { registerStatsRoute } from "./stats/registerStatsRoute.js";
 import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
 import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
 import { registertoolsRoute } from "./tools/registertoolsRoute.js";
-async function main(authOptions) {
+export async function main(authOptions) {
     const fastify = Fastify({
         logger: {
             level: "info",
