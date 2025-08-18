@@ -1,7 +1,6 @@
 import { z } from "zod";
-
 // 定义类型验证schema
-const mcprefreshDataSchema = z.object({
+export const mcprefreshDataSchema = z.object({
   args: z.string(),
   sessionId: z.string(),
 });

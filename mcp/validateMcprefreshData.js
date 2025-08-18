@@ -1,5 +1,5 @@
 import { z } from "zod";
-const mcprefreshDataSchema = z.object({
+export const mcprefreshDataSchema = z.object({
     args: z.string(),
     sessionId: z.string(),
 });
