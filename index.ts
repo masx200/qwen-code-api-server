@@ -1,29 +1,30 @@
 // ESM
 
-import Fastify from "fastify";
 import websocket from "@fastify/websocket";
+import Fastify from "fastify";
 
+import fs from "fs";
 import { registerAboutRoute } from "./about/registerAboutRoute.js";
-import { registerQuitRoute } from "./quit/registerQuitRoute.js";
-import { registerSessionRoute } from "./session/route-session.js";
-import { SessionManager } from "./session/sessions.js";
-import { start } from "./start.js";
-import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
+import {
+  authOptions,
+  registerBasicAuthMiddleware,
+  type AuthOptions,
+} from "./auth/basicAuthMiddleware.js";
+import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
 import {
   registerMcpListRoute,
   registerMcpRoute,
 } from "./mcp/registerMcpListRoute.js";
 import { registerMcprefreshRoute } from "./mcp/registerMcpRefreshRoute.js";
-import { registerStatsRoute } from "./stats/registerStatsRoute.js";
+import { registerQuitRoute } from "./quit/registerQuitRoute.js";
+import { registerSessionRoute } from "./session/route-session.js";
+import { SessionManager } from "./session/sessions.js";
+import { start } from "./start.js";
 import { registerStatsModelRoute } from "./stats/registerStatsModelRoute.js";
+import { registerStatsRoute } from "./stats/registerStatsRoute.js";
 import { registerStatsToolsRoute } from "./stats/registerStatsToolsRoute.js";
-import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRoute.js";
+import { registerSwaggerPlugin } from "./swagger/registerSwaggerPlugin.js";
 import { registertoolsRoute } from "./tools/registertoolsRoute.js";
-import {
-  type AuthOptions,
-  authOptions,
-  registerBasicAuthMiddleware,
-} from "./auth/basicAuthMiddleware.js";
 async function main(authOptions: AuthOptions) {
   const fastify = Fastify({
     logger: {
@@ -86,4 +87,4 @@ async function main(authOptions: AuthOptions) {
   }, console.error);
 }
 await main(authOptions).then(console.log, console.error);
-import fs from "fs";
+
