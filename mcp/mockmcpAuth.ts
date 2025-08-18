@@ -1,7 +1,7 @@
 import { mcpCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/mcpCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 import type { HistoryItem } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import type { SessionManager } from "../session/sessions.js";
+import type { SessionManager } from "../session/SessionManager.js";
 
 export async function mockmcpAuth(
   sessionId: string,

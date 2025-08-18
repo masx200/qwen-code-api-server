@@ -1,7 +1,7 @@
-import { describe, expect, test } from "vitest";
-import { mockQuit } from "./mock-quit.js";
-import { SessionManager } from "../session/sessions.js";
 import os from "node:os";
+import { describe, expect, test } from "vitest";
+import { SessionManager } from "../session/SessionManager.js";
+import { mockQuit } from "./mock-quit.js";
 describe("mockQuit", () => {
   test("should return expected structure when quitCommand.action is a function", async () => {
     // Setup mock session manager

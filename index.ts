@@ -17,8 +17,8 @@ import {
 } from "./mcp/registerMcpListRoute.js";
 import { registerMcprefreshRoute } from "./mcp/registerMcpRefreshRoute.js";
 import { registerQuitRoute } from "./quit/registerQuitRoute.js";
+import { SessionManager } from "./session/SessionManager.js";
 import { registerSessionRoute } from "./session/route-session.js";
-import { SessionManager } from "./session/sessions.js";
 import { start } from "./start.js";
 import { registerStatsModelRoute } from "./stats/registerStatsModelRoute.js";
 import { registerStatsRoute } from "./stats/registerStatsRoute.js";
@@ -69,22 +69,21 @@ async function main(authOptions: AuthOptions) {
       console.log("listening address", address);
     },
     authOptions.port,
-    authOptions.host,
+    authOptions.host
   ).then(console.log, console.error);
   await fastify.ready().then(async () => {
     if (authOptions.document) {
       console.log("swagger document path", authOptions.document);
       await fs.promises.writeFile(
         authOptions.document,
-        JSON.stringify(fastify.swagger(), null, 4),
+        JSON.stringify(fastify.swagger(), null, 4)
       );
     } else {
       console.log(
         "swagger document",
-        JSON.stringify(fastify.swagger(), null, 4),
+        JSON.stringify(fastify.swagger(), null, 4)
       );
     }
   }, console.error);
 }
 await main(authOptions).then(console.log, console.error);
-

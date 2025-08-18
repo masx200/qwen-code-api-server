@@ -1,14 +1,14 @@
 import type { FastifyInstance } from "fastify";
 
+import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
+import type { SessionManager } from "../session/SessionManager.js";
 import { mockStatsModel } from "./mock-stats.js";
 import { statsRequestSchema } from "./statsRequestSchema.js";
 import { statsResponseSchema } from "./statsResponseSchema.js";
-import type { SessionManager } from "../session/sessions.js";
-import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
 
 export function registerStatsModelRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ) {
   // 注册 stats model 命令路由
   fastify.post(
@@ -47,8 +47,8 @@ export function registerStatsModelRoute(
 
         // 保存会话统计信息
         const sessionStats = {
-          sessionStartTime: session.session.stats.sessionStartTime
-            .toISOString(),
+          sessionStartTime:
+            session.session.stats.sessionStartTime.toISOString(),
           promptCount: session.session.stats.promptCount,
           lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
           metrics: session.session.stats.metrics,
@@ -70,6 +70,6 @@ export function registerStatsModelRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
 }

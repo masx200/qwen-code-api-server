@@ -12,6 +12,8 @@ export async function createSession(cwd, argv) {
     const config = (await creategeminiconfig(cwd, argv));
     const uiTelemetryService = new UiTelemetryService();
     return {
+        argv,
+        cwd,
         session: {
             stats: {
                 sessionStartTime: new Date(),
@@ -34,26 +36,5 @@ export async function createSession(cwd, argv) {
             config: config,
         },
     };
-}
-export class SessionManager {
-    createId() {
-        return createId();
-    }
-    listSessions() {
-        return Array.from(this.sessions.keys());
-    }
-    createSession(cwd, argv) {
-        return createSession(cwd, argv);
-    }
-    sessions = new Map();
-    getSession(sessionId) {
-        return this.sessions.get(sessionId);
-    }
-    deleteSession(sessionId) {
-        this.sessions.delete(sessionId);
-    }
-    setSession(sessionId, session) {
-        this.sessions.set(sessionId, session);
-    }
 }
 //# sourceMappingURL=sessions.js.map

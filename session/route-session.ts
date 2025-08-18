@@ -1,5 +1,8 @@
 import type { FastifyInstance } from "fastify";
 import os from "os";
+import z from "zod";
+import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
+import { SessionManager } from "./SessionManager.js";
 import { createSessionResponseSchema } from "./createSessionRequestSchema.js";
 import {
   deleteSessionRequestSchema,
@@ -10,16 +13,14 @@ import {
   getSessionResponseSchema,
 } from "./getSessionRequestSchema.js";
 import { listSessionsResponseSchema } from "./listSessionsResponseSchema.js";
-import { createId, SessionManager } from "./sessions.js";
-import z from "zod";
-import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
+import { createId } from "./sessions.js";
 const createSessionRequestSchema = z.object({
   cwd: z.string(),
   argv: z.array(z.string()),
 });
 export function registerSessionRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ) {
   // 注册会话相关路由
   // 创建会话
@@ -51,8 +52,8 @@ export function registerSessionRoute(
           success: true,
           sessionId: actualSessionId,
           session: {
-            sessionStartTime: session.session.stats.sessionStartTime
-              .toISOString(),
+            sessionStartTime:
+              session.session.stats.sessionStartTime.toISOString(),
             promptCount: session.session.stats.promptCount,
             lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
             metrics: session.session.stats.metrics,
@@ -68,7 +69,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
   // 列出所有会话
   fastify.get(
@@ -99,7 +100,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
   // 删除会话
   fastify.delete(
@@ -144,7 +145,7 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
   // 获取会话详情
   fastify.post(
@@ -177,8 +178,8 @@ export function registerSessionRoute(
           success: true,
           sessionId,
           session: {
-            sessionStartTime: session.session.stats.sessionStartTime
-              .toISOString(),
+            sessionStartTime:
+              session.session.stats.sessionStartTime.toISOString(),
             promptCount: session.session.stats.promptCount,
             lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
             metrics: session.session.stats.metrics,
@@ -193,6 +194,6 @@ export function registerSessionRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
 }

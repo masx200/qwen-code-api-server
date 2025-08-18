@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { SessionManager } from "../session/sessions.js";
-import { mockStats, mockStatsModel, mockStatsTools } from "./mock-stats.js";
 import os from "node:os";
+import { beforeEach, describe, expect, it } from "vitest";
+import { SessionManager } from "../session/SessionManager.js";
+import { mockStats, mockStatsModel, mockStatsTools } from "./mock-stats.js";
 describe("MockStats Functions - Refactored Tests (No statsCommand)", async () => {
     let mockSessionManager;
     const mockSessionId = "test-session-123";

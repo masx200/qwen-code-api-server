@@ -1,7 +1,7 @@
+import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
 import { mockStatsModel } from "./mock-stats.js";
 import { statsRequestSchema } from "./statsRequestSchema.js";
 import { statsResponseSchema } from "./statsResponseSchema.js";
-import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
 export function registerStatsModelRoute(fastify, sessionManager) {
     fastify.post("/command/stats/model", {
         schema: {
@@ -28,8 +28,7 @@ export function registerStatsModelRoute(fastify, sessionManager) {
             const result = await mockStatsModel(sessionId, sessionManager);
             console.log(JSON.stringify({ result }, null, 4));
             const sessionStats = {
-                sessionStartTime: session.session.stats.sessionStartTime
-                    .toISOString(),
+                sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
                 promptCount: session.session.stats.promptCount,
                 lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                 metrics: session.session.stats.metrics,

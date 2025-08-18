@@ -3,11 +3,11 @@ import type {
   CommandContext,
   QuitActionReturn,
 } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
-import type { SessionManager } from "../session/sessions.js";
+import type { SessionManager } from "../session/SessionManager.js";
 
 export async function mockQuit(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{
   type: string;
   messages: {

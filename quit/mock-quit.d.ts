@@ -1,4 +1,4 @@
-import type { SessionManager } from "../session/sessions.js";
+import type { SessionManager } from "../session/SessionManager.js";
 export declare function mockQuit(sessionId: string, sessionManager: SessionManager): Promise<{
     type: string;
     messages: {

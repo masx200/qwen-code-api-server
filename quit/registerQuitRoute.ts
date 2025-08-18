@@ -1,13 +1,13 @@
 import type { FastifyInstance } from "fastify";
 
+import type { SessionManager } from "../session/SessionManager.js";
 import { mockQuit } from "./mock-quit.js";
 import { quitRequestSchema } from "./quitRequestSchema.js";
 import { quitResponseSchema } from "./quitResponseSchema.js";
-import type { SessionManager } from "../session/sessions.js";
 
 export function registerQuitRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ) {
   // 注册 quit 命令路由
   fastify.post(
@@ -46,8 +46,8 @@ export function registerQuitRoute(
 
         // 保存会话统计信息
         const sessionStats = {
-          sessionStartTime: session.session.stats.sessionStartTime
-            .toISOString(),
+          sessionStartTime:
+            session.session.stats.sessionStartTime.toISOString(),
           promptCount: session.session.stats.promptCount,
           lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
           metrics: session.session.stats.metrics,
@@ -72,6 +72,6 @@ export function registerQuitRoute(
           message: String(error),
         });
       }
-    },
+    }
   );
 }

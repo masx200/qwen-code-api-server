@@ -10,18 +10,22 @@ export function createId() {
     .join("");
 }
 export interface SessionContext {
+  cwd: string;
+  argv: string[];
   session: CommandContext["session"];
   services: CommandContext["services"];
 }
 export async function createSession(
   cwd: string,
-  argv: string[],
+  argv: string[]
 ): Promise<SessionContext> {
   const sessionShellAllowlist = new Set<string>();
   const config = (await creategeminiconfig(cwd, argv)) as Config;
   const uiTelemetryService = new UiTelemetryService();
 
   return {
+    argv,
+    cwd,
     session: {
       stats: {
         sessionStartTime: new Date(),
@@ -45,26 +49,4 @@ export async function createSession(
       config: config,
     },
   } as SessionContext;
-}
-
-export class SessionManager {
-  createId() {
-    return createId();
-  }
-  listSessions() {
-    return Array.from(this.sessions.keys());
-  }
-  createSession(cwd: string, argv: string[]): Promise<SessionContext> {
-    return createSession(cwd, argv);
-  }
-  sessions = new Map<string, SessionContext>();
-  getSession(sessionId: string): SessionContext | undefined {
-    return this.sessions.get(sessionId);
-  }
-  deleteSession(sessionId: string) {
-    this.sessions.delete(sessionId);
-  }
-  setSession(sessionId: string, session: SessionContext) {
-    this.sessions.set(sessionId, session);
-  }
 }

@@ -5,11 +5,11 @@ import type {
   HistoryItemStats,
   HistoryItemToolStats,
 } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import type { SessionManager } from "../session/sessions.js";
+import type { SessionManager } from "../session/SessionManager.js";
 
 export async function mockStats(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{ itemData?: HistoryItemStats; baseTimestamp?: number }> {
   const session = sessionManager.getSession(sessionId);
   if (!session) {
@@ -39,7 +39,7 @@ export async function mockStats(
 
 export async function mockStatsModel(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{ itemData?: HistoryItemModelStats; baseTimestamp?: number }> {
   const session = sessionManager.getSession(sessionId);
   if (!session) {
@@ -61,7 +61,7 @@ export async function mockStatsModel(
     },
   } as CommandContext;
   const modelCommand = statsCommand.subCommands?.find(
-    (command) => command.name === "model",
+    (command) => command.name === "model"
   );
   if (typeof modelCommand?.action === "function") {
     await modelCommand.action(context, "");
@@ -73,7 +73,7 @@ export async function mockStatsModel(
 
 export async function mockStatsTools(
   sessionId: string,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ): Promise<{ itemData?: HistoryItemToolStats; baseTimestamp?: number }> {
   const session = sessionManager.getSession(sessionId);
   if (!session) {
@@ -95,7 +95,7 @@ export async function mockStatsTools(
     },
   } as CommandContext;
   const toolsCommand = statsCommand.subCommands?.find(
-    (command) => command.name === "tools",
+    (command) => command.name === "tools"
   );
   if (typeof toolsCommand?.action === "function") {
     await toolsCommand.action(context, "");

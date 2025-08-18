@@ -7,8 +7,8 @@ import { registerMcpAuthWebSocketRoute } from "./mcp/registerMcpAuthWebSocketRou
 import { registerMcpListRoute, registerMcpRoute, } from "./mcp/registerMcpListRoute.js";
 import { registerMcprefreshRoute } from "./mcp/registerMcpRefreshRoute.js";
 import { registerQuitRoute } from "./quit/registerQuitRoute.js";
+import { SessionManager } from "./session/SessionManager.js";
 import { registerSessionRoute } from "./session/route-session.js";
-import { SessionManager } from "./session/sessions.js";
 import { start } from "./start.js";
 import { registerStatsModelRoute } from "./stats/registerStatsModelRoute.js";
 import { registerStatsRoute } from "./stats/registerStatsRoute.js";

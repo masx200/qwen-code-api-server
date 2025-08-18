@@ -1,7 +1,7 @@
 import { mcpCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/mcpCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 import type { HistoryItem } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import type { SessionManager } from "../session/sessions.js";
+import type { SessionManager } from "../session/SessionManager.js";
 
 export async function mockmcpRefresh(
   sessionId: string,
@@ -15,12 +15,13 @@ export async function mockmcpRefresh(
     itemData?: Omit<HistoryItem, "id">;
     baseTimestamp?: number;
   }>
-> { const session = sessionManager.sessions.get(sessionId);
+> {
+  const session = sessionManager.sessions.get(sessionId);
   if (!session) {
     throw new Error("Session not found");
   }
   const refreshCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "refresh",
+    (command) => command.name === "refresh"
   );
   if (typeof refreshCommand?.action === "function") {
     return new ReadableStream<{
@@ -60,7 +61,7 @@ export async function mockmcpRefresh(
         if (typeof refreshCommand?.action === "function") {
           const slashcommandactionreturn = await refreshCommand?.action(
             context,
-            args,
+            args
           );
           if (slashcommandactionreturn) {
             controller.enqueue(slashcommandactionreturn);

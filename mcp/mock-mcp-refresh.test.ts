@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { SessionManager } from "../session/SessionManager.js";
+import { readStreamToArray } from "../utils/stream-reader.js";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
 import { readSettings } from "./settings-reader.js";
-import { readStreamToArray } from "../utils/stream-reader.js";
-import { SessionManager } from "../session/sessions.js";
 
 describe("mockmcp refresh", () => {
   it(

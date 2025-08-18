@@ -1,5 +1,5 @@
 import type { HistoryItemModelStats, HistoryItemStats, HistoryItemToolStats } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import type { SessionManager } from "../session/sessions.js";
+import type { SessionManager } from "../session/SessionManager.js";
 export declare function mockStats(sessionId: string, sessionManager: SessionManager): Promise<{
     itemData?: HistoryItemStats;
     baseTimestamp?: number;

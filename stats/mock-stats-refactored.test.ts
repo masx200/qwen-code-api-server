@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { SessionManager } from "../session/sessions.js";
 import type { HistoryItemModelStats } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import { mockStats, mockStatsModel, mockStatsTools } from "./mock-stats.js";
 import os from "node:os";
+import { beforeEach, describe, expect, it } from "vitest";
+import { SessionManager } from "../session/SessionManager.js";
+import { mockStats, mockStatsModel, mockStatsTools } from "./mock-stats.js";
 // 创建不依赖statsCommand的测试版本
 
 describe("MockStats Functions - Refactored Tests (No statsCommand)", async () => {
@@ -17,7 +17,7 @@ describe("MockStats Functions - Refactored Tests (No statsCommand)", async () =>
     // 添加测试数据
     mockSessionManager.sessions.set(
       mockSessionId,
-      await mockSessionManager.createSession(cwd, argv),
+      await mockSessionManager.createSession(cwd, argv)
     );
   });
 

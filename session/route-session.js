@@ -1,11 +1,12 @@
 import os from "os";
+import z from "zod";
+import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
+import { SessionManager } from "./SessionManager.js";
 import { createSessionResponseSchema } from "./createSessionRequestSchema.js";
 import { deleteSessionRequestSchema, deleteSessionResponseSchema, } from "./deleteSessionRequestSchema.js";
 import { getSessionRequestSchema, getSessionResponseSchema, } from "./getSessionRequestSchema.js";
 import { listSessionsResponseSchema } from "./listSessionsResponseSchema.js";
-import { createId, SessionManager } from "./sessions.js";
-import z from "zod";
-import { zodtojsonSchema } from "../mcp/registerMcpListRoute.js";
+import { createId } from "./sessions.js";
 const createSessionRequestSchema = z.object({
     cwd: z.string(),
     argv: z.array(z.string()),
@@ -33,8 +34,7 @@ export function registerSessionRoute(fastify, sessionManager) {
                 success: true,
                 sessionId: actualSessionId,
                 session: {
-                    sessionStartTime: session.session.stats.sessionStartTime
-                        .toISOString(),
+                    sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
                     promptCount: session.session.stats.promptCount,
                     lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                     metrics: session.session.stats.metrics,
@@ -144,8 +144,7 @@ export function registerSessionRoute(fastify, sessionManager) {
                 success: true,
                 sessionId,
                 session: {
-                    sessionStartTime: session.session.stats.sessionStartTime
-                        .toISOString(),
+                    sessionStartTime: session.session.stats.sessionStartTime.toISOString(),
                     promptCount: session.session.stats.promptCount,
                     lastPromptTokenCount: session.session.stats.lastPromptTokenCount,
                     metrics: session.session.stats.metrics,

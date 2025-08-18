@@ -1,15 +1,33 @@
 import { toolsCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/toolsCommand.js";
 import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { ToolRegistry } from "@qwen-code/qwen-code-core/dist/src/tools/tool-registry.js";
-import { creategeminiconfig } from "../mcp/gemini.js";
-export async function mocktools(cwd, argv, args = "") {
+export async function mocktools(sessionId, sessionManager, args = "") {
+    const session = sessionManager.sessions.get(sessionId);
+    if (!session) {
+        throw new Error("Session not found");
+    }
     const result = {};
-    const config = (await creategeminiconfig(cwd, argv));
-    const context = createcontext(config, function (itemData, baseTimestamp) {
-        result.itemData = itemData;
-        result.baseTimestamp = baseTimestamp;
-        return 0;
-    });
+    const context = {
+        session: {
+            stats: session.session.stats,
+            sessionShellAllowlist: session.session.sessionShellAllowlist,
+        },
+        services: {
+            settings: {
+                merged: {
+                    selectedAuthType: "openai",
+                },
+            },
+            config: session.services.config,
+        },
+        ui: {
+            addItem: function (itemData, baseTimestamp) {
+                result.itemData = itemData;
+                result.baseTimestamp = baseTimestamp;
+                return 0;
+            },
+        },
+    };
     if (typeof toolsCommand.action === "function") {
         await toolsCommand.action(context, args);
         return result;

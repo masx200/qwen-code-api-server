@@ -1,1 +1,1 @@
-{"version":3,"file":"registerStatsRoute.d.ts","sourceRoot":"","sources":["registerStatsRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAK/C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,wBAAwB,CAAC;AAG7D,wBAAgB,kBAAkB,CAChC,OAAO,EAAE,eAAe,EACxB,cAAc,EAAE,cAAc,QAgE/B"}
+{"version":3,"file":"registerStatsRoute.d.ts","sourceRoot":"","sources":["registerStatsRoute.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAG/C,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,8BAA8B,CAAC;AAKnE,wBAAgB,kBAAkB,CAChC,OAAO,EAAE,eAAe,EACxB,cAAc,EAAE,cAAc,QAgE/B"}
