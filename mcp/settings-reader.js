@@ -1,9 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
 import os from "os";
-export async function readSettings() {
+export async function readSettings(projectPath) {
     try {
-        const settingsPath = path.join(os.homedir(), ".qwen", "settings.json");
+        const settingsPath = projectPath
+            ? path.join(projectPath, ".qwen", "settings.json")
+            : path.join(os.homedir(), ".qwen", "settings.json");
         try {
             await fs.access(settingsPath);
         }

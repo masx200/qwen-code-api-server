@@ -6,11 +6,13 @@ import os from "os";
  * 读取并解析用户主目录下的 .qwen/settings.json 文件
  * @returns 解析后的对象，如果文件不存在或解析失败则返回空对象
  */
-export async function readSettings(): Promise<
-  Record<string, any> & { mcpServers: Record<string, any> }
-> {
+export async function readSettings(
+  projectPath?: string
+): Promise<Record<string, any> & { mcpServers: Record<string, any> }> {
   try {
-    const settingsPath = path.join(os.homedir(), ".qwen", "settings.json");
+    const settingsPath = projectPath
+      ? path.join(projectPath, ".qwen", "settings.json")
+      : path.join(os.homedir(), ".qwen", "settings.json");
 
     // 检查文件是否存在
     try {
