@@ -1,11 +1,14 @@
-import * as os from "os";
 import { describe, expect, it } from "vitest";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
 import { readSettings } from "./settings-reader.js";
 import { readStreamToArray } from "../utils/stream-reader.js";
+import { SessionManager } from "../session/sessions.js";
 describe("mockmcp refresh", () => {
     it("应该返回 MCP 服务器列表", async () => {
-        const result = await readStreamToArray(await mockmcpRefresh(os.homedir(), [], ""));
+        const sessionManager = new SessionManager();
+        const sessionid = sessionManager.createId();
+        sessionManager.setSession(sessionid, await sessionManager.createSession(process.cwd(), []));
+        const result = await readStreamToArray(await mockmcpRefresh(sessionid, sessionManager, ""));
         console.log(JSON.stringify(result, null, 4));
         expect(result[1]).toMatchObject({
             type: "message",

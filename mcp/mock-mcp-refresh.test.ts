@@ -1,15 +1,23 @@
-import * as os from "os";
 import { describe, expect, it } from "vitest";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
 import { readSettings } from "./settings-reader.js";
 import { readStreamToArray } from "../utils/stream-reader.js";
+import { SessionManager } from "../session/sessions.js";
 
 describe("mockmcp refresh", () => {
   it(
     "应该返回 MCP 服务器列表",
     async () => {
+      const sessionManager = new SessionManager();
+
+      const sessionid = sessionManager.createId();
+
+      sessionManager.setSession(
+        sessionid,
+        await sessionManager.createSession(process.cwd(), [])
+      );
       const result = await readStreamToArray(
-        await mockmcpRefresh(os.homedir(), [], ""),
+        await mockmcpRefresh(sessionid, sessionManager, "")
       );
       console.log(JSON.stringify(result, null, 4));
       expect(result[1]).toMatchObject({
@@ -28,7 +36,7 @@ describe("mockmcp refresh", () => {
         ) {
           expect(
             //@ts-ignore
-            result[1].content?.slice(0, "Configured MCP servers:".length),
+            result[1].content?.slice(0, "Configured MCP servers:".length)
           ).toBe("Configured MCP servers:");
         } else {
           //@ts-ignore
@@ -49,6 +57,6 @@ describe("mockmcp refresh", () => {
     },
     {
       timeout: 10000,
-    },
+    }
   );
 });

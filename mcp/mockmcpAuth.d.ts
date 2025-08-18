@@ -1,5 +1,6 @@
 import type { HistoryItem } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-export declare function mockmcpAuth(cwd: string, argv: string[], args?: string): Promise<ReadableStream<{
+import type { SessionManager } from "../session/sessions.js";
+export declare function mockmcpAuth(sessionId: string, sessionManager: SessionManager, args?: string): Promise<ReadableStream<{
     type?: string;
     messageType?: string;
     content?: string;

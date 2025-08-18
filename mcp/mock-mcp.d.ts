@@ -1,12 +1,13 @@
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import type { HistoryItem } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-export declare function mockmcp(cwd: string, argv: string[], args?: string): Promise<{
+import type { SessionManager } from "../session/sessions.js";
+export declare function mockmcp(sessionId: string, sessionManager: SessionManager, args?: string): Promise<{
     type?: string;
     messageType?: string;
     content?: string;
 }>;
-export declare function mockmcpList(cwd: string, argv: string[], args?: string): Promise<{
+export declare function mockmcpList(sessionId: string, sessionManager: SessionManager, args?: string): Promise<{
     type?: string;
     messageType?: string;
     content?: string;
