@@ -1,9 +1,7 @@
 import { z } from "zod";
-const mcpAuthDataSchema = z.object({
-    cwd: z.string(),
-    argv: z.array(z.string()),
+export const mcpAuthDataSchema = z.object({
     args: z.string(),
-    id: z.string(),
+    sessionId: z.string(),
 });
 export function validateMcpAuthData(data) {
     try {
