@@ -5,27 +5,44 @@ import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { ToolRegistry } from "@qwen-code/qwen-code-core/dist/src/tools/tool-registry.js";
 import type { HistoryItem } from "@qwen-code/qwen-code/dist/src/ui/types.js";
 
-import { creategeminiconfig } from "./gemini.js";
+import type { SessionManager } from "../session/sessions.js";
 export async function mockmcp(
-  cwd: string,
-  argv: string[],
-  args: string = "",
+  sessionId: string,
+  sessionManager: SessionManager,
+  args: string = ""
 ): Promise<{
   type?: string;
   messageType?: string;
   content?: string;
 }> {
+  const session = sessionManager.sessions.get(sessionId);
+  if (!session) {
+    throw new Error("Session not found");
+  }
   const result: { itemData?: Omit<HistoryItem, "id">; baseTimestamp?: number } =
     {};
-  const config = (await creategeminiconfig(cwd, argv)) as Config;
-  const context: CommandContext = createcontext(
-    config,
-    function (itemData, baseTimestamp) {
-      result.itemData = itemData;
-      result.baseTimestamp = baseTimestamp;
-      return 0;
+  const context: CommandContext = {
+    session: {
+      stats: session.session.stats,
+      sessionShellAllowlist: session.session.sessionShellAllowlist,
     },
-  ) as CommandContext;
+    services: {
+      settings: {
+        merged: {
+          selectedAuthType: "openai",
+        },
+      },
+      config: session.services.config,
+    },
+    ui: {
+      addItem: function (itemData, baseTimestamp) {
+        result.itemData = itemData;
+        result.baseTimestamp = baseTimestamp;
+        return 0;
+      },
+    },
+  } as CommandContext;
+
   if (typeof mcpCommand.action === "function") {
     const result2 = (await mcpCommand.action(context, args)) as {
       type?: string;
@@ -39,27 +56,44 @@ export async function mockmcp(
 }
 
 export async function mockmcpList(
-  cwd: string,
-  argv: string[],
-  args: string = "",
+  sessionId: string,
+  sessionManager: SessionManager,
+  args: string = ""
 ): Promise<{
   type?: string;
   messageType?: string;
   content?: string;
 }> {
+  const session = sessionManager.sessions.get(sessionId);
+  if (!session) {
+    throw new Error("Session not found");
+  }
   const result: { itemData?: Omit<HistoryItem, "id">; baseTimestamp?: number } =
     {};
-  const config = (await creategeminiconfig(cwd, argv)) as Config;
-  const context: CommandContext = createcontext(
-    config,
-    function (itemData, baseTimestamp) {
-      result.itemData = itemData;
-      result.baseTimestamp = baseTimestamp;
-      return 0;
+  const context: CommandContext = {
+    session: {
+      stats: session.session.stats,
+      sessionShellAllowlist: session.session.sessionShellAllowlist,
     },
-  ) as CommandContext;
+    services: {
+      settings: {
+        merged: {
+          selectedAuthType: "openai",
+        },
+      },
+      config: session.services.config,
+    },
+    ui: {
+      addItem: function (itemData, baseTimestamp) {
+        result.itemData = itemData;
+        result.baseTimestamp = baseTimestamp;
+        return 0;
+      },
+    },
+  } as CommandContext;
+
   const listCommand = mcpCommand.subCommands?.find(
-    (command) => command.name === "list",
+    (command) => command.name === "list"
   );
   if (typeof listCommand?.action === "function") {
     return (await listCommand.action(context, args)) as {
@@ -74,7 +108,7 @@ export async function mockmcpList(
 
 export function createcontext(
   config: Config,
-  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number,
+  addItem: (itemData: Omit<HistoryItem, "id">, baseTimestamp: number) => number
 ) {
   const context: CommandContext = {
     services: {
@@ -104,7 +138,7 @@ export function createcontext(
     ui: {
       addItem(
         itemData: Omit<HistoryItem, "id">,
-        baseTimestamp: number,
+        baseTimestamp: number
       ): number {
         return addItem(itemData, baseTimestamp);
       },

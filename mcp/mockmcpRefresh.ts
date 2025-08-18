@@ -1,14 +1,12 @@
-import { Config } from "@qwen-code/qwen-code-core/dist/src/config/config.js";
 import { mcpCommand } from "@qwen-code/qwen-code/dist/src/ui/commands/mcpCommand.js";
 import type { CommandContext } from "@qwen-code/qwen-code/dist/src/ui/commands/types.js";
 import type { HistoryItem } from "@qwen-code/qwen-code/dist/src/ui/types.js";
-import { creategeminiconfig } from "./gemini.js";
-import { createcontext } from "./mock-mcp.js";
+import type { SessionManager } from "../session/sessions.js";
 
 export async function mockmcpRefresh(
-  cwd: string,
-  argv: string[],
-  args: string = "",
+  sessionId: string,
+  sessionManager: SessionManager,
+  args: string = ""
 ): Promise<
   ReadableStream<{
     type?: string;
@@ -17,7 +15,10 @@ export async function mockmcpRefresh(
     itemData?: Omit<HistoryItem, "id">;
     baseTimestamp?: number;
   }>
-> {
+> { const session = sessionManager.sessions.get(sessionId);
+  if (!session) {
+    throw new Error("Session not found");
+  }
   const refreshCommand = mcpCommand.subCommands?.find(
     (command) => command.name === "refresh",
   );
@@ -30,20 +31,32 @@ export async function mockmcpRefresh(
       baseTimestamp?: number;
     }>({
       async start(controller) {
-        const config = (await creategeminiconfig(cwd, argv)) as Config;
-        const context: CommandContext = createcontext(
-          config,
-          function (itemData, baseTimestamp) {
-            const result: {
-              itemData?: Omit<HistoryItem, "id">;
-              baseTimestamp?: number;
-            } = {};
-            result.itemData = itemData;
-            result.baseTimestamp = baseTimestamp;
-            controller.enqueue(result);
-            return 0;
+        const context: CommandContext = {
+          session: {
+            stats: session.session.stats,
+            sessionShellAllowlist: session.session.sessionShellAllowlist,
           },
-        ) as CommandContext;
+          services: {
+            settings: {
+              merged: {
+                selectedAuthType: "openai",
+              },
+            },
+            config: session.services.config,
+          },
+          ui: {
+            addItem: function (itemData, baseTimestamp) {
+              const result: {
+                itemData?: Omit<HistoryItem, "id">;
+                baseTimestamp?: number;
+              } = {};
+              result.itemData = itemData;
+              result.baseTimestamp = baseTimestamp;
+              controller.enqueue(result);
+              return 0;
+            },
+          },
+        } as CommandContext;
         if (typeof refreshCommand?.action === "function") {
           const slashcommandactionreturn = await refreshCommand?.action(
             context,
