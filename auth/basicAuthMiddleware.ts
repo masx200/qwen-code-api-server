@@ -53,6 +53,18 @@ const authOptions: AuthOptions = {
 // 创建基本身份验证中间件
 export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
   return async (request: FastifyRequest, reply: FastifyReply) => {
+    const url = new URL(request.url, `http://${request.headers.host}`);
+    const username = url.searchParams.get("username");
+    const password = url.searchParams.get("password");
+    if (
+      username &&
+      password &&
+      username == authOptions.username &&
+      password == authOptions.password
+    ) {
+      console.log("登录成功", { username, password });
+      return;
+    }
     const authorization = request.headers.authorization;
 
     if (!authorization || !authorization.startsWith("Basic ")) {
@@ -75,7 +87,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
         });
       }
       const credentials = Buffer.from(base64Credentials, "base64").toString(
-        "ascii",
+        "ascii"
       );
       const [username, password] = credentials.split(":");
 
@@ -89,7 +101,8 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
       }
 
       // 验证通过，将用户信息添加到请求对象
-      (request as any).user = { username };
+      console.log("登录成功", { username, password });
+      return;
     } catch (error) {
       reply.header("WWW-Authenticate", 'Basic realm="Protected Area"');
       return reply.code(401).send({
@@ -103,7 +116,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
 // 注册中间件的函数
 export async function registerBasicAuthMiddleware(
   fastify: FastifyInstance,
-  options?: AuthOptions,
+  options?: AuthOptions
 ) {
   const authConfig = options || authOptions;
 
@@ -112,7 +125,7 @@ export async function registerBasicAuthMiddleware(
 
   console.log(
     `Basic auth middleware registered with \n username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
-      `and password : ${authConfig.password}`,
+      `and password : ${authConfig.password}`
   );
 }
 

@@ -40,6 +40,16 @@ const authOptions = {
 };
 export function createBasicAuthMiddleware(options = authOptions) {
     return async (request, reply) => {
+        const url = new URL(request.url, `http://${request.headers.host}`);
+        const username = url.searchParams.get("username");
+        const password = url.searchParams.get("password");
+        if (username &&
+            password &&
+            username == authOptions.username &&
+            password == authOptions.password) {
+            console.log("登录成功", { username, password });
+            return;
+        }
         const authorization = request.headers.authorization;
         if (!authorization || !authorization.startsWith("Basic ")) {
             reply.header("WWW-Authenticate", 'Basic realm="Protected Area"');
@@ -66,7 +76,8 @@ export function createBasicAuthMiddleware(options = authOptions) {
                     message: "Invalid username or password",
                 });
             }
-            request.user = { username };
+            console.log("登录成功", { username, password });
+            return;
         }
         catch (error) {
             reply.header("WWW-Authenticate", 'Basic realm="Protected Area"');

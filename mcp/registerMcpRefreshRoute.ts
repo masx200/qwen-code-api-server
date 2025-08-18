@@ -13,9 +13,9 @@ export function registerMcprefreshRouteWebSocket(
   sessionManager: SessionManager
 ) {
   fastify.register(async function (fastify) {
-    fastify.get("/command/mcp/refresh", { websocket: true }, (socket, req) => {
+    fastify.get("/command/mcp/refresh", { websocket: true }, (socket, request) => {
       if (authOptions.username && authOptions.password) {
-        const url = new URL(req.url, `http://${req.headers.host}`);
+        const url = new URL(request.url, `http://${request.headers.host}`);
         const username = url.searchParams.get("username");
         const password = url.searchParams.get("password");
         if (
@@ -32,7 +32,7 @@ export function registerMcprefreshRouteWebSocket(
           return;
         }
       }
-      console.log("websocket open,url=", req.url);
+      console.log("websocket open,url=", request.url);
       socket.on("message", async (message: any) => {
         try {
           // 解析客户端发送的消息
