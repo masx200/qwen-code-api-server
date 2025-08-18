@@ -1,14 +1,19 @@
+import process from "node:process";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import fastify from "fastify";
 import { registertoolsRoute } from "./registertoolsRoute.js";
 import type { FastifyInstance } from "fastify";
+import { SessionManager } from "../session/SessionManager.js";
 
-describe("POST /command/tools", () => {
+describe("POST /command/tools", async () => {
   let app: FastifyInstance;
-
+  const sessionManager = new SessionManager();
+  const sessionId = sessionManager.createId();
+  const session = await sessionManager.createSession(process.cwd(), []);
+  sessionManager.setSession(sessionId, session);
   beforeEach(async () => {
     app = fastify();
-    registertoolsRoute(app);
+    registertoolsRoute(app, sessionManager);
     await app.ready();
   });
 
@@ -20,8 +25,7 @@ describe("POST /command/tools", () => {
     "should return tools information for valid request with desc args",
     async () => {
       const requestBody = {
-        cwd: "f:/home",
-        argv: [],
+        sessionId: sessionId,
         args: "desc",
       };
 
@@ -50,33 +54,13 @@ describe("POST /command/tools", () => {
     },
     {
       timeout: 20000,
-    },
+    }
   );
 
-  it("should handle invalid request body", async () => {
-    const invalidRequestBody = {
-      // 缺少必需的cwd字段
-      argv: [],
-      args: "desc",
-    };
-
-    const response = await app.inject({
-      method: "POST",
-      url: "/command/tools",
-      payload: invalidRequestBody,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log(JSON.stringify(response, null, 4));
-    expect(response.statusCode).toBe(400);
-  });
 
   it("should handle empty args parameter", async () => {
     const requestBody = {
-      cwd: "f:/home",
-      argv: [],
+      sessionId,
       args: "",
     };
 

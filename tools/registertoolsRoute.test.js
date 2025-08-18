@@ -1,11 +1,17 @@
+import process from "node:process";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import fastify from "fastify";
 import { registertoolsRoute } from "./registertoolsRoute.js";
-describe("POST /command/tools", () => {
+import { SessionManager } from "../session/SessionManager.js";
+describe("POST /command/tools", async () => {
     let app;
+    const sessionManager = new SessionManager();
+    const sessionId = sessionManager.createId();
+    const session = await sessionManager.createSession(process.cwd(), []);
+    sessionManager.setSession(sessionId, session);
     beforeEach(async () => {
         app = fastify();
-        registertoolsRoute(app);
+        registertoolsRoute(app, sessionManager);
         await app.ready();
     });
     afterEach(async () => {
@@ -13,8 +19,7 @@ describe("POST /command/tools", () => {
     });
     it("should return tools information for valid request with desc args", async () => {
         const requestBody = {
-            cwd: "f:/home",
-            argv: [],
+            sessionId: sessionId,
             args: "desc",
         };
         const response = await app.inject({
@@ -42,7 +47,7 @@ describe("POST /command/tools", () => {
     });
     it("should handle invalid request body", async () => {
         const invalidRequestBody = {
-            argv: [],
+            sessionId,
             args: "desc",
         };
         const response = await app.inject({
@@ -58,8 +63,7 @@ describe("POST /command/tools", () => {
     });
     it("should handle empty args parameter", async () => {
         const requestBody = {
-            cwd: "f:/home",
-            argv: [],
+            sessionId,
             args: "",
         };
         const response = await app.inject({
