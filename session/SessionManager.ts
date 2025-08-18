@@ -27,6 +27,7 @@ export class SessionManager {
     }
   }
   setSession(sessionId: string, session: SessionContext) {
+    session.sessionId = sessionId;
     this.sessions.set(sessionId, session);
     const sessions = this.cwdtosession.get(session.cwd);
     if (sessions) {

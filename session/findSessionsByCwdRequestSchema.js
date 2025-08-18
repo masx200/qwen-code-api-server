@@ -1,4 +1,11 @@
-export const listSessionsResponseSchema = {
+export const findSessionsByCwdRequestSchema = {
+  type: "object",
+  properties: {
+    cwd: { type: "string", description: "要查找的工作目录路径" },
+  },
+  required: ["cwd"],
+};
+export const findSessionsByCwdResponseSchema = {
   type: "object",
   properties: {
     success: { type: "boolean", description: "是否成功" },
@@ -11,4 +18,4 @@ export const listSessionsResponseSchema = {
     },
   },
 };
-//# sourceMappingURL=listSessionsResponseSchema.js.map
+//# sourceMappingURL=findSessionsByCwdRequestSchema.js.map

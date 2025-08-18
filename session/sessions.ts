@@ -10,6 +10,7 @@ export function createId() {
     .join("");
 }
 export interface SessionContext {
+  sessionId: string;
   cwd: string;
   argv: string[];
   session: CommandContext["session"];

@@ -13,6 +13,10 @@ import {
   getSessionResponseSchema,
 } from "./getSessionRequestSchema.js";
 import { listSessionsResponseSchema } from "./listSessionsResponseSchema.js";
+import {
+  findSessionsByCwdRequestSchema,
+  findSessionsByCwdResponseSchema,
+} from "./findSessionsByCwdRequestSchema.js";
 import { createId } from "./sessions.js";
 const createSessionRequestSchema = z.object({
   cwd: z.string(),
@@ -192,6 +196,57 @@ export function registerSessionRoute(
           success: false,
           error: "Internal server error",
           message: String(error),
+        });
+      }
+    },
+  );
+
+  // 根据cwd查找会话
+  fastify.post(
+    "/sessions/cwd",
+    {
+      schema: {
+        description: "根据工作目录路径查找会话",
+        tags: ["sessions"],
+        body: findSessionsByCwdRequestSchema,
+        response: {
+          200: findSessionsByCwdResponseSchema,
+          500: findSessionsByCwdResponseSchema,
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const { cwd } = request.body as { cwd: string };
+
+        if (!cwd) {
+          return {
+            success: false,
+            error: "Invalid request",
+            message: "cwd is required",
+            sessions: [],
+          };
+        }
+
+        const sessions = sessionManager.findSessionsByCwd(cwd);
+
+        return {
+          success: true,
+          sessions: sessions.map((session) => {
+            // 获取对应的sessionId
+            let sessionId = session.sessionId;
+
+            return sessionId;
+          }),
+        };
+      } catch (error) {
+        request.log.error(error);
+        console.error(error);
+        reply.status(500).send({
+          success: false,
+          error: "Internal server error",
+          message: String(error),
+          sessions: [],
         });
       }
     },

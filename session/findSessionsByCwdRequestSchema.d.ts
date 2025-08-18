@@ -1,4 +1,14 @@
-export declare const listSessionsResponseSchema: {
+export declare const findSessionsByCwdRequestSchema: {
+  type: string;
+  properties: {
+    cwd: {
+      type: string;
+      description: string;
+    };
+  };
+  required: string[];
+};
+export declare const findSessionsByCwdResponseSchema: {
   type: string;
   properties: {
     success: {
@@ -22,4 +32,4 @@ export declare const listSessionsResponseSchema: {
     };
   };
 };
-//# sourceMappingURL=listSessionsResponseSchema.d.ts.map
+//# sourceMappingURL=findSessionsByCwdRequestSchema.d.ts.map
