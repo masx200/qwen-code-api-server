@@ -2,9 +2,11 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 export interface AuthOptions {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
   document?: string;
+  port?: number;
+  host?: string;
 }
 
 // 解析命令行参数
@@ -27,12 +29,26 @@ const argv = yargs(hideBin(process.argv))
     description: "HTTP的openapi文件输出的位置",
     default: "",
   })
+  .option("port", {
+    alias: "port",
+    type: "number",
+    description: "HTTP监听端口",
+    default: 3000,
+  })
+  .option("host", {
+    alias: "host",
+    type: "string",
+    description: "HTTP监听主机",
+    default: "0.0.0.0",
+  })
   .help().argv as AuthOptions;
 
 const authOptions: AuthOptions = {
   username: argv.username as string,
   password: argv.password as string,
   document: argv.document as string,
+  port: argv.port as number,
+  host: argv.host as string,
 };
 
 // 创建基本身份验证中间件
@@ -60,7 +76,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
         });
       }
       const credentials = Buffer.from(base64Credentials, "base64").toString(
-        "ascii",
+        "ascii"
       );
       const [username, password] = credentials.split(":");
 
@@ -88,7 +104,7 @@ export function createBasicAuthMiddleware(options: AuthOptions = authOptions) {
 // 注册中间件的函数
 export async function registerBasicAuthMiddleware(
   fastify: FastifyInstance,
-  options?: AuthOptions,
+  options?: AuthOptions
 ) {
   const authConfig = options || authOptions;
 
@@ -96,8 +112,8 @@ export async function registerBasicAuthMiddleware(
   fastify.addHook("onRequest", createBasicAuthMiddleware(authConfig));
 
   console.log(
-    `Basic auth middleware registered with username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
-      `and password : ${authConfig.password}`,
+    `Basic auth middleware registered with \n username: ${authConfig.username} \n and document: ${authConfig.document} \n` +
+      `and password : ${authConfig.password}`
   );
 }
 

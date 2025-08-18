@@ -7,6 +7,7 @@ export async function start(
   fastify: FastifyInstance,
   callback: (err: Error | null, address: string) => void,
   port = 3000,
+  host = "0.0.0.0",
 ) {
   try {
     console.log(

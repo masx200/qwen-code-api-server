@@ -67,7 +67,8 @@ async function main(authOptions: AuthOptions) {
       }
       console.log("listening address", address);
     },
-    3000,
+    authOptions.port,
+    authOptions.host,
   ).then(console.log, console.error);
   await fastify.ready().then(async () => {
     if (authOptions.document) {
