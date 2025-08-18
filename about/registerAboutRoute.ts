@@ -23,8 +23,11 @@ export function registerAboutRoute(fastify: FastifyInstance) {
     async (request, reply) => {
       try {
         const { model } = request.body as { model: string };
+
+        console.log("model", model);
         const result = await mockAbout(model);
         // throw new Error("test error");
+        console.log("result", result);
         return { ...result, success: true, gitCommit: GIT_COMMIT_INFO };
       } catch (error) {
         request.log.error(error);
@@ -35,6 +38,6 @@ export function registerAboutRoute(fastify: FastifyInstance) {
           message: String(error),
         });
       }
-    },
+    }
   );
 }
