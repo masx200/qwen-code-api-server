@@ -15,7 +15,9 @@ export function registerAboutRoute(fastify) {
     }, async (request, reply) => {
         try {
             const { model } = request.body;
+            console.log("model", model);
             const result = await mockAbout(model);
+            console.log("result", result);
             return { ...result, success: true, gitCommit: GIT_COMMIT_INFO };
         }
         catch (error) {
