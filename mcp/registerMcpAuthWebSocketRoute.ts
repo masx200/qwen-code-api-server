@@ -5,13 +5,32 @@ import {
   validateMcpAuthData,
 } from "./validateMcpAuthData.js";
 import type { SessionManager } from "../session/SessionManager.js";
+import { authOptions } from "../auth/basicAuthMiddleware.js";
 export function registerMcpAuthWebSocketRoute(
   fastify: FastifyInstance,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ) {
   // 注册WebSocket路由用于MCP认证
   fastify.register(async function (fastify) {
     fastify.get("/command/mcp/auth", { websocket: true }, (socket, req) => {
+      if (authOptions.username && authOptions.password) {
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const username = url.searchParams.get("username");
+        const password = url.searchParams.get("password");
+        if (
+          username !== authOptions.username ||
+          password !== authOptions.password
+        ) {
+          socket.send(
+            JSON.stringify({
+              type: "error",
+              message: "Invalid username or password",
+            })
+          );
+          socket.close();
+          return;
+        }
+      }
       console.log("websocket open,url=", req.url);
       socket.on("message", async (message: any) => {
         try {
@@ -25,7 +44,7 @@ export function registerMcpAuthWebSocketRoute(
               JSON.stringify({
                 type: "error",
                 message: "Missing required parameters: id must be provided",
-              }),
+              })
             );
             socket.close();
             return;
@@ -37,7 +56,7 @@ export function registerMcpAuthWebSocketRoute(
             const stream = await mockmcpAuth(
               sessionId,
               sessionManager,
-              args || "",
+              args || ""
             );
 
             // 读取流中的数据并发送给客户端
@@ -53,7 +72,7 @@ export function registerMcpAuthWebSocketRoute(
                       sessionId,
                       type: "close",
                       message: "Authentication process completed",
-                    }),
+                    })
                   );
                   break;
                 }
@@ -64,7 +83,7 @@ export function registerMcpAuthWebSocketRoute(
                       sessionId,
                       type: "data",
                       data: value,
-                    }),
+                    })
                   );
                 }
               }
@@ -77,7 +96,7 @@ export function registerMcpAuthWebSocketRoute(
                   message: `Stream reading error: ${
                     error instanceof Error ? error.message : String(error)
                   }`,
-                }),
+                })
               );
             } finally {
               reader.releaseLock();
@@ -91,7 +110,7 @@ export function registerMcpAuthWebSocketRoute(
                 message: `Server error: ${
                   error instanceof Error ? error.message : String(error)
                 }`,
-              }),
+              })
             );
 
             // 发送连接成功消息
@@ -101,7 +120,7 @@ export function registerMcpAuthWebSocketRoute(
                 type: "close",
                 message:
                   "WebSocket connection closed. Send { args:string,sessionId:string} to start mcp authentication",
-              }),
+              })
             );
           }
         } catch (error) {
@@ -112,7 +131,7 @@ export function registerMcpAuthWebSocketRoute(
               message: `Server error: ${
                 error instanceof Error ? error.message : String(error)
               }`,
-            }),
+            })
           );
 
           // 发送连接成功消息
@@ -121,7 +140,7 @@ export function registerMcpAuthWebSocketRoute(
               type: "close",
               message:
                 "WebSocket connection closed. Send { args:string,sessionId:string} to start mcp authentication",
-            }),
+            })
           );
           socket.close();
         }

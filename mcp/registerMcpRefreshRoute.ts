@@ -7,12 +7,31 @@ import {
   type McprefreshData,
   validateMcprefreshData,
 } from "./validateMcprefreshData.js";
+import { authOptions } from "../auth/basicAuthMiddleware.js";
 export function registerMcprefreshRouteWebSocket(
   fastify: FastifyInstance,
-  sessionManager: SessionManager,
+  sessionManager: SessionManager
 ) {
   fastify.register(async function (fastify) {
     fastify.get("/command/mcp/refresh", { websocket: true }, (socket, req) => {
+      if (authOptions.username && authOptions.password) {
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const username = url.searchParams.get("username");
+        const password = url.searchParams.get("password");
+        if (
+          username !== authOptions.username ||
+          password !== authOptions.password
+        ) {
+          socket.send(
+            JSON.stringify({
+              type: "error",
+              message: "Invalid username or password",
+            })
+          );
+          socket.close();
+          return;
+        }
+      }
       console.log("websocket open,url=", req.url);
       socket.on("message", async (message: any) => {
         try {
@@ -27,7 +46,7 @@ export function registerMcprefreshRouteWebSocket(
                 type: "error",
                 message:
                   "Missing required parameters: sessionId must be provided",
-              }),
+              })
             );
             socket.close();
             return;
@@ -39,7 +58,7 @@ export function registerMcprefreshRouteWebSocket(
             const stream = await mockmcpRefresh(
               sessionId,
               sessionManager,
-              args || "",
+              args || ""
             );
 
             // 读取流中的数据并发送给客户端
@@ -55,7 +74,7 @@ export function registerMcprefreshRouteWebSocket(
                       sessionId,
                       type: "close",
                       message: "mcp refresh process completed",
-                    }),
+                    })
                   );
                   break;
                 }
@@ -66,7 +85,7 @@ export function registerMcprefreshRouteWebSocket(
                       sessionId,
                       type: "data",
                       data: value,
-                    }),
+                    })
                   );
                 }
               }
@@ -79,7 +98,7 @@ export function registerMcprefreshRouteWebSocket(
                   message: `Stream reading error: ${
                     error instanceof Error ? error.message : String(error)
                   }`,
-                }),
+                })
               );
             } finally {
               reader.releaseLock();
@@ -93,7 +112,7 @@ export function registerMcprefreshRouteWebSocket(
                 message: `Server error: ${
                   error instanceof Error ? error.message : String(error)
                 }`,
-              }),
+              })
             );
 
             // 发送连接成功消息
@@ -103,7 +122,7 @@ export function registerMcprefreshRouteWebSocket(
                 type: "close",
                 message:
                   "WebSocket connection closed. Send { args:string,sessionId:string} to start mcp refresh.",
-              }),
+              })
             );
           }
         } catch (error) {
@@ -114,7 +133,7 @@ export function registerMcprefreshRouteWebSocket(
               message: `Server error: ${
                 error instanceof Error ? error.message : String(error)
               }`,
-            }),
+            })
           );
 
           // 发送连接成功消息
@@ -123,7 +142,7 @@ export function registerMcprefreshRouteWebSocket(
               type: "close",
               message:
                 "WebSocket connection closed. Send { args:string,sessionId:string} to start mcp refresh.",
-            }),
+            })
           );
           socket.close();
         }
@@ -142,6 +161,6 @@ export function registerMcprefreshRouteWebSocket(
 // console.log(zodtojsonSchema(mcprefreshRequestSchema));
 export function zodtojsonSchema(schema: z.ZodTypeAny): JSONSchema.BaseSchema {
   return Object.fromEntries(
-    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema"),
+    Object.entries(z.toJSONSchema(schema)).filter(([key]) => key !== "$schema")
   );
 }

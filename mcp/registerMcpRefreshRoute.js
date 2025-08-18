@@ -1,9 +1,24 @@
 import * as z from "zod";
 import { mockmcpRefresh } from "./mockmcpRefresh.js";
 import { validateMcprefreshData, } from "./validateMcprefreshData.js";
+import { authOptions } from "../auth/basicAuthMiddleware.js";
 export function registerMcprefreshRouteWebSocket(fastify, sessionManager) {
     fastify.register(async function (fastify) {
         fastify.get("/command/mcp/refresh", { websocket: true }, (socket, req) => {
+            if (authOptions.username && authOptions.password) {
+                const url = new URL(req.url, `http://${req.headers.host}`);
+                const username = url.searchParams.get("username");
+                const password = url.searchParams.get("password");
+                if (username !== authOptions.username ||
+                    password !== authOptions.password) {
+                    socket.send(JSON.stringify({
+                        type: "error",
+                        message: "Invalid username or password",
+                    }));
+                    socket.close();
+                    return;
+                }
+            }
             console.log("websocket open,url=", req.url);
             socket.on("message", async (message) => {
                 try {
