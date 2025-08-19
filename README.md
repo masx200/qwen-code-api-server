@@ -9,6 +9,10 @@
 - 🎯 提供 `/command/about` 接口用于获取模型信息
 - 🔧 TypeScript 编写，提供完整的类型支持
 
+
+https://gitee.com/masx200/easy-llm-CLI-UI
+
+
 ## 项目结构
 
 ```
