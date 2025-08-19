@@ -171,11 +171,11 @@ export function registerSessionRoute(
 
         const session = sessionManager.getSession(sessionId);
         if (!session) {
-          return {
+          return reply.status(500).send({
             success: false,
             error: "Session not found",
             message: `Session ${sessionId} not found`,
-          };
+          });
         }
 
         return {
@@ -221,12 +221,12 @@ export function registerSessionRoute(
         cwd = cwd.length ? cwd : os.homedir();
 
         if (!cwd) {
-          return {
+          return reply.status(500).send({
             success: false,
             error: "Invalid request",
             message: "cwd is required",
             sessions: [],
-          };
+          });
         }
 
         const sessions = sessionManager.findSessionsByCwd(cwd);

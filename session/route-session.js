@@ -134,11 +134,11 @@ export function registerSessionRoute(fastify, sessionManager) {
             const { sessionId } = request.body;
             const session = sessionManager.getSession(sessionId);
             if (!session) {
-                return {
+                return reply.status(500).send({
                     success: false,
                     error: "Session not found",
                     message: `Session ${sessionId} not found`,
-                };
+                });
             }
             return {
                 success: true,
@@ -176,12 +176,12 @@ export function registerSessionRoute(fastify, sessionManager) {
             let { cwd } = request.body;
             cwd = cwd.length ? cwd : os.homedir();
             if (!cwd) {
-                return {
+                return reply.status(500).send({
                     success: false,
                     error: "Invalid request",
                     message: "cwd is required",
                     sessions: [],
-                };
+                });
             }
             const sessions = sessionManager.findSessionsByCwd(cwd);
             return {
