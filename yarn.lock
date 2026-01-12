@@ -441,7 +441,7 @@ __metadata:
     "@fastify/swagger-ui": "npm:5.2.3"
     "@fastify/websocket": "npm:^11.2.0"
     "@qwen-code/qwen-code": "npm:0.6.1"
-    "@types/node": "npm:24.9.1"
+    "@types/node": "npm:25.0.6"
     "@types/ws": "npm:^8.18.1"
     "@types/yargs": "npm:^17.0.33"
     concurrently: "npm:^9.2.1"
@@ -691,12 +691,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:24.9.1":
-  version: 24.9.1
-  resolution: "@types/node@npm:24.9.1"
+"@types/node@npm:25.0.6":
+  version: 25.0.6
+  resolution: "@types/node@npm:25.0.6"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/c52f8168080ef9a7c3dc23d8ac6061fab5371aad89231a0f6f4c075869bc3de7e89b075b1f3e3171d9e5143d0dda1807c3dab8e32eac6d68f02e7480e7e78576
+  checksum: 10c0/4ee3b6b606bc28f6840c04d58769e1e75dd8085149908956c874c85f8f8c890990701bcbe783fc2d14017817861dc07fcf23de6fc2805fe491f84eae717b5705
   languageName: node
   linkType: hard
 
