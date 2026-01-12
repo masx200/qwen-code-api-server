@@ -440,7 +440,7 @@ __metadata:
     "@fastify/swagger": "npm:9.5.1"
     "@fastify/swagger-ui": "npm:5.2.3"
     "@fastify/websocket": "npm:^11.2.0"
-    "@qwen-code/qwen-code": "npm:0.6.1"
+    "@qwen-code/qwen-code": "npm:0.6.2"
     "@types/node": "npm:24.9.1"
     "@types/ws": "npm:^8.18.1"
     "@types/yargs": "npm:^17.0.33"
@@ -486,9 +486,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@qwen-code/qwen-code@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@qwen-code/qwen-code@npm:0.6.1"
+"@qwen-code/qwen-code@npm:0.6.2":
+  version: 0.6.2
+  resolution: "@qwen-code/qwen-code@npm:0.6.2"
   dependencies:
     "@lydell/node-pty": "npm:1.1.0"
     "@lydell/node-pty-darwin-arm64": "npm:1.1.0"
@@ -515,7 +515,7 @@ __metadata:
       optional: true
   bin:
     qwen: cli.js
-  checksum: 10c0/88c3c54d6bf1e53f7f3122afb9841788a74ba4e80d6552235d5ad732aa248520ae64fb0a9ebf5c3ad5a4c06b0567918dadf2f613c8c2dd1c997dc1d9b99a4f72
+  checksum: 10c0/d4ca96d270535725bc534b7f9490ea304bdd96241d1d08f22d10273f32c847d09e2c0fa29cff63ec85627681a80f0a30eb093ce62f8d3b5e4902aa7e4ddc1d8e
   languageName: node
   linkType: hard
 
